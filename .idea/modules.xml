@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Java4_homework/Java4_homework.iml" filepath="$PROJECT_DIR$/Java4_homework/Java4_homework.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/QAA2-training-volzhankina-daria.iml" filepath="$PROJECT_DIR$/.idea/QAA2-training-volzhankina-daria.iml" />
     </modules>
   </component>
