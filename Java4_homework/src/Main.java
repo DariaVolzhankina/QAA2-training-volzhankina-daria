@@ -25,21 +25,32 @@ public class Main {
         Attack orc = new Attack() {
             @Override
             public void attack() {
-                System.out.println("Мониторинг общих показателей стартовал!");
+                System.out.println("Орк атакует");
             }
         };
         Attack human = new Attack() {
             @Override
             public void attack() {
-                System.out.println("Мониторинг общих показателей стартовал!");
+                System.out.println("Человек атакует");
             }
         };
         Attack elf = new Attack() {
             @Override
             public void attack() {
-                System.out.println("Мониторинг общих показателей стартовал!");
+                System.out.println("Эльф атакует");
             }
         };
+        
+        new Thread(
+                () -> elf.attack()
+        ).start();
 
+        new Thread(
+                () -> human.attack()
+        ).start();
+
+        new Thread(
+                () -> orc.attack()
+        ).start();
     }
 }
