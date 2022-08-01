@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e31d7848-5adc-4759-ac7b-bef9fdd9ebad" name="Changes" comment="Начало проекта">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java4_homework/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java4_homework/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,11 +18,6 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="main" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -43,14 +38,13 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="18" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Java4_homework/src/Main.java" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.14941406" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\User\IdeaProjects\QAA2-training-volzhankina-daria\Java4_homework\src" />
       <recent name="C:\Users\User\IdeaProjects\QAA2-training-volzhankina-daria" />
     </key>
   </component>
@@ -126,35 +120,7 @@
       <option name="project" value="LOCAL" />
       <updated>1659383358815</updated>
     </task>
-    <task id="LOCAL-00008" summary="Начало проекта">
-      <created>1659384720989</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1659384720989</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Начало проекта">
-      <created>1659384742908</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1659384742908</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Начало проекта">
-      <created>1659384752905</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1659384752905</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Начало проекта">
-      <created>1659384817372</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1659384817372</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
