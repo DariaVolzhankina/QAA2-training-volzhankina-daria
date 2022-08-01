@@ -36,12 +36,14 @@ public class Main {
                 System.out.println("orc attacks");
             }
         };
+
         Attack human1 = new Attack() {
             @Override
             public void attack() {
                 System.out.println("human attacks");
             }
         };
+
         Attack elf1 = new Attack() {
             @Override
             public void attack() {
@@ -68,12 +70,14 @@ public class Main {
                 System.out.println("It's an orc");
             }
         };
+
         Info human2 = new Info() {
             @Override
             public void getInfoCharacter() {
                 System.out.println("It's an human");
             }
         };
+
         Info elf2 = new Info() {
             @Override
             public void getInfoCharacter() {
