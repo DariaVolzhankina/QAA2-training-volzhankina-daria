@@ -16,7 +16,10 @@ public class Main {
         currentDay.isAfter(birthday);
         currentDay.isBefore(birthday);
 
-        //Второе задание
+        //Второе задание.
+        // Хз,что имелось в виду под фразой "график праздников"
+        // тут зависимость подключать какую-нибудь надо и бахнуть целый список праздников?
+        // Я нашла самодельные на гитхабе,но это такое себе
         LocalDate holiday = LocalDate.of(2022, 12, 31);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, EEEE", Locale.ENGLISH);
         System.out.println(holiday.format(formatter));
