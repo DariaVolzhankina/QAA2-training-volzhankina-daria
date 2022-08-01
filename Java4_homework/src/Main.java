@@ -1,3 +1,6 @@
+import interfaces.Attack;
+import interfaces.Info;
+
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,8 +17,9 @@ public class Main {
         currentDay.isBefore(birthday);
 
         //Второе задание
+        LocalDate holiday = LocalDate.of(2022,12,31);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, EEEE", Locale.ENGLISH);
-        System.out.println(currentDay.format(formatter));
+        System.out.println(holiday.format(formatter));
 
         //Третье задание
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -26,19 +30,19 @@ public class Main {
         Attack orc1 = new Attack() {
             @Override
             public void attack() {
-                System.out.println("Орк атакует");
+                System.out.println("orc attacks");
             }
         };
         Attack human1 = new Attack() {
             @Override
             public void attack() {
-                System.out.println("Человек атакует");
+                System.out.println("human attacks");
             }
         };
         Attack elf1 = new Attack() {
             @Override
             public void attack() {
-                System.out.println("Эльф атакует");
+                System.out.println("elf attacks");
             }
         };
         
@@ -58,19 +62,19 @@ public class Main {
         Info orc2 = new Info() {
             @Override
             public void getInfoCharacter() {
-                System.out.println("Это орк");
+                System.out.println("It's an orc");
             }
         };
         Info human2 = new Info() {
             @Override
             public void getInfoCharacter() {
-                System.out.println("Это человек");
+                System.out.println("It's an human");
             }
         };
         Info elf2 = new Info() {
             @Override
             public void getInfoCharacter() {
-                System.out.println("Это эльф");
+                System.out.println("It's an elf");
             }
         };
 
