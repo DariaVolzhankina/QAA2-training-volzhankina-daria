@@ -2,7 +2,6 @@ package interfaces;
 
 @FunctionalInterface
 public interface Info {
-
     void getInfoCharacter();
 
     default void getInfoGame() {
