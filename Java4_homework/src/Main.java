@@ -11,20 +11,20 @@ public class Main {
     public static void main(String[] args) {
 
         //Первое задание
-        LocalDate birthday = LocalDate.of(2001,3,14);
+        LocalDate birthday = LocalDate.of(2001, 3, 14);
         LocalDate currentDay = LocalDate.now();
         currentDay.isAfter(birthday);
         currentDay.isBefore(birthday);
 
         //Второе задание
-        LocalDate holiday = LocalDate.of(2022,12,31);
+        LocalDate holiday = LocalDate.of(2022, 12, 31);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, EEEE", Locale.ENGLISH);
         System.out.println(holiday.format(formatter));
 
         //Третье задание
         LocalDateTime localDateTime = LocalDateTime.now();
         Timestamp timestamp = Convertation.convertLocalDateTimeToTimestamp(localDateTime);
-        System.out.println(timestamp.getNanos()/1000);
+        System.out.println(timestamp.getNanos() / 1000);
 
         //Четвертое задание
         Attack orc1 = new Attack() {
@@ -45,7 +45,7 @@ public class Main {
                 System.out.println("elf attacks");
             }
         };
-        
+
         new Thread(
                 () -> elf1.attack()
         ).start();
@@ -78,16 +78,13 @@ public class Main {
             }
         };
 
-        new Thread(
-                () -> elf2.getInfoCharacter()
-        ).start();
+        Runnable orc = () -> orc2.getInfoCharacter();
+        orc.run();
 
-        new Thread(
-                () -> human2.getInfoCharacter()
-        ).start();
+        Runnable human = () -> human2.getInfoCharacter();
+        human.run();
 
-        new Thread(
-                () -> orc2.getInfoCharacter()
-        ).start();
+        Runnable elf = () -> elf2.getInfoCharacter();
+        elf.run();
     }
 }
