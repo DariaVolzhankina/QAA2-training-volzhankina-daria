@@ -19,22 +19,23 @@ public class Main {
 
         //Третье задание
         LocalDateTime localDateTime = LocalDateTime.now();
-        Convertation.convertLocalDateTimeToTimestamp(localDateTime);
+        Timestamp timestamp = Convertation.convertLocalDateTimeToTimestamp(localDateTime);
+        System.out.println(timestamp.getNanos()/1000);
 
         //Четвертое задание
-        Attack orc = new Attack() {
+        Attack orc1 = new Attack() {
             @Override
             public void attack() {
                 System.out.println("Орк атакует");
             }
         };
-        Attack human = new Attack() {
+        Attack human1 = new Attack() {
             @Override
             public void attack() {
                 System.out.println("Человек атакует");
             }
         };
-        Attack elf = new Attack() {
+        Attack elf1 = new Attack() {
             @Override
             public void attack() {
                 System.out.println("Эльф атакует");
@@ -42,15 +43,47 @@ public class Main {
         };
         
         new Thread(
-                () -> elf.attack()
+                () -> elf1.attack()
         ).start();
 
         new Thread(
-                () -> human.attack()
+                () -> human1.attack()
         ).start();
 
         new Thread(
-                () -> orc.attack()
+                () -> orc1.attack()
+        ).start();
+
+        //Пятое задание
+        Info orc2 = new Info() {
+            @Override
+            public void getInfoCharacter() {
+                System.out.println("Это орк");
+            }
+        };
+        Info human2 = new Info() {
+            @Override
+            public void getInfoCharacter() {
+                System.out.println("Это человек");
+            }
+        };
+        Info elf2 = new Info() {
+            @Override
+            public void getInfoCharacter() {
+                System.out.println("Это эльф");
+            }
+        };
+
+        new Thread(
+                () -> elf2.getInfoCharacter()
+        ).start();
+
+        new Thread(
+                () -> human2.getInfoCharacter()
+        ).start();
+
+        new Thread(
+                () -> orc2.getInfoCharacter()
         ).start();
     }
 }
