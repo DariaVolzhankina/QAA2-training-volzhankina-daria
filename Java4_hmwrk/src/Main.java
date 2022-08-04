@@ -17,17 +17,19 @@ public class Main {
         currentDay.isBefore(birthday);
 
         //Второе задание
-        // Хз,что имелось в виду под фразой "график праздников"
-        // тут зависимость подключать какую-нибудь надо и бахнуть целый список праздников?
-        // Я нашла самодельные на гитхабе,но это такое себе
-        LocalDate holiday = LocalDate.of(2022, 12, 31);
+        LocalDate newYear = LocalDate.of(2022, 12, 31);
+        LocalDate christmas = LocalDate.of(2022, 1, 7);
+        LocalDate victoryDay = LocalDate.of(2022, 1, 7);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, EEEE", Locale.ENGLISH);
-        System.out.println(holiday.format(formatter));
+        System.out.println(newYear.format(formatter));
+        System.out.println(christmas.format(formatter));
+        System.out.println(victoryDay.format(formatter));
 
         //Третье задание
         LocalDateTime localDateTime = LocalDateTime.now();
         Timestamp timestamp = Convertation.convertLocalDateTimeToTimestamp(localDateTime);
-        System.out.println(timestamp.getNanos() / 1000);
+        System.out.println(timestamp.getNanos());
+        System.out.println(timestamp.getTime());
 
         //Четвертое задание
         Attack orc1 = new Attack() {
@@ -51,17 +53,9 @@ public class Main {
             }
         };
 
-        new Thread(
-                () -> elf1.attack()
-        ).start();
-
-        new Thread(
-                () -> human1.attack()
-        ).start();
-
-        new Thread(
-                () -> orc1.attack()
-        ).start();
+        elf1.attack();
+        human1.attack();
+        orc1.attack();
 
         //Пятое задание
         Info orc2 = new Info() {
@@ -85,13 +79,8 @@ public class Main {
             }
         };
 
-        Runnable orc = () -> orc2.getInfoCharacter();
-        orc.run();
-
-        Runnable human = () -> human2.getInfoCharacter();
-        human.run();
-
-        Runnable elf = () -> elf2.getInfoCharacter();
-        elf.run();
+        orc2.getInfoCharacter();
+        human2.getInfoCharacter();
+        elf2.getInfoCharacter();
     }
 }
