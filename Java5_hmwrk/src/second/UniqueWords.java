@@ -9,9 +9,9 @@ public class UniqueWords {
         String str = "one two three one four three one two five six one";
         String[] words = str.toLowerCase().split("[^\\p{L}\\p{N}]+");
         List<String> withDuplicates = Arrays.stream(words).collect(Collectors.toList());
-        List<String> withoutDuplicates = Arrays.stream(words).distinct().collect(Collectors.toList());
+        List<String> withoutDuplicates = Arrays.stream(words).distinct().toList();
 
-        for (Object o : withoutDuplicates) {
+        for (String o : withoutDuplicates) {
             withDuplicates.remove(o);
         }
 
