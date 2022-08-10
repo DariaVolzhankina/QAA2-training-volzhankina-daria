@@ -1,4 +1,6 @@
 package third;
+import third.exceptions.NullException;
+
 import java.util.*;
 
 public class Anagrams {
