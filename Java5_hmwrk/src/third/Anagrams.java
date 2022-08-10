@@ -5,6 +5,16 @@ public class Anagrams {
 
     public boolean isStringsAnagrams(String str1, String str2){
 
+        try {
+            if (str1 != null && str2 != null) {
+                System.out.println("You have entered the values");
+            } else {
+                throw new NullException("The string cannot be null");
+            }
+        } catch (NullException ex) {
+            ex.printStackTrace();
+        }
+
         str1 = str1.toLowerCase().replace(" ", "");
         str2 = str2.toLowerCase().replace(" ", "");
 
