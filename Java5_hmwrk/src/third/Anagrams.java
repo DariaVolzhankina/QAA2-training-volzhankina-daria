@@ -1,5 +1,6 @@
 package third;
 
+import third.exceptions.StringHaveWhitespaceException;
 import third.exceptions.StringIsNullException;
 
 import java.util.*;
@@ -8,22 +9,30 @@ public class Anagrams {
 
     public boolean isStringsAnagrams(String str1, String str2) {
 
-        str1 = str1.toLowerCase().replace(" ", "");
-        str2 = str2.toLowerCase().replace(" ", "");
-
         try {
-            if (str1 != null && str2 != null) {
-                System.out.println("You have entered the values");
-            } else {
+            if (str1 == null || str2 == null) {
                 throw new StringIsNullException("The string cannot be null");
             }
         } catch (StringIsNullException ex) {
             ex.printStackTrace();
         }
 
+        try {
+            if (str1.contains(" ") || str2.contains(" ")) {
+                throw new StringHaveWhitespaceException("The string cannot contain a Whitespace");
+            }
+        } catch (StringHaveWhitespaceException ex) {
+            str1 = str1.replace(" ", "");
+            str2 = str2.replace(" ", "");
+            ex.printStackTrace();
+        }
+
         if (str1.length() != str2.length()) {
             return false;
         }
+
+        str1 = str1.toLowerCase();
+        str2 = str2.toLowerCase();
 
         char[] array1 = str1.toCharArray();
         char[] array2 = str2.toCharArray();
