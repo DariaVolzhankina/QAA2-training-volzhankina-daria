@@ -22,10 +22,7 @@ public class Main {
         city.getPeople().sort(new Comparator<Human>() {
             @Override
             public int compare(Human o1, Human o2) {
-                if(o1.getSurname() == o2.getSurname()){
-                    return o1.getName().compareTo(o2.getName());
-                }
-                return o1.getSurname().compareTo(o2.getSurname());
+                return o1.compareTo(o2);
             }
         });
 
@@ -37,7 +34,7 @@ public class Main {
 
         //Третье
         Anagrams anagrams = new Anagrams();
-        boolean isStringsAnagrams = anagrams.isStringsAnagrams("abc", "b ac");
+        boolean isStringsAnagrams = anagrams.isStringsAnagrams("abc", "bac");
         System.out.println(isStringsAnagrams);
     }
 }

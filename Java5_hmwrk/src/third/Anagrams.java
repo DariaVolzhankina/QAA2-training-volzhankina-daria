@@ -1,6 +1,7 @@
 package third;
 
 import third.exceptions.StringHaveWhitespaceException;
+import third.exceptions.StringIsEmptyException;
 import third.exceptions.StringIsNullException;
 
 import java.util.*;
@@ -18,8 +19,26 @@ public class Anagrams {
         }
 
         try {
-            if (str1.contains(" ") || str2.contains(" ")) {
-                throw new StringHaveWhitespaceException("The string cannot contain a Whitespace");
+            if (str1 == "" || str2 == "") {
+                throw new StringIsEmptyException("The string cannot be empty");
+            }
+        } catch (StringIsEmptyException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            if (str1 == " " || str2 == " ") {
+                throw new StringIsEmptyException("The string cannot contain only whitespace");
+            }
+        } catch (StringIsEmptyException ex) {
+            str1 = str1.replace(" ", "");
+            str2 = str2.replace(" ", "");
+            ex.printStackTrace();
+        }
+
+        try {
+            if (str1.startsWith(" ") || str2.startsWith(" ")) {
+                throw new StringHaveWhitespaceException("The string cannot starts with whitespace");
             }
         } catch (StringHaveWhitespaceException ex) {
             str1 = str1.replace(" ", "");
@@ -27,12 +46,22 @@ public class Anagrams {
             ex.printStackTrace();
         }
 
+        try {
+            if (str1.endsWith(" ") || str2.endsWith(" ")) {
+                throw new StringHaveWhitespaceException("The string cannot ends with whitespace");
+            }
+        } catch (StringHaveWhitespaceException ex) {
+            str1 = str1.replace(" ", "");
+            str2 = str2.replace(" ", "");
+            ex.printStackTrace();
+        }
+
+        str1 = str1.toLowerCase().replace(" ", "");
+        str2 = str2.toLowerCase().replace(" ", "");
+
         if (str1.length() != str2.length()) {
             return false;
         }
-
-        str1 = str1.toLowerCase();
-        str2 = str2.toLowerCase();
 
         char[] array1 = str1.toCharArray();
         char[] array2 = str2.toCharArray();

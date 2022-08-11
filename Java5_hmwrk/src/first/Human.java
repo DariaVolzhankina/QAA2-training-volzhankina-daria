@@ -1,8 +1,8 @@
 package first;
 
-public class Human {
-    private String name;
-    private String surname;
+public class Human implements Comparable<Human> {
+    private final String name;
+    private final String surname;
 
     public String getName() {
         return name;
@@ -12,7 +12,7 @@ public class Human {
         return surname;
     }
 
-    public Human(String name,String surname){
+    public Human(String name, String surname) {
         this.name = name;
         this.surname = surname;
     }
@@ -20,5 +20,13 @@ public class Human {
     @Override
     public String toString() {
         return "\n" + name + " " + surname;
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        if (o.surname == surname) {
+            return name.compareTo(o.name);
+        }
+        return surname.compareTo(o.surname);
     }
 }
