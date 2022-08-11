@@ -37,7 +37,7 @@ public class Main {
 
         //Третье
         Anagrams anagrams = new Anagrams();
-        boolean isStringsAnagrams = anagrams.isStringsAnagrams("abbc", "bacc");
+        boolean isStringsAnagrams = anagrams.isStringsAnagrams("abc", "bac");
         System.out.println(isStringsAnagrams);
     }
 }
