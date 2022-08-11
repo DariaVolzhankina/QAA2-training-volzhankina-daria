@@ -7,7 +7,6 @@ public class City {
 
     public City(List<Human> people) {
         this.people = people;
-
     }
 
     public List<Human> getPeople() {
