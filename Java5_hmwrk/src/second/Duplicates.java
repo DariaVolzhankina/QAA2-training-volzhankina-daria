@@ -4,9 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UniqueWords {
-    public static void main(String[] args) {
-        String str = "one two three one four three one two five six one";
+public class Duplicates {
+    public void duplicates(String str) {
         String[] words = str.toLowerCase().split("[^\\p{L}\\p{N}]+");
         List<String> withDuplicates = Arrays.stream(words).collect(Collectors.toList());
         List<String> withoutDuplicates = Arrays.stream(words).distinct().toList();

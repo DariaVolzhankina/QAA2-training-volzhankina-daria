@@ -1,5 +1,5 @@
 package third;
-import third.exceptions.NullException;
+import third.exceptions.StringIsNullException;
 
 import java.util.*;
 
@@ -11,9 +11,9 @@ public class Anagrams {
             if (str1 != null && str2 != null) {
                 System.out.println("You have entered the values");
             } else {
-                throw new NullException("The string cannot be null");
+                throw new StringIsNullException("The string cannot be null");
             }
-        } catch (NullException ex) {
+        } catch (StringIsNullException ex) {
             ex.printStackTrace();
         }
 
@@ -27,18 +27,13 @@ public class Anagrams {
         char[] array1 = str1.toCharArray();
         char[] array2 = str2.toCharArray();
 
-        Arrays.sort(array1);
-        Arrays.sort(array2);
-
         Map<Character,Integer> map1 = new HashMap<>();
         Map<Character,Integer> map2 = new HashMap<>();
 
         for (int i = 0; i< array1.length;i++){
             char key = array1[i];
             if(map1.containsKey(key)){
-                int counter = map1.get(key);
-                counter +=1;
-                map1.put(key,counter);
+                map1.put(key, map1.get(key) + 1);
             }else {
                 map1.put(key, 1);
             }
@@ -47,9 +42,7 @@ public class Anagrams {
         for (int i = 0; i<array2.length;i++){
             char key = array2[i];
             if(map2.containsKey(key)){
-                int counter = map2.get(key);
-                counter += 1;
-                map2.put(key,counter);
+                map2.put(key, map2.get(key) + 1);
             }else {
             map2.put(key,1);}
         }
