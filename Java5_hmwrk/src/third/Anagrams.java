@@ -28,9 +28,9 @@ public class Anagrams {
 
         try {
             if (str1 == " " || str2 == " ") {
-                throw new StringIsEmptyException("The string cannot contain only whitespace");
+                throw new StringHaveWhitespaceException("The string cannot contain only whitespace");
             }
-        } catch (StringIsEmptyException ex) {
+        } catch (StringHaveWhitespaceException ex) {
             str1 = str1.replace(" ", "");
             str2 = str2.replace(" ", "");
             ex.printStackTrace();
