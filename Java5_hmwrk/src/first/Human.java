@@ -24,7 +24,7 @@ public class Human implements Comparable<Human> {
 
     @Override
     public int compareTo(Human o) {
-        if (o.surname == surname) {
+        if (o.surname.equals(surname)) {
             return name.compareTo(o.name);
         }
         return surname.compareTo(o.surname);
