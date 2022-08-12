@@ -18,6 +18,9 @@ public class Anagrams {
             ex.printStackTrace();
         }
 
+        str1 = str1.toLowerCase().trim();
+        str2 = str2.toLowerCase().trim();
+
         try {
             if (str1 == "" || str2 == "") {
                 throw new StringIsEmptyException("The string cannot be empty");
@@ -27,37 +30,12 @@ public class Anagrams {
         }
 
         try {
-            if (str1 == " " || str2 == " ") {
-                throw new StringHaveWhitespaceException("The string cannot contain only whitespace");
+            if (str1.contains(" ") || str2.contains(" ")) {
+                throw new StringHaveWhitespaceException("Words cannot contain a whitespace");
             }
         } catch (StringHaveWhitespaceException ex) {
-            str1 = str1.replace(" ", "");
-            str2 = str2.replace(" ", "");
             ex.printStackTrace();
         }
-
-        try {
-            if (str1.startsWith(" ") || str2.startsWith(" ")) {
-                throw new StringHaveWhitespaceException("The string cannot starts with whitespace");
-            }
-        } catch (StringHaveWhitespaceException ex) {
-            str1 = str1.replace(" ", "");
-            str2 = str2.replace(" ", "");
-            ex.printStackTrace();
-        }
-
-        try {
-            if (str1.endsWith(" ") || str2.endsWith(" ")) {
-                throw new StringHaveWhitespaceException("The string cannot ends with whitespace");
-            }
-        } catch (StringHaveWhitespaceException ex) {
-            str1 = str1.replace(" ", "");
-            str2 = str2.replace(" ", "");
-            ex.printStackTrace();
-        }
-
-        str1 = str1.toLowerCase().replace(" ", "");
-        str2 = str2.toLowerCase().replace(" ", "");
 
         if (str1.length() != str2.length()) {
             return false;
