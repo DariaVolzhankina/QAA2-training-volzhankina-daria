@@ -14,11 +14,11 @@ public class City {
         return people;
     }
 
-    public void addPeopleToCity(List<Human> people, String name, String surname) {
+    public void addHuman2City(List<Human> people, String name, String surname) {
         people.add(new Human(name, surname));
     }
 
-    public void sortStringByComparator(List<Human> people) {
+    public void sortPeople() {
         people.sort(new Comparator<Human>() {
             @Override
             public int compare(Human o1, Human o2) {

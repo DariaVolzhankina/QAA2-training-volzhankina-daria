@@ -13,14 +13,14 @@ public class Main {
         City city = new City(new ArrayList<>());
         List<Human> people = city.getPeople();
 
-        city.addPeopleToCity(people, "Ivan", "Ivanov");
-        city.addPeopleToCity(people, "Boris", "Ivanov");
-        city.addPeopleToCity(people, "Anna", "Makarova");
-        city.addPeopleToCity(people, "Ivan", "Petrov");
-        city.addPeopleToCity(people, "Petr", "Petrov");
-        city.addPeopleToCity(people, "Anton", "Matveev");
+        city.addHuman2City(people, "Ivan", "Ivanov");
+        city.addHuman2City(people, "Boris", "Ivanov");
+        city.addHuman2City(people, "Anna", "Makarova");
+        city.addHuman2City(people, "Ivan", "Petrov");
+        city.addHuman2City(people, "Petr", "Petrov");
+        city.addHuman2City(people, "Anton", "Matveev");
 
-        city.sortStringByComparator(city.getPeople());
+        city.sortPeople();
 
         //Второе
         Duplicates duplicates = new Duplicates();
