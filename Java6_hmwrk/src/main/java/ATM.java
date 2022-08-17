@@ -61,7 +61,7 @@ public class ATM {
     public void putMoney(Card card, Cash cash){
         if(currency.equals(cash.getCurrency()) && card.getCurrency().equals(cash.getCurrency())){
             card.setMoneyAmount(card.getMoneyAmount() + cash.getSum());
-            this.limit += cash.getSum();
+            limit += cash.getSum();
             System.out.println(limit);
         }else {
             System.out.println("Put money in another currency");
