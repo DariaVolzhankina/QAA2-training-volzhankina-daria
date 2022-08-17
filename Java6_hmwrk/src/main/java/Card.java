@@ -1,6 +1,11 @@
 public class Card {
     private String currency;
     private String bank;
+
+    public void setMoneyAmount(int moneyAmount) {
+        this.moneyAmount = moneyAmount;
+    }
+
     private int moneyAmount;
     private String cardNumber;
     private String pinCode;
