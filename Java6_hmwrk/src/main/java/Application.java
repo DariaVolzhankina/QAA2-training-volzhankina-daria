@@ -4,11 +4,6 @@ public class Application {
         ATM atm = new ATM("Tinkoff","rub",100000);
 
         boolean checkBank = atm.checkBank(card);
-        if(checkBank){
-            boolean checkPin = atm.checkPinCode(card, "1234");
-            if (checkPin){
 
-            }
-        }
     }
 }

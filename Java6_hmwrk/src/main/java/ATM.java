@@ -41,4 +41,23 @@ public class ATM {
             return false;
         }
     }
+
+    public boolean checkCurrency(Card card) {
+        String currency = this.currency;
+        return currency.equals(card.getCurrency());
+    }
+
+    public Cash withdrawMoney(Card card, Cash cash) {
+        int sum = cash.getSum();
+        int limit = this.limit;
+        if(sum <= limit && sum <= card.getMoneyAmount()){
+            return cash;
+        }else if(sum > limit){
+            System.out.println("the ATM gives out no more than " + limit + this.currency);
+        }else if (sum > card.getMoneyAmount()){
+            System.out.println("there are not enough funds on your card");
+        }
+        return new Cash(0,this.currency);
+    }
 }
+
