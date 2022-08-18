@@ -23,6 +23,33 @@ public class ATM {
     }
 
     public boolean checkPinCode(Card card, String pin) {
+        try {
+            if (pin == null) {
+                System.out.println("pin code cannot be null");
+                throw new WrongPinCodeException("invalid pin code");
+            }
+        } catch (WrongPinCodeException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (pin.equals("")) {
+                System.out.println("pin code cannot be empty");
+                throw new WrongPinCodeException("invalid pin code");
+            }
+        } catch (WrongPinCodeException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (pin.contains(" ")) {
+                System.out.println("pin code cannot contain a whitespace");
+                throw new WrongPinCodeException("invalid pin code");
+            }
+        } catch (WrongPinCodeException e) {
+            e.printStackTrace();
+        }
+
         return card.getPinCode().equals(pin);
     }
 
@@ -133,6 +160,30 @@ public class ATM {
     }
 
     public String selectAction(String action) {
+
+        try {
+            if (action == null) {
+                System.out.println("string cannot be null");
+                throw new WrongPinCodeException("invalid pin code");
+            }
+        } catch (WrongPinCodeException e) {
+            e.printStackTrace();
+        }
+
+        action.trim();
+
+        try {
+            if (action.equals("")) {
+                System.out.println("string cannot be empty");
+                throw new WrongPinCodeException("invalid pin code");
+            }
+        } catch (WrongPinCodeException e) {
+            e.printStackTrace();
+        }
+
+        if (!action.equals("withdraw") && !action.equals("put")){
+            return null;
+        }
         return action;
     }
 }

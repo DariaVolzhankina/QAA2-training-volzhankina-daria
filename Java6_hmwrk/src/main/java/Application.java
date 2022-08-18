@@ -1,6 +1,6 @@
 public class Application {
     public static void main(String[] args) {
-        Card card = new Card("Sber", "1111222233334444", "1234", "ru", 10000);
+        Card card = new Card("Sber", "1111222233334444", "1234", "rub", 10000);
         ATM atm = new ATM("Sber", "rub", 100000);
         Cash cash = new Cash(1000,"rub");
 
@@ -8,7 +8,7 @@ public class Application {
 
         String withdraw = "withdraw";
         String put = "put";
-        String action = atm.selectAction(put);
+        String action = atm.selectAction(withdraw);
 
         if (checkCard && action.equals(withdraw)) {
             atm.withdrawMoney(card, 100);
