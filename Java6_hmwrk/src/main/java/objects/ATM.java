@@ -1,3 +1,5 @@
+package objects;
+
 import enums.Actions;
 import exceptions.*;
 import lombok.Builder;
@@ -69,7 +71,7 @@ public class ATM {
         try {
             if (!checkBank) {
                 System.out.println("your card is not a " + bank + " bank card. Insert a " + bank + " bank card");
-                throw new WrongBankException("ATM accepts only " + bank + " cards");
+                throw new WrongBankException("objects.ATM accepts only " + bank + " cards");
             }
         } catch (WrongBankException e) {
             e.printStackTrace();
@@ -87,8 +89,8 @@ public class ATM {
         }
 
         try {
-            System.out.println("The ATM only issues " + currency);
-            throw new WrongCurrencyException("The ATM only issues " + currency);
+            System.out.println("The objects.ATM only issues " + currency);
+            throw new WrongCurrencyException("The objects.ATM only issues " + currency);
         } catch (WrongCurrencyException e) {
             e.printStackTrace();
             return false;
@@ -109,8 +111,8 @@ public class ATM {
 
         try {
             if (sum > limit) {
-                System.out.println("The ATM issues an amount up to " + limit);
-                throw new MoneyAmountException("ATM limit exceeded");
+                System.out.println("The objects.ATM issues an amount up to " + limit);
+                throw new MoneyAmountException("objects.ATM limit exceeded");
             }
         } catch (MoneyAmountException e) {
             e.printStackTrace();
@@ -146,8 +148,8 @@ public class ATM {
 
         try {
             if (!currency.equals(cash.getCurrency())) {
-                System.out.println("The ATM only issues " + currency);
-                throw new WrongCurrencyException("The ATM only issues " + currency);
+                System.out.println("The objects.ATM only issues " + currency);
+                throw new WrongCurrencyException("The objects.ATM only issues " + currency);
             }
         } catch (WrongCurrencyException e) {
             e.printStackTrace();

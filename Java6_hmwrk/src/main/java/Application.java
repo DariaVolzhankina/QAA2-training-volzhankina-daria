@@ -1,4 +1,7 @@
 import enums.Actions;
+import objects.ATM;
+import objects.Card;
+import objects.Cash;
 
 public class Application {
     public static void main(String[] args) {
@@ -15,7 +18,7 @@ public class Application {
         } else if (checkCard && action.equals(Actions.PUT)) {
             atm.putMoney(card, cash);
         } else {
-            System.out.println("Choose other ATM");
+            System.out.println("Choose other objects.ATM");
         }
     }
 }
