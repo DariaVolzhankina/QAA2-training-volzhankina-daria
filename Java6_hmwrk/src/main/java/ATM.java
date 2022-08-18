@@ -1,7 +1,4 @@
-import exceptions.MoneyAmountException;
-import exceptions.WrongBankException;
-import exceptions.WrongCurrencyException;
-import exceptions.WrongPinCodeException;
+import exceptions.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -164,9 +161,9 @@ public class ATM {
         try {
             if (action == null) {
                 System.out.println("string cannot be null");
-                throw new WrongPinCodeException("invalid pin code");
+                throw new WrongActionException("string cannot be null");
             }
-        } catch (WrongPinCodeException e) {
+        } catch (WrongActionException e) {
             e.printStackTrace();
         }
 
@@ -175,9 +172,9 @@ public class ATM {
         try {
             if (action.equals("")) {
                 System.out.println("string cannot be empty");
-                throw new WrongPinCodeException("invalid pin code");
+                throw new WrongActionException("string cannot be empty");
             }
-        } catch (WrongPinCodeException e) {
+        } catch (WrongActionException e) {
             e.printStackTrace();
         }
 
