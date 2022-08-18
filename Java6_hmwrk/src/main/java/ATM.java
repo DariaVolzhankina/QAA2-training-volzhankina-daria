@@ -1,3 +1,4 @@
+import enums.Actions;
 import exceptions.*;
 import lombok.Builder;
 import lombok.Data;
@@ -156,34 +157,6 @@ public class ATM {
         card.setMoneyAmount(card.getMoneyAmount() + cash.getSum());
         limit += cash.getSum();
         return card.getMoneyAmount();
-    }
-
-    public String selectAction(String action) {
-
-        try {
-            if (action == null) {
-                System.out.println("string cannot be null");
-                throw new WrongActionException("string cannot be null");
-            }
-        } catch (WrongActionException e) {
-            e.printStackTrace();
-        }
-
-        action.trim();
-
-        try {
-            if (action.equals("")) {
-                System.out.println("string cannot be empty");
-                throw new WrongActionException("string cannot be empty");
-            }
-        } catch (WrongActionException e) {
-            e.printStackTrace();
-        }
-
-        if (!action.equals("withdraw") && !action.equals("put")) {
-            return null;
-        }
-        return action;
     }
 }
 
