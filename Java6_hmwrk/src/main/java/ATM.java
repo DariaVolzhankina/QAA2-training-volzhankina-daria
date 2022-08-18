@@ -8,11 +8,13 @@ public class ATM {
     private String currency;
     private String bank;
     private int limit;
+    private Actions action;
 
-    public ATM(String bank, String currency, int limit) {
+    public ATM(String bank, String currency, int limit, Actions action) {
         this.currency = currency;
         this.bank = bank;
         this.limit = limit;
+        this.action = action;
     }
 
     public boolean checkBank(Card card) {
@@ -178,7 +180,7 @@ public class ATM {
             e.printStackTrace();
         }
 
-        if (!action.equals("withdraw") && !action.equals("put")){
+        if (!action.equals("withdraw") && !action.equals("put")) {
             return null;
         }
         return action;
