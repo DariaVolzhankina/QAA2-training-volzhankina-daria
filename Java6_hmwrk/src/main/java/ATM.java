@@ -1,3 +1,4 @@
+import exceptions.MoneyAmountException;
 import exceptions.WrongBankException;
 import exceptions.WrongCurrencyException;
 import exceptions.WrongPinCodeException;
@@ -68,28 +69,67 @@ public class ATM {
     }
 
     public Cash withdrawMoney(Card card, int sum) {
-        int limit = this.limit;
-        if (sum <= limit && sum <= card.getMoneyAmount()) {
-            card.setMoneyAmount(card.getMoneyAmount() - sum);
-            System.out.println(card.getMoneyAmount());
-            return new Cash(sum, this.currency);
-        } else if (sum > limit) {
-            System.out.println("the ATM gives out no more than " + limit + this.currency);
-        } else if (sum > card.getMoneyAmount()) {
-            System.out.println("there are not enough funds on your card");
+
+        try {
+            if (sum == 0) {
+                System.out.println("enter the amount of money");
+                throw new MoneyAmountException("no amount of money entered");
+            }
+        } catch (MoneyAmountException e) {
+            e.printStackTrace();
+            return new Cash(0, this.currency);
         }
-        return new Cash(0, this.currency);
+
+        try {
+            if (sum > limit) {
+                System.out.println("The ATM issues an amount up to " + limit);
+                throw new MoneyAmountException("ATM limit exceeded");
+            }
+        } catch (MoneyAmountException e) {
+            e.printStackTrace();
+            return new Cash(0, this.currency);
+        }
+
+        try {
+            if (sum > card.getMoneyAmount()) {
+                System.out.println(("not enough money on the card"));
+                throw new MoneyAmountException("not enough money on the card");
+            }
+        } catch (MoneyAmountException e) {
+            e.printStackTrace();
+            return new Cash(0, this.currency);
+        }
+
+        card.setMoneyAmount(card.getMoneyAmount() - sum);
+        limit -= sum;
+        return new Cash(sum, this.currency);
     }
 
 
-    public void putMoney(Card card, Cash cash) {
-        if (currency.equals(cash.getCurrency()) && card.getCurrency().equals(cash.getCurrency())) {
-            card.setMoneyAmount(card.getMoneyAmount() + cash.getSum());
-            limit += cash.getSum();
-            System.out.println(limit);
-        } else {
-            System.out.println("Put money in another currency");
+    public int putMoney(Card card, Cash cash) {
+        try {
+            if (cash.getSum() == 0) {
+                System.out.println("enter the amount of money");
+                throw new MoneyAmountException("no amount of money entered");
+            }
+        } catch (MoneyAmountException e) {
+            e.printStackTrace();
+            return card.getMoneyAmount();
         }
+
+        try {
+            if (!currency.equals(cash.getCurrency())) {
+                System.out.println("The ATM only issues " + currency);
+                throw new WrongCurrencyException("The ATM only issues " + currency);
+            }
+        } catch (WrongCurrencyException e) {
+            e.printStackTrace();
+            return card.getMoneyAmount();
+        }
+
+        card.setMoneyAmount(card.getMoneyAmount() + cash.getSum());
+        limit += cash.getSum();
+        return card.getMoneyAmount();
     }
 
     public String selectAction(String action) {
