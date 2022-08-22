@@ -30,44 +30,7 @@ public class ATM {
         return currency.equals(card.getCurrency());
     }
 
-    public boolean checkCard(Card card, String pin) {
-        boolean checkPinCode = checkPinCode(card, pin);
-        boolean checkCurrency = checkCurrency(card);
-
-        if (checkPinCode && checkCurrency) {
-            return true;
-        }
-
-        try {
-            if (!checkPinCode) {
-                System.out.println("invalid pin code");
-                throw new WrongPinCodeException("invalid pin code");
-            }
-        } catch (WrongPinCodeException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        try {
-            System.out.println("The objects.ATM only issues " + currency);
-            throw new WrongCurrencyException("The objects.ATM only issues " + currency);
-        } catch (WrongCurrencyException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public Cash withdrawMoney(Card card, int sum) {
-//
-//        try {
-//            if (sum == 0) {
-//                System.out.println("enter the amount of money");
-//                throw new MoneyAmountException("no amount of money entered");
-//            }
-//        } catch (MoneyAmountException e) {
-//            e.printStackTrace();
-//            return new Cash(0, this.currency);
-//        }
 
         try {
             if (sum > limit) {

@@ -1,4 +1,5 @@
 import exceptions.MoneyAmountException;
+import exceptions.WrongCurrencyException;
 import exceptions.WrongPinCodeException;
 import objects.ATM;
 import objects.Card;
@@ -46,9 +47,28 @@ public class Application {
                 e.printStackTrace();
             }
 
-            boolean checkCard = atm.checkCard(card, pin);
+            boolean checkPinCode = atm.checkPinCode(card, pin);
+            boolean checkCurrency = atm.checkCurrency(card);
 
-            if(checkCard){
+            try {
+                if (!checkPinCode) {
+                    System.out.println("invalid pin code");
+                    throw new WrongPinCodeException("invalid pin code");
+                }
+            } catch (WrongPinCodeException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (!checkCurrency) {
+                    System.out.println("The objects.ATM only issues " + atm.getCurrency());
+                    throw new WrongCurrencyException("The objects.ATM only issues " + atm.getCurrency());
+                }
+            } catch (WrongCurrencyException e) {
+                e.printStackTrace();
+            }
+
+            if(checkPinCode && checkCurrency){
                 System.out.println("Choose an action: 1 - withdraw money, 2 - put money");
                 int choise = s.nextInt();
                 if (choise == 1) {
