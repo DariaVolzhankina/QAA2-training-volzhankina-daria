@@ -31,30 +31,18 @@ public class ATM {
 
     public Cash withdrawMoney(Card card, int sum) {
 
-        try {
-            if (sum > limit) {
-                System.out.println("The objects.ATM issues an amount up to " + limit);
-                throw new MoneyAmountException("objects.ATM limit exceeded");
-            }
-        } catch (MoneyAmountException e) {
-            e.printStackTrace();
+        if (sum > limit) {
+            System.out.println("The objects.ATM issues an amount up to " + limit);
             return new Cash(0, this.currency);
-        }
-
-        try {
-            if (sum > card.getMoneyAmount()) {
-                System.out.println(("not enough money on the card"));
-                throw new MoneyAmountException("not enough money on the card");
-            }
-        } catch (MoneyAmountException e) {
-            e.printStackTrace();
+        } else if (sum > card.getMoneyAmount()) {
+            System.out.println(("not enough money on the card"));
             return new Cash(0, this.currency);
+        } else {
+            card.setMoneyAmount(card.getMoneyAmount() - sum);
+            limit -= sum;
+            System.out.println(card.getMoneyAmount());
+            return new Cash(sum, this.currency);
         }
-
-        card.setMoneyAmount(card.getMoneyAmount() - sum);
-        limit -= sum;
-        System.out.println(card.getMoneyAmount());
-        return new Cash(sum, this.currency);
     }
 
 
