@@ -104,18 +104,18 @@ public class Application {
                                     throw new MoneyAmountException("not enough money on the card");
                                 }
                             } catch (MoneyAmountException e) {
-                                System.out.println(("not enough money on the card"));
                                 e.printStackTrace();
+                                System.out.println(("not enough money on the card"));
                             }
 
                             try {
                                 if (sum > atm.getLimit()) {
                                     sum = 0;
-                                    System.out.println("The ATM issues an amount up to " + atm.getLimit());
                                     throw new MoneyAmountException("The ATM issues an amount up to" + atm.getLimit());
                                 }
                             } catch (MoneyAmountException e) {
                                 e.printStackTrace();
+                                System.out.println("The ATM issues an amount up to " + atm.getLimit());
                             }
 
                             atm.withdrawMoney(card, sum);
