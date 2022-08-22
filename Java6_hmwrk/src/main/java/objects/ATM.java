@@ -22,15 +22,15 @@ public class ATM {
         return bank.equals(card.getBank());
     }
 
-    public boolean checkPinCode(Card card, String pin) {
-        return card.getPinCode().equals(pin);
+    public boolean checkPinCode(Card card, int pin) {
+        return card.getPinCode() == pin;
     }
 
     public boolean checkCurrency(Card card) {
         return currency.equals(card.getCurrency());
     }
 
-    public boolean checkCard(Card card, String pin) {
+    public boolean checkCard(Card card, int pin) {
         boolean checkPinCode = checkPinCode(card, pin);
         boolean checkCurrency = checkCurrency(card);
 

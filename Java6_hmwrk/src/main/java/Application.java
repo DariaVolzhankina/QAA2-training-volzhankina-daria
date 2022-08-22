@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Application {
     public static void main(String[] args) {
         ATM atm = new ATM("Sber", "rub", 100000);
-        Card card = new Card("Sber", "1111222233334444", "1234", "rub", 10000);
+        Card card = new Card("Sber", "1111222233334444", 1234, "rub", 10000);
         Cash cash = new Cash(1000,"rub");
 
         boolean checkBank =  atm.checkBank(card);
@@ -17,34 +17,16 @@ public class Application {
         if(checkBank){
             Scanner s  = new Scanner(System.in);
             System.out.println("Enter pin code");
-            String pin = s.nextLine();
+            int pin = s.nextInt();
 
-            try {
-                if (pin == null) {
-                    System.out.println("pin code cannot be null");
-                    throw new WrongPinCodeException("pin code cannot be null");
-                }
-            } catch (WrongPinCodeException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                if (pin.equals("")) {
-                    System.out.println("pin code cannot be empty");
-                    throw new WrongPinCodeException("pin code cannot be empty");
-                }
-            } catch (WrongPinCodeException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                if (pin.contains(" ")) {
-                    System.out.println("pin code cannot contain a whitespace");
-                    throw new WrongPinCodeException("pin code cannot contain a whitespace");
-                }
-            } catch (WrongPinCodeException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                if (pin == null) {
+//                    System.out.println("pin code cannot be null");
+//                    throw new WrongPinCodeException("pin code cannot be null");
+//                }
+//            } catch (WrongPinCodeException e) {
+//                e.printStackTrace();
+//            }
 
             boolean checkCard = atm.checkCard(card, pin);
 
