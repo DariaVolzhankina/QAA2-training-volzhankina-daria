@@ -11,13 +11,11 @@ public class ATM {
     private String currency;
     private String bank;
     private int limit;
-    private Actions action;
 
-    public ATM(String bank, String currency, int limit, Actions action) {
+    public ATM(String bank, String currency, int limit) {
         this.currency = currency;
         this.bank = bank;
         this.limit = limit;
-        this.action = action;
     }
 
     public boolean checkBank(Card card) {
@@ -25,33 +23,6 @@ public class ATM {
     }
 
     public boolean checkPinCode(Card card, String pin) {
-        try {
-            if (pin == null) {
-                System.out.println("pin code cannot be null");
-                throw new WrongPinCodeException("invalid pin code");
-            }
-        } catch (WrongPinCodeException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if (pin.equals("")) {
-                System.out.println("pin code cannot be empty");
-                throw new WrongPinCodeException("invalid pin code");
-            }
-        } catch (WrongPinCodeException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if (pin.contains(" ")) {
-                System.out.println("pin code cannot contain a whitespace");
-                throw new WrongPinCodeException("invalid pin code");
-            }
-        } catch (WrongPinCodeException e) {
-            e.printStackTrace();
-        }
-
         return card.getPinCode().equals(pin);
     }
 
@@ -60,22 +31,11 @@ public class ATM {
     }
 
     public boolean checkCard(Card card, String pin) {
-        boolean checkBank = checkBank(card);
         boolean checkPinCode = checkPinCode(card, pin);
         boolean checkCurrency = checkCurrency(card);
 
-        if (checkBank && checkPinCode && checkCurrency) {
+        if (checkPinCode && checkCurrency) {
             return true;
-        }
-
-        try {
-            if (!checkBank) {
-                System.out.println("your card is not a " + bank + " bank card. Insert a " + bank + " bank card");
-                throw new WrongBankException("objects.ATM accepts only " + bank + " cards");
-            }
-        } catch (WrongBankException e) {
-            e.printStackTrace();
-            return false;
         }
 
         try {
@@ -131,6 +91,7 @@ public class ATM {
 
         card.setMoneyAmount(card.getMoneyAmount() - sum);
         limit -= sum;
+        System.out.println(card.getMoneyAmount());
         return new Cash(sum, this.currency);
     }
 
