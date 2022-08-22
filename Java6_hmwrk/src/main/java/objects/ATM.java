@@ -22,15 +22,15 @@ public class ATM {
         return bank.equals(card.getBank());
     }
 
-    public boolean checkPinCode(Card card, int pin) {
-        return card.getPinCode() == pin;
+    public boolean checkPinCode(Card card, String pin) {
+        return card.getPinCode().equals(pin);
     }
 
     public boolean checkCurrency(Card card) {
         return currency.equals(card.getCurrency());
     }
 
-    public boolean checkCard(Card card, int pin) {
+    public boolean checkCard(Card card, String pin) {
         boolean checkPinCode = checkPinCode(card, pin);
         boolean checkCurrency = checkCurrency(card);
 
@@ -58,16 +58,16 @@ public class ATM {
     }
 
     public Cash withdrawMoney(Card card, int sum) {
-
-        try {
-            if (sum == 0) {
-                System.out.println("enter the amount of money");
-                throw new MoneyAmountException("no amount of money entered");
-            }
-        } catch (MoneyAmountException e) {
-            e.printStackTrace();
-            return new Cash(0, this.currency);
-        }
+//
+//        try {
+//            if (sum == 0) {
+//                System.out.println("enter the amount of money");
+//                throw new MoneyAmountException("no amount of money entered");
+//            }
+//        } catch (MoneyAmountException e) {
+//            e.printStackTrace();
+//            return new Cash(0, this.currency);
+//        }
 
         try {
             if (sum > limit) {

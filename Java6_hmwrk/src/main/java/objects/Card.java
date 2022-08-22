@@ -8,9 +8,9 @@ public class Card {
     private String bank;
     private int moneyAmount;
     private String cardNumber;
-    private int pinCode;
+    private String pinCode;
 
-    public Card(String bank, String cardNumber, int pinCode, String currency, int moneyAmount) {
+    public Card(String bank, String cardNumber, String pinCode, String currency, int moneyAmount) {
         this.currency = currency;
         this.bank = bank;
         this.moneyAmount = moneyAmount;
