@@ -30,12 +30,9 @@ public class ATM {
     }
 
     public Cash withdrawMoney(Card card, int sum) {
-
         if (sum > limit) {
-            System.out.println("The objects.ATM issues an amount up to " + limit);
             return new Cash(0, this.currency);
         } else if (sum > card.getMoneyAmount()) {
-            System.out.println(("not enough money on the card"));
             return new Cash(0, this.currency);
         } else {
             card.setMoneyAmount(card.getMoneyAmount() - sum);
@@ -69,6 +66,7 @@ public class ATM {
 
         card.setMoneyAmount(card.getMoneyAmount() + cash.getSum());
         limit += cash.getSum();
+        System.out.println(card.getMoneyAmount());
         return card.getMoneyAmount();
     }
 }

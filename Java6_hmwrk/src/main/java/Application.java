@@ -1,4 +1,5 @@
 import exceptions.MoneyAmountException;
+import exceptions.WrongBankException;
 import exceptions.WrongCurrencyException;
 import exceptions.WrongPinCodeException;
 import objects.ATM;
@@ -13,65 +14,65 @@ public class Application {
         Card card = new Card("Sber", "1111222233334444", "1234", "rub", 10000);
         Cash cash = new Cash(1000, "rub");
 
-        while (true) {
-            boolean checkBank = atm.checkBank(card);
+        boolean continueApp = true;
+        boolean checkBank = atm.checkBank(card);
+        if (checkBank) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Enter pin code");
+            String pin = s.nextLine();
 
-            if (checkBank) {
-                Scanner s = new Scanner(System.in);
-                System.out.println("Enter pin code");
-                String pin = s.nextLine();
-
-                try {
-                    if (pin == null) {
-                        System.out.println("pin code cannot be null");
-                        throw new WrongPinCodeException("pin code cannot be null");
-                    }
-                } catch (WrongPinCodeException e) {
-                    e.printStackTrace();
+            try {
+                if (pin == null) {
+                    System.out.println("pin code cannot be null");
+                    throw new WrongPinCodeException("pin code cannot be null");
                 }
+            } catch (WrongPinCodeException e) {
+                e.printStackTrace();
+            }
 
-                try {
-                    if (pin.equals("")) {
-                        System.out.println("pin code cannot be empty");
-                        throw new WrongPinCodeException("pin code cannot be empty");
-                    }
-                } catch (WrongPinCodeException e) {
-                    e.printStackTrace();
+            try {
+                if (pin.equals("")) {
+                    System.out.println("pin code cannot be empty");
+                    throw new WrongPinCodeException("pin code cannot be empty");
                 }
+            } catch (WrongPinCodeException e) {
+                e.printStackTrace();
+            }
 
-                try {
-                    if (pin.contains(" ")) {
-                        System.out.println("pin code cannot contain a whitespace");
-                        throw new WrongPinCodeException("pin code contain a whitespace");
-                    }
-                } catch (WrongPinCodeException e) {
-                    e.printStackTrace();
+            try {
+                if (pin.contains(" ")) {
+                    System.out.println("pin code cannot contain a whitespace");
+                    throw new WrongPinCodeException("pin code contain a whitespace");
                 }
+            } catch (WrongPinCodeException e) {
+                e.printStackTrace();
+            }
 
-                boolean checkPinCode = atm.checkPinCode(card, pin);
+            boolean checkPinCode = atm.checkPinCode(card, pin);
 
-                try {
-                    if (!checkPinCode) {
-                        System.out.println("invalid pin code");
-                        throw new WrongPinCodeException("invalid pin code");
-                    }
-                } catch (WrongPinCodeException e) {
-                    e.printStackTrace();
+            try {
+                if (!checkPinCode) {
+                    System.out.println("invalid pin code");
+                    throw new WrongPinCodeException("invalid pin code");
                 }
+            } catch (WrongPinCodeException e) {
+                e.printStackTrace();
+            }
 
-                boolean checkCurrency = atm.checkCurrency(card);
+            boolean checkCurrency = atm.checkCurrency(card);
 
-                try {
-                    if (!checkCurrency) {
-                        System.out.println("The objects.ATM only issues " + atm.getCurrency());
-                        throw new WrongCurrencyException("The objects.ATM only issues " + atm.getCurrency());
-                    }
-                } catch (WrongCurrencyException e) {
-                    e.printStackTrace();
+            try {
+                if (!checkCurrency) {
+                    System.out.println("The objects.ATM only issues " + atm.getCurrency());
+                    throw new WrongCurrencyException("The objects.ATM only issues " + atm.getCurrency());
                 }
+            } catch (WrongCurrencyException e) {
+                e.printStackTrace();
+            }
 
+            while (continueApp) {
                 if (checkPinCode && checkCurrency) {
-                    System.out.println("Choose an action: 1 - withdraw money, 2 - put money");
+                    System.out.println("Choose an action: 1 - withdraw money, 2 - put money, 3 - exit");
                     int choise = s.nextInt();
 
                     switch (choise) {
@@ -97,17 +98,45 @@ public class Application {
                                 e.printStackTrace();
                             }
 
+                            try {
+                                if (sum > card.getMoneyAmount()) {
+                                    sum = 0;
+                                    throw new MoneyAmountException("not enough money on the card");
+                                }
+                            } catch (MoneyAmountException e) {
+                                System.out.println(("not enough money on the card"));
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                if (sum > atm.getLimit()) {
+                                    sum = 0;
+                                    System.out.println("The ATM issues an amount up to " + atm.getLimit());
+                                    throw new MoneyAmountException("The ATM issues an amount up to" + atm.getLimit());
+                                }
+                            } catch (MoneyAmountException e) {
+                                e.printStackTrace();
+                            }
+
                             atm.withdrawMoney(card, sum);
                             break;
                         case 2:
                             atm.putMoney(card, cash);
                             break;
+                        case 3:
+                            continueApp = false;
+                            break;
                         default:
                             System.out.println("You entered the wrong number");
                     }
                 }
-            } else {
+            }
+        } else {
+            try {
                 System.out.println("Insert a " + atm.getBank() + " bank card");
+                throw new WrongBankException("Insert a " + atm.getBank() + " bank card");
+            } catch (WrongBankException e) {
+                e.printStackTrace();
             }
         }
     }
