@@ -69,11 +69,12 @@ public class Application {
 
                 try {
                     if (!checkCurrency) {
-                        System.out.println("The objects.ATM only issues " + atm.getCurrency());
+                        System.out.println("The objects.ATM only issues " + atm.getCurrency()+ ". insert another card into the ATM");
                         throw new WrongCurrencyException("The objects.ATM only issues " + atm.getCurrency());
                     }
                 } catch (WrongCurrencyException e) {
                     e.printStackTrace();
+                    break;
                 }
 
                 while (continueApp2) {
