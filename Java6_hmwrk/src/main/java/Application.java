@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Application {
     public static void main(String[] args) {
         ATM atm = new ATM("Sber", "rub", 100000);
-        Card card = new CreditCard("Sber", "1111222233334444", "1234", "rub", 10000,10000);
+        Card card = new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000);
         Cash cash = new Cash(1000, "ru");
 
         boolean continueApp1 = true;
