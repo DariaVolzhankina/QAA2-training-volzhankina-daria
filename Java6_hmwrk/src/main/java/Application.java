@@ -168,7 +168,7 @@ public class Application {
             } else {
                 try {
                     System.out.println("Insert a " + atm.getBank() + " bank card");
-                    throw new WrongBankException("Insert a " + atm.getBank() + " bank card");
+                    throw new WrongBankException("Insert insert another card into the ATM");
                 } catch (WrongBankException e) {
                     e.printStackTrace();
                     continueApp1 = false;

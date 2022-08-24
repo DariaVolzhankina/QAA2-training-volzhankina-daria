@@ -1,5 +1,6 @@
 package objects;
 
+import exceptions.WrongBankException;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,15 +17,39 @@ public class ATM {
         this.limit = limit;
     }
 
-    public boolean checkBank(Card card) {
+    public boolean checkBank(Card card) throws WrongBankException {
+        if (bank == null || card.getBank() == null){
+            return false;
+        }
+
+        if(bank.trim().equals("") || card.getBank().trim().equals("")){
+            return false;
+        }
+
         return bank.equals(card.getBank());
     }
 
     public boolean checkPinCode(Card card, String pin) {
-        return card.getPinCode().equals(pin);
+        if (pin == null || card.getPinCode() == null){
+            return false;
+        }
+
+        if(pin.trim().equals("") || card.getPinCode().trim().equals("")){
+            return false;
+        }
+
+        return card.getPinCode().equals(pin.trim());
     }
 
     public boolean checkCurrency(Card card) {
+        if (currency == null || card.getCurrency() == null){
+            return false;
+        }
+
+        if(currency.trim().equals("") || card.getCurrency().trim().equals("")){
+            return false;
+        }
+
         return currency.equals(card.getCurrency());
     }
 
