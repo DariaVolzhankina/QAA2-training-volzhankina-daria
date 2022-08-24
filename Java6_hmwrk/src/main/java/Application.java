@@ -72,7 +72,8 @@ public class Application {
                     }
                 } catch (WrongCurrencyException e) {
                     e.printStackTrace();
-                    break;
+                    continueApp1 = false;
+                    continueApp2 = false;
                 }
 
                 while (continueApp2) {
