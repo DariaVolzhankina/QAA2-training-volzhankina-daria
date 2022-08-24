@@ -2,16 +2,14 @@ import exceptions.MoneyAmountException;
 import exceptions.WrongBankException;
 import exceptions.WrongCurrencyException;
 import exceptions.WrongPinCodeException;
-import objects.ATM;
-import objects.Cash;
-import objects.DebitCard;
+import objects.*;
 
 import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
         ATM atm = new ATM("Sber", "rub", 100000);
-        DebitCard card = new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000);
+        Card card = new CreditCard("Sber", "1111222233334444", "1234", "rub", 10000,10000);
         Cash cash = new Cash(1000, "ru");
 
         boolean continueApp1 = true;
@@ -105,7 +103,7 @@ public class Application {
                             }
 
                             try {
-                                if (sum > card.getMoneyAmount()) {
+                                if (sum > (card.getMoneyAmount() + card.getCreditLimit())) {
                                     sum = 0;
                                     throw new MoneyAmountException("not enough money on the card");
                                 }
@@ -123,14 +121,22 @@ public class Application {
                                 e.printStackTrace();
                                 System.out.println("The ATM issues an amount up to " + atm.getLimit());
                             }
-
-                            atm.withdrawMoney(card, sum);
+                            card.withdrawMoney(atm, sum);
                             break;
                         case 2:
                             try {
                                 if (cash.getSum() == 0) {
                                     System.out.println("enter the amount of money");
                                     throw new MoneyAmountException("no amount of money entered");
+                                }
+                            } catch (MoneyAmountException e) {
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                if (cash.getSum() < 0) {
+                                    System.out.println("the amount cannot be less than zero");
+                                    throw new MoneyAmountException("the amount cannot be less than zero");
                                 }
                             } catch (MoneyAmountException e) {
                                 e.printStackTrace();
@@ -145,7 +151,7 @@ public class Application {
                                 e.printStackTrace();
                             }
 
-                            atm.putMoney(card, cash);
+                            card.putMoney(atm, cash);
                             break;
                         case 3:
                             continueApp1 = false;

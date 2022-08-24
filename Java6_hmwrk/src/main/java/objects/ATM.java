@@ -48,7 +48,7 @@ public class ATM {
         } else if (sum > (card.getMoneyAmount() + card.getCreditLimit())) {
             return new Cash(0, this.currency);
         } else {
-            card.setMoneyAmount(card.getMoneyAmount() - sum);
+            card.setMoneyAmount(card.getMoneyAmount() + card.getCreditLimit() - sum);
             limit -= sum;
             System.out.println(card.getMoneyAmount());
             return new Cash(sum, this.currency);
