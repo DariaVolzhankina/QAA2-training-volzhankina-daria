@@ -1,6 +1,5 @@
 package objects;
 
-import exceptions.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -32,54 +31,55 @@ public class ATM {
     public Cash withdrawMoney(DebitCard card, int sum) {
         if (sum > limit) {
             return new Cash(0, this.currency);
-        } else if (sum > card.getMoneyAmount()) {
-            return new Cash(0, this.currency);
-        } else {
-            card.setMoneyAmount(card.getMoneyAmount() - sum);
-            limit -= sum;
-            System.out.println(card.getMoneyAmount());
-            return new Cash(sum, this.currency);
         }
+        if (sum > card.getMoneyAmount()) {
+            return new Cash(0, this.currency);
+        }
+
+        if(sum < 0){
+            return new Cash(0, this.currency);
+        }
+
+        card.setMoneyAmount(card.getMoneyAmount() - sum);
+        limit -= sum;
+        return new Cash(sum, this.currency);
     }
 
     public Cash withdrawMoney(CreditCard card, int sum) {
         if (sum > limit) {
             return new Cash(0, this.currency);
-        } else if (sum > (card.getMoneyAmount() + card.getCreditLimit())) {
-            return new Cash(0, this.currency);
-        } else {
-            card.setMoneyAmount(card.getMoneyAmount() + card.getCreditLimit() - sum);
-            limit -= sum;
-            System.out.println(card.getMoneyAmount());
-            return new Cash(sum, this.currency);
         }
+
+        if (sum > (card.getMoneyAmount() + card.getCreditLimit())) {
+            return new Cash(0, this.currency);
+        }
+
+        if(sum < 0){
+            return new Cash(0, this.currency);
+        }
+
+        card.setCreditLimit(card.getMoneyAmount() + card.getCreditLimit() - sum);
+        card.setMoneyAmount(0);
+        limit -= sum;
+        return new Cash(sum, this.currency);
     }
 
 
     public int putMoney(Card card, Cash cash) {
-        try {
-            if (cash.getSum() == 0) {
-                System.out.println("enter the amount of money");
-                throw new MoneyAmountException("no amount of money entered");
-            }
-        } catch (MoneyAmountException e) {
-            e.printStackTrace();
+        if (cash.getSum() == 0) {
             return card.getMoneyAmount();
         }
 
-        try {
-            if (!currency.equals(cash.getCurrency())) {
-                System.out.println("The objects.ATM only issues " + currency);
-                throw new WrongCurrencyException("The objects.ATM only issues " + currency);
-            }
-        } catch (WrongCurrencyException e) {
-            e.printStackTrace();
+        if (!currency.equals(cash.getCurrency())) {
+            return card.getMoneyAmount();
+        }
+
+        if (cash.getSum() < 0) {
             return card.getMoneyAmount();
         }
 
         card.setMoneyAmount(card.getMoneyAmount() + cash.getSum());
         limit += cash.getSum();
-        System.out.println(card.getMoneyAmount());
         return card.getMoneyAmount();
     }
 }

@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Application {
     public static void main(String[] args) {
         ATM atm = new ATM("Sber", "rub", 100000);
-        DebitCard card = new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000);
+        CreditCard card = new CreditCard("Sber", "1111222233334444", "1234", "rub", 10000,10000);
         Cash cash = new Cash(1000, "ru");
 
         boolean continueApp1 = true;
@@ -121,37 +121,40 @@ public class Application {
                                 e.printStackTrace();
                                 System.out.println("The ATM issues an amount up to " + atm.getLimit());
                             }
+
                             atm.withdrawMoney(card, sum);
+                            System.out.println(card.getMoneyAmount() + card.getCreditLimit());
                             break;
                         case 2:
                             try {
                                 if (cash.getSum() == 0) {
-                                    System.out.println("enter the amount of money");
                                     throw new MoneyAmountException("no amount of money entered");
                                 }
                             } catch (MoneyAmountException e) {
                                 e.printStackTrace();
+                                System.out.println("no amount of money entered");
                             }
 
                             try {
                                 if (cash.getSum() < 0) {
-                                    System.out.println("the amount cannot be less than zero");
                                     throw new MoneyAmountException("the amount cannot be less than zero");
                                 }
                             } catch (MoneyAmountException e) {
                                 e.printStackTrace();
+                                System.out.println("the amount cannot be less than zero");
                             }
 
                             try {
                                 if (!atm.getCurrency().equals(cash.getCurrency())) {
-                                    System.out.println("The objects.ATM only issues " + atm.getCurrency());
                                     throw new WrongCurrencyException("The objects.ATM only issues " + atm.getCurrency());
                                 }
                             } catch (WrongCurrencyException e) {
                                 e.printStackTrace();
+                                System.out.println("The objects.ATM only issues " + atm.getCurrency());
                             }
 
                             atm.putMoney(card, cash);
+                            System.out.println(card.getMoneyAmount());
                             break;
                         case 3:
                             continueApp1 = false;
