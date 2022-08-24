@@ -1,16 +1,16 @@
 package objects;
 
 public class CreditCard extends Card {
-    private int creditLimit2;
+    private int creditLimit;
 
     @Override
     public int getCreditLimit() {
-        return creditLimit2;
+        return creditLimit;
     }
 
     public CreditCard(String bank, String cardNumber, String pinCode, String currency, int moneyAmount, int creditLimit) {
         super(bank, cardNumber, pinCode, currency, moneyAmount);
-        this.creditLimit2 = creditLimit;
+        this.creditLimit = creditLimit;
     }
 
     @Override
