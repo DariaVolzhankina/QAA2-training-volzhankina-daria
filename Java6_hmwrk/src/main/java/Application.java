@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Application {
     public static void main(String[] args) {
         ATM atm = new ATM("Sber", "rub", 100000);
-        Card card = new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000);
+        DebitCard card = new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000);
         Cash cash = new Cash(1000, "ru");
 
         boolean continueApp1 = true;
@@ -121,7 +121,7 @@ public class Application {
                                 e.printStackTrace();
                                 System.out.println("The ATM issues an amount up to " + atm.getLimit());
                             }
-                            card.withdrawMoney(atm, sum);
+                            atm.withdrawMoney(card, sum);
                             break;
                         case 2:
                             try {
@@ -151,7 +151,7 @@ public class Application {
                                 e.printStackTrace();
                             }
 
-                            card.putMoney(atm, cash);
+                            atm.putMoney(card, cash);
                             break;
                         case 3:
                             continueApp1 = false;

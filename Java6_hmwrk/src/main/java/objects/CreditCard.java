@@ -12,18 +12,4 @@ public class CreditCard extends Card {
         super(bank, cardNumber, pinCode, currency, moneyAmount);
         this.creditLimit = creditLimit;
     }
-
-    @Override
-    public Cash withdrawMoney(ATM atm, int sum) {
-        if (sum > atm.getLimit()) {
-            return new Cash(0, this.getCurrency());
-        } else if (sum > (this.getMoneyAmount() + this.getCreditLimit())) {
-            return new Cash(0, this.getCurrency());
-        } else {
-            this.setMoneyAmount(this.getMoneyAmount() + this.getCreditLimit() - sum);
-            atm.setLimit(atm.getLimit() - sum);
-            System.out.println(this.getMoneyAmount());
-            return new Cash(sum, this.getCurrency());
-        }
-    }
 }
