@@ -29,10 +29,23 @@ public class ATM {
         return currency.equals(card.getCurrency());
     }
 
-    public Cash withdrawMoney(Card card, int sum) {
+    public Cash withdrawMoney(DebitCard card, int sum) {
         if (sum > limit) {
             return new Cash(0, this.currency);
         } else if (sum > card.getMoneyAmount()) {
+            return new Cash(0, this.currency);
+        } else {
+            card.setMoneyAmount(card.getMoneyAmount() - sum);
+            limit -= sum;
+            System.out.println(card.getMoneyAmount());
+            return new Cash(sum, this.currency);
+        }
+    }
+
+    public Cash withdrawMoney(CreditCard card, int sum) {
+        if (sum > limit) {
+            return new Cash(0, this.currency);
+        } else if (sum > (card.getMoneyAmount() + card.getCreditLimit())) {
             return new Cash(0, this.currency);
         } else {
             card.setMoneyAmount(card.getMoneyAmount() - sum);

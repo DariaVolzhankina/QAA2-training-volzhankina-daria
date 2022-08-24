@@ -3,7 +3,7 @@ package objects;
 import lombok.Data;
 
 @Data
-public class Card {
+public abstract class Card {
     private String currency;
     private String bank;
     private int moneyAmount;

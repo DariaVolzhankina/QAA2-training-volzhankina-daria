@@ -3,16 +3,16 @@ import exceptions.WrongBankException;
 import exceptions.WrongCurrencyException;
 import exceptions.WrongPinCodeException;
 import objects.ATM;
-import objects.Card;
 import objects.Cash;
+import objects.DebitCard;
 
 import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
         ATM atm = new ATM("Sber", "rub", 100000);
-        Card card = new Card("Sber", "1111222233334444", "1234", "rub", 10000);
-        Cash cash = new Cash(1000, "rub");
+        DebitCard card = new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000);
+        Cash cash = new Cash(1000, "ru");
 
         boolean continueApp1 = true;
         boolean continueApp2 = true;
@@ -58,7 +58,7 @@ public class Application {
                         continueApp2 = false;
                         System.out.println("invalid pin code");
                         throw new WrongPinCodeException("invalid pin code");
-                    }else {
+                    } else {
                         continueApp2 = true;
                     }
                 } catch (WrongPinCodeException e) {
@@ -69,7 +69,7 @@ public class Application {
 
                 try {
                     if (!checkCurrency) {
-                        System.out.println("The objects.ATM only issues " + atm.getCurrency()+ ". insert another card into the ATM");
+                        System.out.println("The objects.ATM only issues " + atm.getCurrency() + ". insert another card into the ATM");
                         throw new WrongCurrencyException("The objects.ATM only issues " + atm.getCurrency());
                     }
                 } catch (WrongCurrencyException e) {
@@ -78,65 +78,81 @@ public class Application {
                 }
 
                 while (continueApp2) {
-                    if (checkPinCode && checkCurrency) {
-                        System.out.println("Choose an action: 1 - withdraw money, 2 - put money, 3 - exit");
-                        int choise = s.nextInt();
+                    System.out.println("Choose an action: 1 - withdraw money, 2 - put money, 3 - exit");
+                    int choise = s.nextInt();
 
-                        switch (choise) {
-                            case 1:
-                                System.out.println("The amount of money you want to withdraw");
-                                int sum = s.nextInt();
-                                try {
-                                    if (sum == 0) {
-                                        System.out.println("enter the amount of money");
-                                        throw new MoneyAmountException("no amount of money entered");
-                                    }
-                                } catch (MoneyAmountException e) {
-                                    e.printStackTrace();
+                    switch (choise) {
+                        case 1:
+                            System.out.println("The amount of money you want to withdraw");
+                            int sum = s.nextInt();
+                            try {
+                                if (sum == 0) {
+                                    System.out.println("enter the amount of money");
+                                    throw new MoneyAmountException("no amount of money entered");
                                 }
+                            } catch (MoneyAmountException e) {
+                                e.printStackTrace();
+                            }
 
-                                try {
-                                    if (sum < 0) {
-                                        System.out.println("the amount of money cannot be a negative value");
-                                        sum = 0;
-                                        throw new MoneyAmountException("the amount of money cannot be a negative value");
-                                    }
-                                } catch (MoneyAmountException e) {
-                                    e.printStackTrace();
+                            try {
+                                if (sum < 0) {
+                                    System.out.println("the amount of money cannot be a negative value");
+                                    sum = 0;
+                                    throw new MoneyAmountException("the amount of money cannot be a negative value");
                                 }
+                            } catch (MoneyAmountException e) {
+                                e.printStackTrace();
+                            }
 
-                                try {
-                                    if (sum > card.getMoneyAmount()) {
-                                        sum = 0;
-                                        throw new MoneyAmountException("not enough money on the card");
-                                    }
-                                } catch (MoneyAmountException e) {
-                                    e.printStackTrace();
-                                    System.out.println(("not enough money on the card"));
+                            try {
+                                if (sum > card.getMoneyAmount()) {
+                                    sum = 0;
+                                    throw new MoneyAmountException("not enough money on the card");
                                 }
+                            } catch (MoneyAmountException e) {
+                                e.printStackTrace();
+                                System.out.println(("not enough money on the card"));
+                            }
 
-                                try {
-                                    if (sum > atm.getLimit()) {
-                                        sum = 0;
-                                        throw new MoneyAmountException("The ATM issues an amount up to" + atm.getLimit());
-                                    }
-                                } catch (MoneyAmountException e) {
-                                    e.printStackTrace();
-                                    System.out.println("The ATM issues an amount up to " + atm.getLimit());
+                            try {
+                                if (sum > atm.getLimit()) {
+                                    sum = 0;
+                                    throw new MoneyAmountException("The ATM issues an amount up to" + atm.getLimit());
                                 }
+                            } catch (MoneyAmountException e) {
+                                e.printStackTrace();
+                                System.out.println("The ATM issues an amount up to " + atm.getLimit());
+                            }
 
-                                atm.withdrawMoney(card, sum);
-                                break;
-                            case 2:
-                                atm.putMoney(card, cash);
-                                break;
-                            case 3:
-                                continueApp1 = false;
-                                continueApp2 = false;
-                                break;
-                            default:
-                                System.out.println("You entered the wrong number");
-                        }
+                            atm.withdrawMoney(card, sum);
+                            break;
+                        case 2:
+                            try {
+                                if (cash.getSum() == 0) {
+                                    System.out.println("enter the amount of money");
+                                    throw new MoneyAmountException("no amount of money entered");
+                                }
+                            } catch (MoneyAmountException e) {
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                if (!atm.getCurrency().equals(cash.getCurrency())) {
+                                    System.out.println("The objects.ATM only issues " + atm.getCurrency());
+                                    throw new WrongCurrencyException("The objects.ATM only issues " + atm.getCurrency());
+                                }
+                            } catch (WrongCurrencyException e) {
+                                e.printStackTrace();
+                            }
+
+                            atm.putMoney(card, cash);
+                            break;
+                        case 3:
+                            continueApp1 = false;
+                            continueApp2 = false;
+                            break;
+                        default:
+                            System.out.println("You entered the wrong number");
                     }
                 }
             } else {
