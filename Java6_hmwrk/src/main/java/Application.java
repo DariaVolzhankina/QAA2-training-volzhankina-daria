@@ -10,7 +10,7 @@ public class Application {
     public static void main(String[] args) {
         ATM atm = new ATM("Sber", "rub", 100000);
         CreditCard card = new CreditCard("Sber", "1111222233334444", "1234", "rub", 10000,10000);
-        Cash cash = new Cash(1000, "ru");
+        Cash cash = new Cash(1000, "rub");
 
         boolean continueApp1 = true;
         boolean continueApp2 = true;
