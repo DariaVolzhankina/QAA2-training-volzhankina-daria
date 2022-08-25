@@ -67,7 +67,11 @@ public class ATM {
         return currency.equals(card.getCurrency());
     }
 
-    public Cash withdrawMoney(DebitCard card, int sum) throws MoneyAmountException {
+    public Cash withdrawMoney(DebitCard card, int sum) throws MoneyAmountException, WrongCurrencyException{
+
+        if (!this.getCurrency().equals(card.getCurrency())) {
+            throw new WrongCurrencyException("The ATM issues another currency");
+        }
 
         if (sum > limit) {
             throw new MoneyAmountException("The ATM issues an amount up to" + this.getLimit());
@@ -90,7 +94,11 @@ public class ATM {
         return new Cash(sum, this.currency);
     }
 
-    public Cash withdrawMoney(CreditCard card, int sum) throws MoneyAmountException{
+    public Cash withdrawMoney(CreditCard card, int sum) throws MoneyAmountException, WrongCurrencyException{
+        if (!this.getCurrency().equals(card.getCurrency())) {
+            throw new WrongCurrencyException("The ATM issues another currency");
+        }
+
         if (sum > limit) {
             throw new MoneyAmountException("The ATM issues an amount up to" + this.getLimit());
         }
