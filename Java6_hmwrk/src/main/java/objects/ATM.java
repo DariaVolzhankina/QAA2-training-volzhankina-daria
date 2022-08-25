@@ -1,6 +1,9 @@
 package objects;
 
+import exceptions.MoneyAmountException;
 import exceptions.WrongBankException;
+import exceptions.WrongCurrencyException;
+import exceptions.WrongPinCodeException;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,51 +21,68 @@ public class ATM {
     }
 
     public boolean checkBank(Card card) throws WrongBankException {
-        if (bank == null || card.getBank() == null){
-            return false;
+        if (bank == null || card.getBank() == null) {
+            throw new WrongBankException("Bank value cannot be null");
         }
 
-        if(bank.trim().equals("") || card.getBank().trim().equals("")){
-            return false;
+        if (bank.trim().equals("") || card.getBank().trim().equals("")) {
+            throw new WrongBankException("Bank value cannot be empty");
         }
 
+        if (!bank.equals(card.getBank())) {
+            throw new WrongBankException("Card of another bank");
+        }
         return bank.equals(card.getBank());
     }
 
     public boolean checkPinCode(Card card, String pin) {
-        if (pin == null || card.getPinCode() == null){
-            return false;
+        if (pin == null || card.getPinCode() == null) {
+            throw new WrongPinCodeException("pin code cannot be null");
         }
 
-        if(pin.trim().equals("") || card.getPinCode().trim().equals("")){
-            return false;
+        if (pin.trim().equals("") || card.getPinCode().trim().equals("")) {
+            throw new WrongPinCodeException("pin code cannot be empty");
+        }
+
+        if (!card.getPinCode().equals(pin.trim())) {
+            throw new WrongPinCodeException("invalid pin code");
         }
 
         return card.getPinCode().equals(pin.trim());
     }
 
-    public boolean checkCurrency(Card card) {
-        if (currency == null || card.getCurrency() == null){
-            return false;
+    public boolean checkCurrency(Card card) throws WrongCurrencyException {
+        if (currency == null || card.getCurrency() == null) {
+            throw new WrongCurrencyException("Currency cannot be null");
         }
 
-        if(currency.trim().equals("") || card.getCurrency().trim().equals("")){
-            return false;
+        if (currency.trim().equals("") || card.getCurrency().trim().equals("")) {
+            throw new WrongCurrencyException("Currency cannot be empty");
+        }
+
+        if (!currency.equals(card.getCurrency())) {
+            throw new WrongCurrencyException("The ATM issues another currency");
         }
 
         return currency.equals(card.getCurrency());
     }
 
-    public Cash withdrawMoney(DebitCard card, int sum) {
+    public Cash withdrawMoney(DebitCard card, int sum) throws MoneyAmountException {
+
         if (sum > limit) {
-            return new Cash(0, this.currency);
-        }
-        if (sum > card.getMoneyAmount()) {
-            return new Cash(0, this.currency);
+            throw new MoneyAmountException("The ATM issues an amount up to" + this.getLimit());
         }
 
-        if(sum < 0){
-            return new Cash(0, this.currency);
+        if (sum > card.getMoneyAmount()) {
+            throw new MoneyAmountException("not enough money on the card");
+        }
+
+        if (sum < 0) {
+            throw new MoneyAmountException("the amount cannot be less than zero");
+        }
+
+        if(sum == 0){
+            throw new MoneyAmountException("the sum cannot be zero");
         }
 
         card.setMoneyAmount(card.getMoneyAmount() - sum);
@@ -70,17 +90,21 @@ public class ATM {
         return new Cash(sum, this.currency);
     }
 
-    public Cash withdrawMoney(CreditCard card, int sum) {
+    public Cash withdrawMoney(CreditCard card, int sum) throws MoneyAmountException{
         if (sum > limit) {
-            return new Cash(0, this.currency);
+            throw new MoneyAmountException("The ATM issues an amount up to" + this.getLimit());
         }
 
         if (sum > (card.getMoneyAmount() + card.getCreditLimit())) {
-            return new Cash(0, this.currency);
+            throw new MoneyAmountException("not enough money on the card");
         }
 
-        if(sum < 0){
-            return new Cash(0, this.currency);
+        if (sum < 0) {
+            throw new MoneyAmountException("the amount cannot be less than zero");
+        }
+
+        if(sum == 0){
+            throw new MoneyAmountException("the sum cannot be zero");
         }
 
         card.setCreditLimit(card.getMoneyAmount() + card.getCreditLimit() - sum);
@@ -90,17 +114,17 @@ public class ATM {
     }
 
 
-    public int putMoney(Card card, Cash cash) {
+    public int putMoney(Card card, Cash cash) throws MoneyAmountException{
         if (cash.getSum() == 0) {
-            return card.getMoneyAmount();
-        }
-
-        if (!currency.equals(cash.getCurrency())) {
-            return card.getMoneyAmount();
+            throw new MoneyAmountException("the sum cannot be zero");
         }
 
         if (cash.getSum() < 0) {
-            return card.getMoneyAmount();
+            throw new MoneyAmountException("the amount cannot be less than zero");
+        }
+
+        if (!currency.equals(cash.getCurrency())) {
+            throw new MoneyAmountException("The objects.ATM only issues " + this.getCurrency());
         }
 
         card.setMoneyAmount(card.getMoneyAmount() + cash.getSum());

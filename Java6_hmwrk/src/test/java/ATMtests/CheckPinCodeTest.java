@@ -1,7 +1,7 @@
 package ATMtests;
 
+import exceptions.WrongPinCodeException;
 import objects.ATM;
-import objects.CreditCard;
 import objects.DebitCard;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -19,12 +19,12 @@ public class CheckPinCodeTest {
     @DataProvider
     public Object[][] checkPinCodeNegativeData() {
         return new Object[][]{
-                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", "1235", "rub", 10000), "1234", false},
-                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", " 1234", "rub", 10000), "1234", false},
-                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000), "qwer", false},
-                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", "", "rub", 10000), "", false},
-                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", " ", "rub", 10000), " ", false},
-                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", " ", "rub", 10000), null, false},
+                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", "1235", "rub", 10000), "1234"},
+                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", " 1234", "rub", 10000), "1234"},
+                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000), "qwer"},
+                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", "", "rub", 10000), ""},
+                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", " ", "rub", 10000), " "},
+                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", " ", "rub", 10000), null},
         };
     }
 
@@ -33,8 +33,8 @@ public class CheckPinCodeTest {
         Assert.assertEquals(atm.checkPinCode(card,pin), expected);
     }
 
-    @Test(dataProvider = "checkPinCodeNegativeData", description = "Неподходящий пин-код")
-    public void testPinCodeNegative(ATM atm, DebitCard card, String pin, boolean expected) {
-        Assert.assertEquals(atm.checkPinCode(card,pin), expected);
+    @Test(dataProvider = "checkPinCodeNegativeData",expectedExceptions = WrongPinCodeException.class)
+    public void testCheckPinCodeException(ATM atm, DebitCard card, String pin) throws WrongPinCodeException{
+        atm.checkPinCode(card,pin);
     }
 }
