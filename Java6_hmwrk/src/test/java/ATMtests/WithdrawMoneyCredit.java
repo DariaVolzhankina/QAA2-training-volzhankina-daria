@@ -5,7 +5,6 @@ import exceptions.WrongCurrencyException;
 import objects.ATM;
 import objects.Cash;
 import objects.CreditCard;
-import objects.DebitCard;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

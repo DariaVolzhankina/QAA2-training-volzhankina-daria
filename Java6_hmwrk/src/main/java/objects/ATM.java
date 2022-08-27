@@ -132,7 +132,7 @@ public class ATM {
         }else if(currency.trim().equals("") || cash.getCurrency().trim().equals("")){
             throw new WrongCurrencyException("Currency cannot be empty");
         } else if (!currency.equals(cash.getCurrency())) {
-            throw new MoneyAmountException("The objects.ATM only issues " + this.getCurrency());
+            throw new WrongCurrencyException("The objects.ATM only issues " + this.getCurrency());
         } else {
             card.setMoneyAmount(card.getMoneyAmount() + cash.getSum());
             limit += cash.getSum();
