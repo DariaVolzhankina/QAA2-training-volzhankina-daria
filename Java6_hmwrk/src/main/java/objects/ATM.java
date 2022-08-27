@@ -96,9 +96,7 @@ public class ATM {
 
         if (sum > limit) {
             throw new MoneyAmountException("The ATM issues an amount up to" + this.getLimit());
-        } else if (sum > (card.getMoneyAmount() + card.getCreditLimit())) {
-            throw new MoneyAmountException("not enough money on the card");
-        } else if (sum < 0 || this.getLimit() < 0 || card.getMoneyAmount() < 0) {
+        }  else if (sum < 0 || this.getLimit() < 0 || card.getMoneyAmount() < 0 || card.getCreditLimit() < 0) {
             throw new MoneyAmountException("the amount cannot be less than zero");
         } else if (sum == 0) {
             throw new MoneyAmountException("the sum cannot be zero");
@@ -106,9 +104,15 @@ public class ATM {
             throw new MoneyAmountException("ATM have no money");
         } else if (card.getMoneyAmount() + card.getCreditLimit() == 0) {
             throw new MoneyAmountException("You have no money");
+        } else if (sum > (card.getMoneyAmount() + card.getCreditLimit())) {
+            throw new MoneyAmountException("not enough money on the card");
         } else {
-            card.setCreditLimit(card.getMoneyAmount() + card.getCreditLimit() - sum);
-            card.setMoneyAmount(0);
+            if (sum > card.getMoneyAmount()) {
+                card.setCreditLimit(card.getMoneyAmount() + card.getCreditLimit() - sum);
+                card.setMoneyAmount(0);
+            }else{
+                card.setMoneyAmount(card.getMoneyAmount() - sum);
+            }
             limit -= sum;
             return new Cash(sum, this.currency);
         }
@@ -125,6 +129,8 @@ public class ATM {
             throw new MoneyAmountException("the sum cannot be zero");
         } else if (cash.getSum() < 0) {
             throw new MoneyAmountException("the amount cannot be less than zero");
+        }else if(currency.trim().equals("") || cash.getCurrency().trim().equals("")){
+            throw new WrongCurrencyException("Currency cannot be empty");
         } else if (!currency.equals(cash.getCurrency())) {
             throw new MoneyAmountException("The objects.ATM only issues " + this.getCurrency());
         } else {

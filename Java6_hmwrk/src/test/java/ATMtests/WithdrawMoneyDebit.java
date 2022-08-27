@@ -15,7 +15,6 @@ public class WithdrawMoneyDebit {
         return new Object[][]{
                 {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000), 1, new Cash(1,"rub")},
                 {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", "4563", "rub", 10000), 9999, new Cash(9999,"rub")},
-                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", "4563", "rub", 10000), 10000, new Cash(10000,"rub")},
                 {new ATM("Sber", "rub", 10000),new DebitCard("Sber", "1111222233334444", "4563", "rub", 10000), 10000, new Cash(10000,"rub")},
         };
     }
@@ -84,8 +83,6 @@ public class WithdrawMoneyDebit {
         atm.withdrawMoney(card,sum);
         Assert.assertEquals(atm.getLimit(),atmLimitExpected);
     }
-
-
 
     @Test(dataProvider = "moneyAmountAfterMoneyWithdrawalPositiveData", description = "Подходящий пин-код")
     public void testCardMoneyAmountAfterMoneyWithdrawalPositive(ATM atm, DebitCard card, int sum, int moneyAmountExpected ) {
