@@ -27,6 +27,14 @@ public class PutMoneyTests {
     }
 
     @DataProvider
+    public Object[][] atmLimitAfterDepositingMoneyPositiveData() {
+        return new Object[][]{
+                {new ATM("Sber", "rub", 100000),new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000), new Cash(1,"rub"),100001},
+                {new ATM("Sber", "rub", 100),new DebitCard("Sber", "1111222233334444", "4563", "rub", 10000),  new Cash(10000,"rub"),10100}
+        };
+    }
+
+    @DataProvider
     public Object[][] putMoneyCheckCurrencyNegativeData() {
         return new Object[][]{
                 {new ATM("Sber", "r", 100000),new DebitCard("Sber", "1111222233334444", "1234", "rub", 10000), new Cash(1,"rub")},
@@ -54,5 +62,11 @@ public class PutMoneyTests {
     @Test(dataProvider = "putMoneyNegativeData", expectedExceptions = MoneyAmountException.class)
     public void testWithdrawMoneyDebitNegative(ATM atm, DebitCard card, Cash cash) {
      atm.putMoney(card,cash);
+    }
+
+    @Test(dataProvider = "atmLimitAfterDepositingMoneyPositiveData", description = "Подходящий пин-код")
+    public void testAtmLimitAfterDepositingMoneyPositive(ATM atm, DebitCard card, Cash cash, int atmLimitExpected ) {
+        atm.putMoney(card,cash);
+        Assert.assertEquals(atm.getLimit(),atmLimitExpected);
     }
 }
