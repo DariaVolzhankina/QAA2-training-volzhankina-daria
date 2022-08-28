@@ -49,7 +49,7 @@ public class PutMoneyTests {
         };
     }
 
-    @Test(dataProvider = "putMoneyPositiveData", description = "Подходящий пин-код")
+    @Test(dataProvider = "putMoneyPositiveData")
     public void testWithdrawMoneyDebitPositive(ATM atm, DebitCard card, Cash cash, int expected) {
         Assert.assertEquals(atm.putMoney(card,cash), expected);
     }
@@ -64,7 +64,7 @@ public class PutMoneyTests {
      atm.putMoney(card,cash);
     }
 
-    @Test(dataProvider = "atmLimitAfterDepositingMoneyPositiveData", description = "Подходящий пин-код")
+    @Test(dataProvider = "atmLimitAfterDepositingMoneyPositiveData")
     public void testAtmLimitAfterDepositingMoneyPositive(ATM atm, DebitCard card, Cash cash, int atmLimitExpected ) {
         atm.putMoney(card,cash);
         Assert.assertEquals(atm.getLimit(),atmLimitExpected);

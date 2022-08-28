@@ -63,7 +63,7 @@ public class WithdrawMoneyDebit {
         };
     }
 
-    @Test(dataProvider = "withdrawMoneyDebitPositiveData", description = "Подходящий пин-код")
+    @Test(dataProvider = "withdrawMoneyDebitPositiveData")
     public void testWithdrawMoneyDebitPositive(ATM atm, DebitCard card, int sum, Cash expected) {
         Assert.assertEquals(atm.withdrawMoney(card,sum), expected);
     }
@@ -78,13 +78,13 @@ public class WithdrawMoneyDebit {
         atm.withdrawMoney(card,sum);
     }
 
-    @Test(dataProvider = "atmLimitAfterMoneyWithdrawalPositiveData", description = "Подходящий пин-код")
+    @Test(dataProvider = "atmLimitAfterMoneyWithdrawalPositiveData")
     public void testAtmLimitAfterMoneyWithdrawalPositive(ATM atm, DebitCard card, int sum, int atmLimitExpected ) {
         atm.withdrawMoney(card,sum);
         Assert.assertEquals(atm.getLimit(),atmLimitExpected);
     }
 
-    @Test(dataProvider = "moneyAmountAfterMoneyWithdrawalPositiveData", description = "Подходящий пин-код")
+    @Test(dataProvider = "moneyAmountAfterMoneyWithdrawalPositiveData")
     public void testCardMoneyAmountAfterMoneyWithdrawalPositive(ATM atm, DebitCard card, int sum, int moneyAmountExpected ) {
         atm.withdrawMoney(card,sum);
         Assert.assertEquals(card.getMoneyAmount(),moneyAmountExpected);

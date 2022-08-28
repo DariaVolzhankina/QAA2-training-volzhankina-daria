@@ -77,7 +77,7 @@ public class WithdrawMoneyCredit {
         };
     }
 
-    @Test(dataProvider = "withdrawMoneyCreditPositiveData", description = "Подходящий пин-код")
+    @Test(dataProvider = "withdrawMoneyCreditPositiveData")
     public void testWithdrawMoneyCreditPositive(ATM atm, CreditCard card, int sum, Cash expected) {
         Assert.assertEquals(atm.withdrawMoney(card,sum), expected);
     }
@@ -92,19 +92,19 @@ public class WithdrawMoneyCredit {
         atm.withdrawMoney(card,sum);
     }
 
-    @Test(dataProvider = "atmLimitAfterMoneyWithdrawalPositiveData", description = "Подходящий пин-код")
+    @Test(dataProvider = "atmLimitAfterMoneyWithdrawalPositiveData")
     public void testAtmLimitAfterMoneyWithdrawalPositive(ATM atm, CreditCard card, int sum, int atmLimitExpected ) {
         atm.withdrawMoney(card,sum);
         Assert.assertEquals(atm.getLimit(),atmLimitExpected);
     }
 
-    @Test(dataProvider = "moneyAmountAfterMoneyWithdrawalPositiveData", description = "Подходящий пин-код")
+    @Test(dataProvider = "moneyAmountAfterMoneyWithdrawalPositiveData")
     public void testCardMoneyAmountAfterMoneyWithdrawalPositive(ATM atm, CreditCard card, int sum, int moneyAmountExpected ) {
         atm.withdrawMoney(card,sum);
         Assert.assertEquals(card.getMoneyAmount(),moneyAmountExpected);
     }
 
-    @Test(dataProvider = "creditLimitAfterMoneyWithdrawalPositiveData", description = "Подходящий пин-код")
+    @Test(dataProvider = "creditLimitAfterMoneyWithdrawalPositiveData")
     public void testCardCreditLimitAfterMoneyWithdrawalPositive(ATM atm, CreditCard card, int sum, int creditLimitExpected ) {
         atm.withdrawMoney(card,sum);
         Assert.assertEquals(card.getCreditLimit(),creditLimitExpected);
