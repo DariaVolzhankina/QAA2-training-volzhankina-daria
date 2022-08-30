@@ -5,15 +5,14 @@ import exceptions.WrongBankException;
 import exceptions.WrongCurrencyException;
 import exceptions.WrongPinCodeException;
 import lombok.Data;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
+@Slf4j
 public class ATM {
     private final Currencies currency;
     private final Banks bank;
     private int limit;
-    private static final Logger logger = LogManager.getLogger();
 
 
     public ATM(Banks bank, Currencies currency, int limit) {
@@ -24,22 +23,22 @@ public class ATM {
 
     public boolean checkBank(Card card) throws WrongBankException {
         if (bank == null || card.getBank() == null) {
-            logger.warn("Bank value cannot be null");
+            log.warn("Bank value cannot be null");
             throw new WrongBankException("Bank value cannot be null");
         }
 
         if (!bank.equals(card.getBank())) {
-            logger.warn("Card of another bank");
+            log.warn("Card of another bank");
             throw new WrongBankException("Card of another bank");
         }
 
-        logger.info("checkBank return " + bank.equals(card.getBank()));
+        log.info("check bank was successful");
         return bank.equals(card.getBank());
     }
 
     public boolean checkPinCode(Card card, String pin) {
         if (pin == null || card.getPinCode() == null) {
-            logger.warn("pin code cannot be null");
+            log.warn("pin code cannot be null");
         }
 
         if (pin.contains(" ") || card.getPinCode().contains(" ")){
@@ -47,117 +46,41 @@ public class ATM {
         }
 
         if (pin.trim().equals("") || card.getPinCode().trim().equals("")) {
-            logger.warn("pin code cannot be empty");
+            log.warn("pin code cannot be empty");
             throw new WrongPinCodeException("pin code cannot be empty");
         }
 
         if (!card.getPinCode().equals(pin)) {
-            logger.warn("invalid pin code");
+            log.warn("invalid pin code");
             throw new WrongPinCodeException("invalid pin code");
         }
 
-        logger.info("checkPinCode return " + card.getPinCode().equals(pin));
+        log.info("checkPinCode return " + card.getPinCode().equals(pin));
         return card.getPinCode().equals(pin);
     }
 
     public boolean checkCurrency(Card card) throws WrongCurrencyException {
         if (currency == null || card.getCurrency() == null) {
-            logger.warn("Currency cannot be null");
+            log.warn("Currency cannot be null");
             throw new WrongCurrencyException("Currency cannot be null");
         }
 
         if (!currency.equals(card.getCurrency())) {
-            logger.warn("The ATM issues another currency");
+            log.warn("The ATM issues another currency");
             throw new WrongCurrencyException("The ATM issues another currency");
         }
 
-        logger.info("checkCurrency return " + currency.equals(card.getCurrency()));
+        log.info("checkCurrency return " + currency.equals(card.getCurrency()));
         return currency.equals(card.getCurrency());
     }
 
-//    public Cash withdrawMoney(DebitCard card, int sum) throws MoneyAmountException, WrongCurrencyException {
-//
-////        if (sum > limit) {
-////            logger.warn("The ATM issues an amount up to" + this.getLimit());
-////            throw new MoneyAmountException("The ATM issues an amount up to" + this.getLimit());
-////        } else if (sum > card.getMoneyAmount()) {
-////            logger.warn("not enough money on the card");
-////            throw new MoneyAmountException("not enough money on the card");
-////        } else if (sum < 0 || this.getLimit() < 0 || card.getMoneyAmount() < 0) {
-////            logger.warn("the amount cannot be less than zero");
-////            throw new MoneyAmountException("the amount cannot be less than zero");
-////        } else if (sum == 0) {
-////            logger.warn("the sum cannot be zero");
-////            throw new MoneyAmountException("the sum cannot be zero");
-////        } else if (this.getLimit() == 0) {
-////            logger.warn("ATM have no money");
-////            throw new MoneyAmountException("ATM have no money");
-////        } else if (card.getMoneyAmount() == 0) {
-////            logger.warn("You have no money");
-////            throw new MoneyAmountException("You have no money");
-////        } else {
-////            card.setMoneyAmount(card.getMoneyAmount() - sum);
-////            limit -= sum;
-////            logger.info("withdrawMoney return " + new Cash(sum, this.currency));
-////            return new Cash(sum, this.currency);
-////        }
-//    }
-
     public Cash withdrawMoney(Card card, int sum) throws MoneyAmountException, WrongCurrencyException {
-
-//        if (sum > limit) {
-//            logger.warn("The ATM issues an amount up to" + this.getLimit());
-//            throw new MoneyAmountException("The ATM issues an amount up to" + this.getLimit());
-//        } else if (sum < 0 || this.getLimit() < 0 || card.getMoneyAmount() < 0 || card.getCreditLimit() < 0) {
-//            logger.warn("the amount cannot be less than zero");
-//            throw new MoneyAmountException("the amount cannot be less than zero");
-//        } else if (sum == 0) {
-//            logger.warn("the sum cannot be zero");
-//            throw new MoneyAmountException("the sum cannot be zero");
-//        } else if (this.getLimit() == 0) {
-//            logger.warn("ATM have no money");
-//            throw new MoneyAmountException("ATM have no money");
-//        } else if (card.getMoneyAmount() + card.getCreditLimit() == 0) {
-//            logger.warn("You have no money");
-//            throw new MoneyAmountException("You have no money");
-//        } else if (sum > (card.getMoneyAmount() + card.getCreditLimit())) {
-//            logger.warn("not enough money on the card");
-//            throw new MoneyAmountException("not enough money on the card");
-//        } else {
-//            if (sum > card.getMoneyAmount()) {
-//                card.setCreditLimit(card.getMoneyAmount() + card.getCreditLimit() - sum);
-//                card.setMoneyAmount(0);
-//            } else {
-//                card.setMoneyAmount(card.getMoneyAmount() - sum);
-//            }
-//            limit -= sum;
-//            logger.info("withdrawMoney return " + new Cash(sum, this.currency));
-//            return new Cash(sum, this.currency);
-//        }
        return card.withdrawMoney(this, sum);
     }
 
 
     public int putMoney(Card card, Cash cash) throws MoneyAmountException, WrongCurrencyException {
-
-        if (cash.getCurrency() == null) {
-            logger.warn("Currency cannot be null");
-            throw new WrongCurrencyException("Currency cannot be null");
-        } else if (cash.getSum() == 0) {
-            logger.warn("the sum cannot be zero");
-            throw new MoneyAmountException("the sum cannot be zero");
-        } else if (cash.getSum() < 0) {
-            logger.warn("the amount cannot be less than zero");
-            throw new MoneyAmountException("the amount cannot be less than zero");
-        }else if (!currency.equals(cash.getCurrency())) {
-            logger.warn("The objects.ATM only issues " + this.getCurrency());
-            throw new WrongCurrencyException("The objects.ATM only issues " + this.getCurrency());
-        } else {
-            card.setMoneyAmount(card.getMoneyAmount() + cash.getSum());
-            limit += cash.getSum();
-            logger.info("putMoney return " +  card.getMoneyAmount());
-            return card.getMoneyAmount();
-        }
+        return card.putMoney(this, cash);
     }
 }
 
