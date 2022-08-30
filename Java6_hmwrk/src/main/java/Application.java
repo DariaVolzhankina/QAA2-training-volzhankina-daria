@@ -13,18 +13,23 @@ public class Application {
         Cash cash = new Cash(1000, "rub");
 
         boolean continueApp1 = true;
-        boolean continueApp2 = true;
+        boolean continueApp2;
 
         while (continueApp1) {
             try {
                 atm.checkBank(card);
             } catch (WrongBankException e) {
                 e.printStackTrace();
-                System.out.println("Insert a " + atm.getBank() + " bank card");
                 break;
             }
 
-            System.out.println("Enter pin code");
+            try {
+                atm.checkCurrency(card);
+            } catch (WrongCurrencyException e) {
+                e.printStackTrace();
+                break;
+            }
+
             Scanner s = new Scanner(System.in);
             String pin = s.nextLine();
 
@@ -34,32 +39,20 @@ public class Application {
             } catch (WrongPinCodeException e) {
                 e.printStackTrace();
                 continueApp2 = false;
-                System.out.println("invalid pin code");
-            }
-
-            try {
-                atm.checkCurrency(card);
-            } catch (WrongCurrencyException e) {
-                e.printStackTrace();
-                System.out.println("The objects.ATM only issues " + atm.getCurrency() + ". insert another card into the ATM");
-                continueApp1 = false;
-                continueApp2 = false;
             }
 
             while (continueApp2) {
-                System.out.println("Choose an action: 1 - withdraw money, 2 - put money, 3 - exit");
+                //System.out.println("Choose an action: 1 - withdraw money, 2 - put money, 3 - exit");
                 int choice = s.nextInt();
                 switch (choice) {
                     case 1:
-                        System.out.println("The amount of money you want to withdraw");
                         int sum = s.nextInt();
                         try {
                             atm.withdrawMoney(card, sum);
                         } catch (MoneyAmountException e) {
                             e.printStackTrace();
                         }
-
-                        System.out.println(card.getMoneyAmount() + card.getCreditLimit());
+                        //System.out.println(card.getMoneyAmount() + card.getCreditLimit());
                         break;
                     case 2:
                         try {
@@ -68,14 +61,14 @@ public class Application {
                             e.printStackTrace();
                         }
 
-                        System.out.println(card.getMoneyAmount());
+                        //System.out.println(card.getMoneyAmount());
                         break;
                     case 3:
                         continueApp1 = false;
                         continueApp2 = false;
                         break;
                     default:
-                        System.out.println("You entered the wrong number");
+                        //System.out.println("You entered the wrong number");
                 }
             }
         }
