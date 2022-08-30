@@ -1,4 +1,4 @@
-package objects;
+package objects.enums;
 
 public enum Banks {
     SBER,

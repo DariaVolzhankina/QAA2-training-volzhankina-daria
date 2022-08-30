@@ -6,6 +6,10 @@ import exceptions.WrongCurrencyException;
 import exceptions.WrongPinCodeException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import objects.enums.Banks;
+import objects.enums.Currencies;
+
+import java.util.Objects;
 
 @Data
 @Slf4j
@@ -16,16 +20,12 @@ public class ATM {
 
 
     public ATM(Banks bank, Currencies currency, int limit) {
-        this.currency = currency;
-        this.bank = bank;
+        this.currency = Objects.requireNonNull(currency);
+        this.bank = Objects.requireNonNull(bank);
         this.limit = limit;
     }
 
     public boolean checkBank(Card card) throws WrongBankException {
-        if (bank == null || card.getBank() == null) {
-            log.warn("Bank value cannot be null");
-            throw new WrongBankException("Bank value cannot be null");
-        }
 
         if (!bank.equals(card.getBank())) {
             log.warn("Card of another bank");
@@ -37,7 +37,7 @@ public class ATM {
     }
 
     public boolean checkPinCode(Card card, String pin) {
-        if (pin == null || card.getPinCode() == null) {
+        if (pin == null) {
             log.warn("pin code cannot be null");
         }
 
@@ -60,10 +60,6 @@ public class ATM {
     }
 
     public boolean checkCurrency(Card card) throws WrongCurrencyException {
-        if (currency == null || card.getCurrency() == null) {
-            log.warn("Currency cannot be null");
-            throw new WrongCurrencyException("Currency cannot be null");
-        }
 
         if (!currency.equals(card.getCurrency())) {
             log.warn("The ATM issues another currency");

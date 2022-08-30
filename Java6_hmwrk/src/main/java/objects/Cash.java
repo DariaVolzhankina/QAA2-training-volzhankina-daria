@@ -2,6 +2,9 @@ package objects;
 
 import lombok.Builder;
 import lombok.Data;
+import objects.enums.Currencies;
+
+import java.util.Objects;
 
 @Data
 @Builder
@@ -11,6 +14,6 @@ public class Cash {
 
     public Cash(int sum, Currencies currency) {
         this.sum = sum;
-        this.currency = currency;
+        this.currency = Objects.requireNonNull(currency);
     }
 }

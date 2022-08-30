@@ -3,8 +3,8 @@ package objects;
 import exceptions.MoneyAmountException;
 import exceptions.WrongCurrencyException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import objects.enums.Banks;
+import objects.enums.Currencies;
 
 @Slf4j
 public class CreditCard extends Card {
@@ -62,11 +62,8 @@ public class CreditCard extends Card {
     }
 
     @Override
-    public int putMoney(ATM atm, Cash cash) throws WrongCurrencyException,MoneyAmountException{
-        if (cash.getCurrency() == null) {
-            log.warn("Currency cannot be null");
-            throw new WrongCurrencyException("Currency cannot be null");
-        } else if (cash.getSum() == 0) {
+    public int putMoney(ATM atm, Cash cash) throws WrongCurrencyException, MoneyAmountException {
+        if (cash.getSum() == 0) {
             log.warn("the sum cannot be zero");
             throw new MoneyAmountException("the sum cannot be zero");
         } else if (cash.getSum() < 0) {

@@ -3,6 +3,8 @@ import exceptions.WrongBankException;
 import exceptions.WrongCurrencyException;
 import exceptions.WrongPinCodeException;
 import objects.*;
+import objects.enums.Banks;
+import objects.enums.Currencies;
 
 import java.util.Scanner;
 
@@ -42,7 +44,7 @@ public class Application {
             }
 
             while (continueApp2) {
-                //System.out.println("Choose an action: 1 - withdraw money, 2 - put money, 3 - exit");
+                //Choose an action: 1 - withdraw money, 2 - put money, 3 - exit
                 int choice = s.nextInt();
                 switch (choice) {
                     case 1:
@@ -52,7 +54,6 @@ public class Application {
                         } catch (MoneyAmountException e) {
                             e.printStackTrace();
                         }
-                        //System.out.println(card.getMoneyAmount() + card.getCreditLimit());
                         break;
                     case 2:
                         try {
@@ -61,7 +62,6 @@ public class Application {
                             e.printStackTrace();
                         }
 
-                        //System.out.println(card.getMoneyAmount());
                         break;
                     case 3:
                         continueApp1 = false;

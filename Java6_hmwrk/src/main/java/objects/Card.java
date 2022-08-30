@@ -2,6 +2,10 @@ package objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import objects.enums.Banks;
+import objects.enums.Currencies;
+
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -13,11 +17,11 @@ public abstract class Card {
     private final String pinCode;
 
     public Card(Banks bank, String cardNumber, String pinCode, Currencies currency, int moneyAmount) {
-        this.currency = currency;
-        this.bank = bank;
+        this.currency = Objects.requireNonNull(currency);
+        this.bank = Objects.requireNonNull(bank);
         this.moneyAmount = moneyAmount;
-        this.cardNumber = cardNumber;
-        this.pinCode = pinCode;
+        this.cardNumber = Objects.requireNonNull(cardNumber);
+        this.pinCode = Objects.requireNonNull(pinCode);
     }
 
     public abstract Cash withdrawMoney(ATM atm, int sum);
