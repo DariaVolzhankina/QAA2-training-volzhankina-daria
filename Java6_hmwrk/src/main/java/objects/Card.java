@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-abstract class Card {
+public abstract class Card {
     private final Currencies currency;
     private final Banks bank;
     private int moneyAmount;

@@ -22,18 +22,9 @@ public class DebitCard extends Card {
         } else if (sum > this.getMoneyAmount()) {
             logger.warn("not enough money on the card");
             throw new MoneyAmountException("not enough money on the card");
-        } else if (sum < 0 || atm.getLimit() < 0 || this.getMoneyAmount() < 0) {
-            logger.warn("the amount cannot be less than zero");
-            throw new MoneyAmountException("the amount cannot be less than zero");
-        } else if (sum == 0) {
-            logger.warn("the sum cannot be zero");
-            throw new MoneyAmountException("the sum cannot be zero");
-        } else if (atm.getLimit() == 0) {
-            logger.warn("ATM have no money");
-            throw new MoneyAmountException("ATM have no money");
-        } else if (this.getMoneyAmount() == 0) {
-            logger.warn("You have no money");
-            throw new MoneyAmountException("You have no money");
+        } else if (sum <= 0 || atm.getLimit() <= 0 || this.getMoneyAmount() <= 0) {
+            logger.warn("the values cannot be equal to zero or less than zero");
+            throw new MoneyAmountException("the values cannot be equal to zero or less than zero");
         } else {
             this.setMoneyAmount(this.getMoneyAmount() - sum);
             atm.setLimit(atm.getLimit() - sum);
@@ -53,9 +44,6 @@ public class DebitCard extends Card {
         } else if (cash.getSum() < 0) {
             logger.warn("the amount cannot be less than zero");
             throw new MoneyAmountException("the amount cannot be less than zero");
-        } else if (atm.getCurrency().equals("") || cash.getCurrency().equals("")) {
-            logger.warn("Currency cannot be empty");
-            throw new WrongCurrencyException("Currency cannot be empty");
         } else if (!atm.getCurrency().equals(cash.getCurrency())) {
             logger.warn("The objects.ATM only issues " + this.getCurrency());
             throw new WrongCurrencyException("The objects.ATM only issues " + this.getCurrency());

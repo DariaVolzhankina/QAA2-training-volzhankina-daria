@@ -4,7 +4,6 @@ import exceptions.MoneyAmountException;
 import exceptions.WrongBankException;
 import exceptions.WrongCurrencyException;
 import exceptions.WrongPinCodeException;
-import lombok.Builder;
 import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +15,7 @@ public class ATM {
     private int limit;
     private static final Logger logger = LogManager.getLogger();
 
+
     public ATM(Banks bank, Currencies currency, int limit) {
         this.currency = currency;
         this.bank = bank;
@@ -26,11 +26,6 @@ public class ATM {
         if (bank == null || card.getBank() == null) {
             logger.warn("Bank value cannot be null");
             throw new WrongBankException("Bank value cannot be null");
-        }
-
-        if (bank.equals("") || card.getBank().equals("")) {
-            logger.warn("Bank value cannot be empty");
-            throw new WrongBankException("Bank value cannot be empty");
         }
 
         if (!bank.equals(card.getBank())) {
@@ -45,7 +40,10 @@ public class ATM {
     public boolean checkPinCode(Card card, String pin) {
         if (pin == null || card.getPinCode() == null) {
             logger.warn("pin code cannot be null");
-            throw new WrongPinCodeException("pin code cannot be null");
+        }
+
+        if (pin.contains(" ") || card.getPinCode().contains(" ")){
+            throw new WrongPinCodeException("pin code cannot contain a whitespace");
         }
 
         if (pin.trim().equals("") || card.getPinCode().trim().equals("")) {
@@ -53,24 +51,19 @@ public class ATM {
             throw new WrongPinCodeException("pin code cannot be empty");
         }
 
-        if (!card.getPinCode().equals(pin.trim())) {
+        if (!card.getPinCode().equals(pin)) {
             logger.warn("invalid pin code");
             throw new WrongPinCodeException("invalid pin code");
         }
 
-        logger.info("checkPinCode return " + card.getPinCode().equals(pin.trim()));
-        return card.getPinCode().equals(pin.trim());
+        logger.info("checkPinCode return " + card.getPinCode().equals(pin));
+        return card.getPinCode().equals(pin);
     }
 
     public boolean checkCurrency(Card card) throws WrongCurrencyException {
         if (currency == null || card.getCurrency() == null) {
             logger.warn("Currency cannot be null");
             throw new WrongCurrencyException("Currency cannot be null");
-        }
-
-        if (currency.equals("") || card.getCurrency().equals("")) {
-            logger.warn("Currency cannot be empty");
-            throw new WrongCurrencyException("Currency cannot be empty");
         }
 
         if (!currency.equals(card.getCurrency())) {
@@ -156,10 +149,7 @@ public class ATM {
         } else if (cash.getSum() < 0) {
             logger.warn("the amount cannot be less than zero");
             throw new MoneyAmountException("the amount cannot be less than zero");
-        } else if (currency.equals("") || cash.getCurrency().equals("")) {
-            logger.warn("Currency cannot be empty");
-            throw new WrongCurrencyException("Currency cannot be empty");
-        } else if (!currency.equals(cash.getCurrency())) {
+        }else if (!currency.equals(cash.getCurrency())) {
             logger.warn("The objects.ATM only issues " + this.getCurrency());
             throw new WrongCurrencyException("The objects.ATM only issues " + this.getCurrency());
         } else {
