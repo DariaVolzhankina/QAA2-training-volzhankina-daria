@@ -7,9 +7,9 @@ import lombok.Data;
 @Builder
 public class Cash {
     private int sum;
-    private String currency;
+    private final Currencies currency;
 
-    public Cash(int sum, String currency) {
+    public Cash(int sum, Currencies currency) {
         this.sum = sum;
         this.currency = currency;
     }
