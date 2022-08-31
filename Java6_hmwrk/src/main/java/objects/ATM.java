@@ -55,7 +55,7 @@ public class ATM {
             throw new WrongPinCodeException("invalid pin code");
         }
 
-        log.info("checkPinCode return " + card.getPinCode().equals(pin));
+        log.info("check pin code was successful");
         return card.getPinCode().equals(pin);
     }
 
@@ -66,7 +66,7 @@ public class ATM {
             throw new WrongCurrencyException("The ATM issues another currency");
         }
 
-        log.info("checkCurrency return " + currency.equals(card.getCurrency()));
+        log.info("check currency was successful");
         return currency.equals(card.getCurrency());
     }
 
