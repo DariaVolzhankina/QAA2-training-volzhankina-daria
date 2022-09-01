@@ -2,26 +2,21 @@ package objects;
 
 import exceptions.MoneyAmountException;
 import exceptions.WrongCurrencyException;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import objects.enums.Banks;
 import objects.enums.Currencies;
 
 @Slf4j
 public class CreditCard extends Card {
+
+    @Getter
+    @Setter
     private int creditLimit;
+
+    @Getter
     private final int maxCreditLimit;
-
-    public int getMaxCreditLimit() {
-        return maxCreditLimit;
-    }
-
-    public void setCreditLimit(int creditLimit) {
-        this.creditLimit = creditLimit;
-    }
-
-    public int getCreditLimit() {
-        return creditLimit;
-    }
 
     public CreditCard(Banks bank, String cardNumber, String pinCode, Currencies currency, int moneyAmount, int creditLimit, int maxCreditLimit) throws MoneyAmountException {
         super(bank, cardNumber, pinCode, currency, moneyAmount);

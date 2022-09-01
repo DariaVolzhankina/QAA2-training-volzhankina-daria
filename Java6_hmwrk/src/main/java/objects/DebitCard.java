@@ -58,5 +58,4 @@ public class DebitCard extends Card {
         log.info("checkMoneyAmount return " + moneyAmount);
         return moneyAmount;
     }
-
 }
