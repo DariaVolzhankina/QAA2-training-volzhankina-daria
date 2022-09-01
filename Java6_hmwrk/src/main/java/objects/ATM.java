@@ -42,7 +42,7 @@ public class ATM {
             log.warn("pin code cannot be null");
         }
 
-        if(!Pattern.matches(regex, pin) || !card.getPinCode().equals(pin)){
+        if (!Pattern.matches(regex, pin) || !card.getPinCode().equals(pin)) {
             throw new WrongPinCodeException("invalid pin code");
         }
 
@@ -54,12 +54,25 @@ public class ATM {
         if (currency.equals(card.getCurrency())) {
             log.info("check currency was successful");
             return currency.equals(card.getCurrency());
-        }else{
+        } else {
             log.warn("The ATM issues another currency");
             throw new WrongCurrencyException("The ATM issues another currency");
         }
     }
 
+    public int reduceLimit(int sum) {
+        int currentLimit = this.getLimit() - sum;
+        this.setLimit(currentLimit);
+        log.warn("reduceLimit return " + currentLimit);
+        return currentLimit;
+    }
+
+    public int increaseLimit(int sum) {
+        int currentLimit = this.getLimit() + sum;
+        this.setLimit(currentLimit);
+        log.warn("increaseLimit return " + currentLimit);
+        return currentLimit;
+    }
 
     public boolean chooseAction(Scanner s, Card card, Cash cash, boolean b1) {
         // 1 - withdraw, 2 - put, 3 - check money amount, 4 - exit, 5 - check credit limit
@@ -67,18 +80,26 @@ public class ATM {
         switch (choice) {
             case 1:
                 int sum = s.nextInt();
-                try {
-                    card.withdrawMoney(this, sum);
-                } catch (MoneyAmountException e) {
-                    e.printStackTrace();
+                if (sum > this.getLimit()) {
+                    log.warn("ATM doesn't have enough money");
+                    throw new MoneyAmountException("ATM doesn't have enough money");
+                } else if (sum <= 0) {
+                    log.warn("the values cannot be equal to zero or less than zero");
+                    throw new MoneyAmountException("the values cannot be equal to zero or less than zero");
                 }
+                card.withdrawMoney(this, sum);
+                reduceLimit(sum);
                 break;
             case 2:
-                try {
-                    card.putMoney(this, cash);
-                } catch (MoneyAmountException e) {
-                    e.printStackTrace();
+                if (!this.getCurrency().equals(cash.getCurrency())) {
+                    log.warn("The objects.ATM only issues " + this.getCurrency());
+                    throw new WrongCurrencyException("The objects.ATM only issues " + this.getCurrency());
+                } else if (cash.getSum() <= 0) {
+                    log.warn("the amount cannot be less than zero or equal to zero ");
+                    throw new MoneyAmountException("the amount cannot be less than zero or equal to zero");
                 }
+                card.putMoney(this, cash);
+                increaseLimit(cash.getSum());
                 break;
             case 3:
                 card.checkMoneyAmount();
@@ -87,10 +108,10 @@ public class ATM {
                 b1 = false;
                 break;
             case 5:
-                if(card instanceof CreditCard){
+                if (card instanceof CreditCard) {
                     ((CreditCard) card).checkCreditLimit();
                     break;
-                }else{
+                } else {
                     throw new WrongActionException("you entered the wrong number");
                 }
             default:

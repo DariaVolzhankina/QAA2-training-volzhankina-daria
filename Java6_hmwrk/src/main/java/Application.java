@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
-        ATM atm = new ATM(Banks.SBER, Currencies.RUB, 100000);
+        ATM atm = new ATM(Banks.SBER, Currencies.RUB, 15000);
         Card card = new CreditCard(Banks.SBER, "1111222233334444", "1234", Currencies.RUB, 10000,10000,10001);
         Cash cash = new Cash(1000, Currencies.RUB);
 
@@ -43,7 +43,7 @@ public class Application {
                 try {
                     continueApp2 = atm.chooseAction(s,card,cash,continueApp2);
                 }
-                catch (WrongActionException e) {
+                catch (WrongActionException | MoneyAmountException | WrongCurrencyException e) {
                     e.printStackTrace();
                 }
                 continueApp1 = continueApp2;
