@@ -70,6 +70,7 @@ public class ATM {
 
 
     public boolean chooseAction(Scanner s, Card card, Cash cash, boolean b1) {
+        // 1 - withdraw, 2 - put, 3 - check money amount, 4 - exit
         int choice = s.nextInt();
         switch (choice) {
             case 1:
@@ -88,8 +89,18 @@ public class ATM {
                 }
                 break;
             case 3:
+                card.checkMoneyAmount();
+                break;
+            case 4:
                 b1 = false;
                 break;
+            case 5:
+                if(card instanceof CreditCard){
+                    ((CreditCard) card).checkCreditLimit();
+                    break;
+                }else{
+                    throw new WrongActionException("you entered the wrong number");
+                }
             default:
                 throw new WrongActionException("you entered the wrong number");
         }

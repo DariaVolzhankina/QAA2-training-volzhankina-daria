@@ -12,9 +12,9 @@ import java.util.Objects;
 public abstract class Card {
     private final Currencies currency;
     private final Banks bank;
-    private int moneyAmount;
     private final String cardNumber;
     private final String pinCode;
+    private int moneyAmount;
 
     public Card(Banks bank, String cardNumber, String pinCode, Currencies currency, int moneyAmount) {
         this.currency = Objects.requireNonNull(currency);
@@ -26,4 +26,5 @@ public abstract class Card {
 
     public abstract Cash withdrawMoney(ATM atm, int sum);
     public abstract int putMoney(ATM atm, Cash cash);
+    public abstract int checkMoneyAmount();
 }

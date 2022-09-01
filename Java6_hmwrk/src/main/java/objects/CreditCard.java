@@ -90,4 +90,17 @@ public class CreditCard extends Card {
             return this.getMoneyAmount();
         }
     }
+
+    @Override
+    public int checkMoneyAmount() {
+        int moneyAmount = this.getMoneyAmount();
+        log.info("checkMoneyAmount return " + moneyAmount);
+        return moneyAmount;
+    }
+
+    public int checkCreditLimit(){
+        int creditLimit = this.getCreditLimit();
+        log.info("checkCreditLimit return " + creditLimit);
+        return creditLimit;
+    }
 }
