@@ -1,15 +1,13 @@
 package objects;
 
-import exceptions.MoneyAmountException;
-import exceptions.WrongBankException;
-import exceptions.WrongCurrencyException;
-import exceptions.WrongPinCodeException;
+import exceptions.*;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import objects.enums.Banks;
 import objects.enums.Currencies;
 
 import java.util.Objects;
+import java.util.Scanner;
 
 @Data
 @Slf4j
@@ -41,7 +39,7 @@ public class ATM {
             log.warn("pin code cannot be null");
         }
 
-        if (pin.contains(" ") || card.getPinCode().contains(" ")){
+        if (pin.contains(" ") || card.getPinCode().contains(" ")) {
             throw new WrongPinCodeException("pin code cannot contain a whitespace");
         }
 
@@ -70,13 +68,32 @@ public class ATM {
         return currency.equals(card.getCurrency());
     }
 
-    public Cash withdrawMoney(Card card, int sum) throws MoneyAmountException, WrongCurrencyException {
-       return card.withdrawMoney(this, sum);
-    }
 
-
-    public int putMoney(Card card, Cash cash) throws MoneyAmountException, WrongCurrencyException {
-        return card.putMoney(this, cash);
+    public boolean chooseAction(Scanner s, Card card, Cash cash, boolean b1) {
+        int choice = s.nextInt();
+        switch (choice) {
+            case 1:
+                int sum = s.nextInt();
+                try {
+                    card.withdrawMoney(this, sum);
+                } catch (MoneyAmountException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                try {
+                    card.putMoney(this, cash);
+                } catch (MoneyAmountException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 3:
+                b1 = false;
+                break;
+            default:
+                throw new WrongActionException("you entered the wrong number");
+        }
+        return b1;
     }
 }
 

@@ -1,7 +1,4 @@
-import exceptions.MoneyAmountException;
-import exceptions.WrongBankException;
-import exceptions.WrongCurrencyException;
-import exceptions.WrongPinCodeException;
+import exceptions.*;
 import objects.*;
 import objects.enums.Banks;
 import objects.enums.Currencies;
@@ -11,11 +8,11 @@ import java.util.Scanner;
 public class Application {
     public static void main(String[] args) {
         ATM atm = new ATM(Banks.SBER, Currencies.RUB, 100000);
-        Card card = new CreditCard(Banks.SBER, "1111222233334444", "1234", Currencies.RUB, 10000,10000,10001);
+        Card card = new CreditCard(Banks.SBER, "1111222233334444", "1234", Currencies.RUB, 10000, 10000, 10001);
         Cash cash = new Cash(1000, Currencies.RUB);
 
         boolean continueApp1 = true;
-        boolean continueApp2;
+        boolean continueApp2 = false;
 
         while (continueApp1) {
             try {
@@ -40,36 +37,16 @@ public class Application {
                 continueApp2 = true;
             } catch (WrongPinCodeException e) {
                 e.printStackTrace();
-                continueApp2 = false;
             }
 
             while (continueApp2) {
-                //Choose an action: 1 - withdraw money, 2 - put money, 3 - exit
-                int choice = s.nextInt();
-                switch (choice) {
-                    case 1:
-                        int sum = s.nextInt();
-                        try {
-                            atm.withdrawMoney(card, sum);
-                        } catch (MoneyAmountException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case 2:
-                        try {
-                            atm.putMoney(card, cash);
-                        } catch (MoneyAmountException e) {
-                            e.printStackTrace();
-                        }
-
-                        break;
-                    case 3:
-                        continueApp1 = false;
-                        continueApp2 = false;
-                        break;
-                    default:
-                        //System.out.println("You entered the wrong number");
+                try {
+                    continueApp2 = atm.chooseAction(s,card,cash,continueApp2);
                 }
+                catch (WrongActionException e) {
+                    e.printStackTrace();
+                }
+                continueApp1 = continueApp2;
             }
         }
     }
