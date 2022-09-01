@@ -40,8 +40,9 @@ public class Application {
             }
 
             while (continueApp2) {
+                int choice = s.nextInt();
                 try {
-                    continueApp2 = atm.chooseAction(s,card,cash,continueApp2);
+                    continueApp2 = atm.chooseAction(choice,s,card,cash,continueApp2);
                 }
                 catch (WrongActionException | MoneyAmountException | WrongCurrencyException e) {
                     e.printStackTrace();

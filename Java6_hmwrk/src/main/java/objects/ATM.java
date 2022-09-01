@@ -69,9 +69,8 @@ public class ATM {
         return currentLimit;
     }
 
-    public boolean chooseAction(Scanner s, Card card, Cash cash, boolean b1) {
+    public boolean chooseAction(int choice, Scanner s, Card card, Cash cash, boolean b1) {
         // 1 - withdraw, 2 - put, 3 - check money amount, 4 - exit, 5 - check credit limit
-        int choice = s.nextInt();
         switch (choice) {
             case 1:
                 int sum = s.nextInt();
