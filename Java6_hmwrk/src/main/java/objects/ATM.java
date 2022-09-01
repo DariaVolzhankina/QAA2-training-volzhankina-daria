@@ -25,22 +25,17 @@ public class ATM {
     }
 
     public boolean checkBank(Card card) throws WrongBankException {
-
-        if (!bank.equals(card.getBank())) {
+        if (bank.equals(card.getBank())) {
+            log.info("check bank was successful");
+            return bank.equals(card.getBank());
+        } else {
             log.warn("Card of another bank");
             throw new WrongBankException("Card of another bank");
         }
-
-        log.info("check bank was successful");
-        return bank.equals(card.getBank());
     }
 
-    public boolean checkPinCode(Card card, String pin) {
+    public boolean checkPinCode(Card card, @NonNull String pin) {
         String regex = "^\\d{4}$";
-
-        if (pin == null) {
-            log.warn("pin code cannot be null");
-        }
 
         if (!Pattern.matches(regex, pin) || !card.getPinCode().equals(pin)) {
             throw new WrongPinCodeException("invalid pin code");
@@ -80,12 +75,12 @@ public class ATM {
         switch (choice) {
             case 1:
                 int sum = s.nextInt();
-                if (sum > this.getLimit()) {
-                    log.warn("ATM doesn't have enough money");
-                    throw new MoneyAmountException("ATM doesn't have enough money");
-                } else if (sum <= 0) {
+                if (sum <= 0) {
                     log.warn("the values cannot be equal to zero or less than zero");
                     throw new MoneyAmountException("the values cannot be equal to zero or less than zero");
+                } else if (sum > this.getLimit()) {
+                    log.warn("ATM doesn't have enough money");
+                    throw new MoneyAmountException("ATM doesn't have enough money");
                 }
                 card.withdrawMoney(this, sum);
                 reduceLimit(sum);
