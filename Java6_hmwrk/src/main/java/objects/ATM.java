@@ -81,7 +81,7 @@ public class ATM {
     public int putMoney(Card card, Cash cash) throws WrongCurrencyException, MoneyAmountException{
         if (!this.getCurrency().equals(cash.getCurrency())) {
             log.warn("The objects.ATM only issues " + this.getCurrency());
-            throw new WrongCurrencyException("The objects.ATM only issues " + this.getCurrency());
+            throw new WrongCurrencyException("the ATM does not accept this currency");
         } else if (cash.getSum() <= 0) {
             log.warn("the amount cannot be less than zero or equal to zero ");
             throw new MoneyAmountException("the amount cannot be less than zero or equal to zero");
