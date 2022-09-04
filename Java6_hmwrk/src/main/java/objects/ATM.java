@@ -20,6 +20,10 @@ public class ATM {
         this.currency = currency;
         this.bank = bank;
         this.limit = limit;
+
+        if(limit < 0){
+            throw new MoneyAmountException("the ATM limit cannot be less than zero");
+        }
     }
 
     public boolean checkBank(Card card) throws WrongBankException {
