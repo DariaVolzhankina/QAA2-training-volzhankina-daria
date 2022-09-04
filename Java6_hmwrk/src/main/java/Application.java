@@ -40,6 +40,12 @@ public class Application {
             }
 
             while (continueApp2) {
+                boolean isCreditCard = card instanceof CreditCard;
+                if(isCreditCard){
+                    System.out.println("1 - withdraw, 2 - put, 3 - check money amount, 4 - exit, 5 - check credit limit");
+                }else{
+                    System.out.println("1 - withdraw, 2 - put, 3 - check money amount, 4 - exit");
+                }
                 int choice = s.nextInt();
                 switch (choice) {
                     case 1:
@@ -67,7 +73,7 @@ public class Application {
                         continueApp2 = false;
                         break;
                     case 5:
-                        if (card instanceof CreditCard) {
+                        if (isCreditCard) {
                             atm.checkCreditLimit((CreditCard) card);
                             break;
                         } else {
