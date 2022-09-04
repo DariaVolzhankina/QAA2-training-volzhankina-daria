@@ -1,7 +1,6 @@
 package objects;
 
 import exceptions.MoneyAmountException;
-import exceptions.WrongCurrencyException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,7 @@ public class CreditCard extends Card {
     }
 
     @Override
-    public Cash withdrawMoney(ATM atm, int sum) throws MoneyAmountException {
+    public Cash withdrawMoney(int sum) throws MoneyAmountException {
 
         if (sum > (this.getMoneyAmount() + this.getCreditLimit())) {
             log.warn("not enough money on the card");
@@ -41,14 +40,14 @@ public class CreditCard extends Card {
             } else {
                 this.setMoneyAmount(this.getMoneyAmount() - sum);
             }
-            Cash cash = new Cash(sum, atm.getCurrency());
+            Cash cash = new Cash(sum, this.getCurrency());
             log.info("withdrawMoney return " + cash);
             return cash;
         }
     }
 
     @Override
-    public int putMoney(ATM atm, Cash cash) throws MoneyAmountException {
+    public int putMoney(Cash cash) throws MoneyAmountException {
         if (this.maxCreditLimit > this.creditLimit) {
             int requiredAmount = this.maxCreditLimit - this.creditLimit;
             if (requiredAmount < cash.getSum()) {
@@ -63,13 +62,6 @@ public class CreditCard extends Card {
         }
         log.info("putMoney return " + this.getMoneyAmount());
         return this.getMoneyAmount();
-    }
-
-    @Override
-    public int checkMoneyAmount() {
-        int moneyAmount = this.getMoneyAmount();
-        log.info("checkMoneyAmount return " + moneyAmount);
-        return moneyAmount;
     }
 
     public int checkCreditLimit() {

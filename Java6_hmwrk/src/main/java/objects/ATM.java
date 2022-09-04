@@ -6,8 +6,6 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import objects.enums.Banks;
 import objects.enums.Currencies;
-
-import java.util.Scanner;
 import java.util.regex.Pattern;
 
 @Data
@@ -69,49 +67,33 @@ public class ATM {
         return currentLimit;
     }
 
-    public boolean chooseAction(int choice, Scanner s, Card card, Cash cash, boolean b1) {
-        // 1 - withdraw, 2 - put, 3 - check money amount, 4 - exit, 5 - check credit limit
-        switch (choice) {
-            case 1:
-                int sum = s.nextInt();
-                if (sum <= 0) {
-                    log.warn("the values cannot be equal to zero or less than zero");
-                    throw new MoneyAmountException("the values cannot be equal to zero or less than zero");
-                } else if (sum > this.getLimit()) {
-                    log.warn("ATM doesn't have enough money");
-                    throw new MoneyAmountException("ATM doesn't have enough money");
-                }
-                card.withdrawMoney(this, sum);
-                reduceLimit(sum);
-                break;
-            case 2:
-                if (!this.getCurrency().equals(cash.getCurrency())) {
-                    log.warn("The objects.ATM only issues " + this.getCurrency());
-                    throw new WrongCurrencyException("The objects.ATM only issues " + this.getCurrency());
-                } else if (cash.getSum() <= 0) {
-                    log.warn("the amount cannot be less than zero or equal to zero ");
-                    throw new MoneyAmountException("the amount cannot be less than zero or equal to zero");
-                }
-                card.putMoney(this, cash);
-                increaseLimit(cash.getSum());
-                break;
-            case 3:
-                card.checkMoneyAmount();
-                break;
-            case 4:
-                b1 = false;
-                break;
-            case 5:
-                if (card instanceof CreditCard) {
-                    ((CreditCard) card).checkCreditLimit();
-                    break;
-                } else {
-                    throw new WrongActionException("you entered the wrong number");
-                }
-            default:
-                throw new WrongActionException("you entered the wrong number");
+    public Cash withdrawMoney(Card card, int sum) throws MoneyAmountException{
+        if (sum <= 0) {
+            log.warn("the values cannot be equal to zero or less than zero");
+            throw new MoneyAmountException("the values cannot be equal to zero or less than zero");
+        } else if (sum > this.getLimit()) {
+            log.warn("ATM doesn't have enough money");
+            throw new MoneyAmountException("ATM doesn't have enough money");
         }
-        return b1;
+        return card.withdrawMoney(sum);
+    }
+
+    public int putMoney(Card card, Cash cash) throws WrongCurrencyException, MoneyAmountException{
+        if (!this.getCurrency().equals(cash.getCurrency())) {
+            log.warn("The objects.ATM only issues " + this.getCurrency());
+            throw new WrongCurrencyException("The objects.ATM only issues " + this.getCurrency());
+        } else if (cash.getSum() <= 0) {
+            log.warn("the amount cannot be less than zero or equal to zero ");
+            throw new MoneyAmountException("the amount cannot be less than zero or equal to zero");
+        }
+        return card.putMoney(cash);
+    }
+
+    public int checkMoneyAmount(Card card){
+        return card.checkMoneyAmount();
+    }
+    public int checkCreditLimit(CreditCard card){
+       return card.checkCreditLimit();
     }
 }
 

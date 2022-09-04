@@ -41,13 +41,41 @@ public class Application {
 
             while (continueApp2) {
                 int choice = s.nextInt();
-                try {
-                    continueApp2 = atm.chooseAction(choice,s,card,cash,continueApp2);
+                switch (choice) {
+                    case 1:
+                        int sum = s.nextInt();
+                        try {
+                            atm.withdrawMoney(card, sum);
+                            atm.reduceLimit(sum);
+                        }catch (MoneyAmountException ex){
+                            ex.printStackTrace();
+                        }
+                        break;
+                    case 2:
+                        try {
+                            atm.putMoney(card, cash);
+                            atm.increaseLimit(cash.getSum());
+                        }catch (MoneyAmountException | WrongCurrencyException ex){
+                            ex.printStackTrace();
+                        };
+                        break;
+                    case 3:
+                        atm.checkMoneyAmount(card);
+                        break;
+                    case 4:
+                        continueApp1 = false;
+                        continueApp2 = false;
+                        break;
+                    case 5:
+                        if (card instanceof CreditCard) {
+                            atm.checkCreditLimit((CreditCard) card);
+                            break;
+                        } else {
+                            throw new WrongActionException("you entered the wrong number");
+                        }
+                    default:
+                        throw new WrongActionException("you entered the wrong number");
                 }
-                catch (WrongActionException | MoneyAmountException | WrongCurrencyException e) {
-                    e.printStackTrace();
-                }
-                continueApp1 = continueApp2;
             }
         }
     }
