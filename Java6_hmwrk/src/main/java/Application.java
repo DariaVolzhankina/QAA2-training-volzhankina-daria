@@ -63,7 +63,7 @@ public class Application {
                             atm.increaseLimit(cash.getSum());
                         }catch (MoneyAmountException | WrongCurrencyException ex){
                             ex.printStackTrace();
-                        };
+                        }
                         break;
                     case 3:
                         atm.checkMoneyAmount(card);

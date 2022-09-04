@@ -32,7 +32,7 @@ public class ATM {
         }
     }
 
-    public boolean checkPinCode(Card card, @NonNull String pin) {
+    public boolean checkPinCode(Card card, @NonNull String pin) throws WrongPinCodeException{
         String regex = "^\\d{4}$";
 
         if (!Pattern.matches(regex, pin) || !card.getPinCode().equals(pin)) {
