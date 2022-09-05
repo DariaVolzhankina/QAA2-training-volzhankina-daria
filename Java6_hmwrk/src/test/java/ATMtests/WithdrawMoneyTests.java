@@ -1,6 +1,8 @@
 package ATMtests;
 
 import exceptions.MoneyAmountException;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import objects.ATM;
 import objects.Cash;
 import objects.DebitCard;
@@ -11,6 +13,8 @@ import org.testng.annotations.Test;
 import static objects.enums.Banks.SBER;
 import static objects.enums.Currencies.RUB;
 
+@Epic("Методы банкомата")
+@Feature("Снять деньги с карты")
 public class WithdrawMoneyTests {
     @DataProvider
     public Object[][] withdrawMoneyPositiveData() {

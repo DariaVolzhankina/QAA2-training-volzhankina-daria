@@ -1,5 +1,7 @@
 package ATMtests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import objects.ATM;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -8,6 +10,8 @@ import org.testng.annotations.Test;
 import static objects.enums.Banks.SBER;
 import static objects.enums.Currencies.RUB;
 
+@Epic("Методы банкомата")
+@Feature("Уменьшение лимита банкомата")
 public class ReduceLimitTests {
 
     @DataProvider

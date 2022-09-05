@@ -1,5 +1,7 @@
 package CreditCardTests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import objects.Cash;
 import objects.CreditCard;
 import org.testng.Assert;
@@ -9,6 +11,8 @@ import org.testng.annotations.Test;
 import static objects.enums.Banks.SBER;
 import static objects.enums.Currencies.RUB;
 
+@Epic("Методы кредитной карты")
+@Feature("Положить деньги на кредитку")
 public class PutMoneyCreditTests {
 
     @DataProvider

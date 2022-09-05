@@ -1,6 +1,8 @@
 package ATMtests;
 
 import exceptions.WrongBankException;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import objects.ATM;
 import objects.CreditCard;
 import org.testng.Assert;
@@ -10,6 +12,8 @@ import org.testng.annotations.Test;
 import static objects.enums.Banks.*;
 import static objects.enums.Currencies.*;
 
+@Epic("Методы банкомата")
+@Feature("Проверка банкомата")
 public class CheckBankTests {
 
     @DataProvider

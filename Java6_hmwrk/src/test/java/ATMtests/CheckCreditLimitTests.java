@@ -1,5 +1,7 @@
 package ATMtests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import objects.ATM;
 import objects.CreditCard;
 import org.testng.Assert;
@@ -9,6 +11,8 @@ import org.testng.annotations.Test;
 import static objects.enums.Banks.SBER;
 import static objects.enums.Currencies.RUB;
 
+@Epic("Методы банкомата")
+@Feature("Просмотр кредитного лимита")
 public class CheckCreditLimitTests {
 
     @DataProvider
@@ -20,7 +24,7 @@ public class CheckCreditLimitTests {
     }
 
     @Test(dataProvider = "checkCreditLimitData")
-    public void testCheckMoneyAmountPositive(ATM atm, CreditCard card, int expected) {
+    public void testCheckCreditLimitPositive(ATM atm, CreditCard card, int expected) {
         Assert.assertEquals(atm.checkCreditLimit(card), expected);
     }
 }

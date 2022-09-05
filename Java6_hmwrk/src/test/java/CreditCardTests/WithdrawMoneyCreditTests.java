@@ -1,6 +1,8 @@
 package CreditCardTests;
 
 import exceptions.MoneyAmountException;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import objects.Cash;
 import objects.CreditCard;
 import org.testng.Assert;
@@ -10,6 +12,8 @@ import org.testng.annotations.Test;
 import static objects.enums.Banks.SBER;
 import static objects.enums.Currencies.RUB;
 
+@Epic("Методы кредитной карты")
+@Feature("Снять деньги с кредитки")
 public class WithdrawMoneyCreditTests {
 
     @DataProvider

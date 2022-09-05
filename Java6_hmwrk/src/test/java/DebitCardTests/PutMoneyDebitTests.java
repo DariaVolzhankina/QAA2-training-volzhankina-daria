@@ -1,5 +1,7 @@
 package DebitCardTests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import objects.Cash;
 import objects.DebitCard;
 import org.testng.Assert;
@@ -9,6 +11,8 @@ import org.testng.annotations.Test;
 import static objects.enums.Banks.SBER;
 import static objects.enums.Currencies.RUB;
 
+@Epic("Методы дебетовой карты")
+@Feature("Положить деньги на дебетовку")
 public class PutMoneyDebitTests {
     @DataProvider
     public Object[][] putMoneyDebitPositiveData() {

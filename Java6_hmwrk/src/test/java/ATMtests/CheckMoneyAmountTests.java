@@ -1,5 +1,7 @@
 package ATMtests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import objects.ATM;
 import objects.Card;
 import objects.CreditCard;
@@ -12,6 +14,8 @@ import static objects.enums.Banks.SBER;
 import static objects.enums.Banks.TINKOFF;
 import static objects.enums.Currencies.RUB;
 
+@Epic("Методы банкомата")
+@Feature("Просмотр суммы денег на счете")
 public class CheckMoneyAmountTests {
     @DataProvider
     public Object[][] checkMoneyAmountData() {
