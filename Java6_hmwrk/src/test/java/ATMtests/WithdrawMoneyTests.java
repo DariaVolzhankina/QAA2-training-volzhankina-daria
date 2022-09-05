@@ -13,7 +13,7 @@ import static objects.enums.Currencies.RUB;
 
 public class WithdrawMoneyTests {
     @DataProvider
-    public Object[][] withdrawMoneyDebitPositiveData() {
+    public Object[][] withdrawMoneyPositiveData() {
         return new Object[][]{
                 {new ATM(SBER, RUB, 100000), new DebitCard(SBER, "1111222233334444", "1234", RUB, 10000), 1, new Cash(1,RUB)},
                 {new ATM(SBER, RUB, 100000), new DebitCard(SBER, "1111222233334444", "1234", RUB, 10000), 9999, new Cash(9999,RUB)},
@@ -37,8 +37,8 @@ public class WithdrawMoneyTests {
         };
     }
 
-    @Test(dataProvider = "withdrawMoneyDebitPositiveData")
-    public void testWithdrawMoneyDebitPositive(ATM atm, DebitCard card, int sum, Cash expected) {
+    @Test(dataProvider = "withdrawMoneyPositiveData")
+    public void testWithdrawMoneyPositive(ATM atm, DebitCard card, int sum, Cash expected) {
         Assert.assertEquals(atm.withdrawMoney(card,sum), expected);
     }
 
