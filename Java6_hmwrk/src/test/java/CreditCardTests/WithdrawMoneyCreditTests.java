@@ -3,7 +3,6 @@ package CreditCardTests;
 import exceptions.MoneyAmountException;
 import objects.Cash;
 import objects.CreditCard;
-import objects.DebitCard;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -11,7 +10,7 @@ import org.testng.annotations.Test;
 import static objects.enums.Banks.SBER;
 import static objects.enums.Currencies.RUB;
 
-public class WithdrawMoneyCredit {
+public class WithdrawMoneyCreditTests {
 
     @DataProvider
     public Object[][] withdrawMoneyCreditPositiveData() {
