@@ -1,7 +1,6 @@
 package ATMtests;
 
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import objects.ATM;
 import objects.Card;
 import objects.CreditCard;
@@ -25,7 +24,12 @@ public class CheckMoneyAmountTests {
         };
     }
 
-    @Test(dataProvider = "checkMoneyAmountData")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Проверка денег на счету")
+    @Description("Позитивная проверка работы метода checkMoneyAmount")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "checkMoneyAmountData", description = "проверка денег на счету")
     public void testCheckMoneyAmountPositive(ATM atm, Card card, int expected) {
         Assert.assertEquals(atm.checkMoneyAmount(card), expected);
     }

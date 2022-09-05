@@ -2,8 +2,7 @@ package ATMtests;
 
 import exceptions.MoneyAmountException;
 import exceptions.WrongCurrencyException;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import objects.ATM;
 import objects.Cash;
 import objects.DebitCard;
@@ -41,18 +40,33 @@ public class PutMoneyTests {
         };
     }
 
-    @Test(dataProvider = "putMoneyPositiveData")
-    public void testWithdrawMoneyDebitPositive(ATM atm, DebitCard card, Cash cash, int expected) {
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Положить деньги на счет")
+    @Description("Позитивная проверка работы метода putMoney")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "putMoneyPositiveData", description = "Позитивная проверка работы метода putMoney")
+    public void testPutMoneyPositiveData(ATM atm, DebitCard card, Cash cash, int expected) {
         Assert.assertEquals(atm.putMoney(card, cash), expected);
     }
 
-    @Test(dataProvider = "putMoneyWrongCurrencyException", expectedExceptions = WrongCurrencyException.class, expectedExceptionsMessageRegExp = "the ATM does not accept this currency")
-    public void testWithdrawMoneyDebitWrongCurrencyException(ATM atm, DebitCard card, Cash cash) {
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Положить деньги на счет")
+    @Description("Негативная проверка работы метода putMoney, эксепшен WrongCurrencyException")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "putMoneyWrongCurrencyException", expectedExceptions = WrongCurrencyException.class, expectedExceptionsMessageRegExp = "the ATM does not accept this currency", description = "Негативная проверка работы метода putMoney")
+    public void testPutMoneyWrongCurrencyException(ATM atm, DebitCard card, Cash cash) {
         atm.putMoney(card, cash);
     }
 
-    @Test(dataProvider = "putMoneyMoneyAmountException", expectedExceptions = MoneyAmountException.class, expectedExceptionsMessageRegExp = "the amount cannot be less than zero or equal to zero")
-    public void testWithdrawMoneyDebitNegative(ATM atm, DebitCard card, Cash cash) {
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Положить деньги на счет")
+    @Description("Негативная проверка работы метода putMoney, эксепшен MoneyAmountException")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "putMoneyMoneyAmountException", expectedExceptions = MoneyAmountException.class, expectedExceptionsMessageRegExp = "the amount cannot be less than zero or equal to zero", description = "Негативная проверка работы метода putMoney")
+    public void testPutMoneyMoneyAmountException(ATM atm, DebitCard card, Cash cash) {
         atm.putMoney(card, cash);
     }
 }

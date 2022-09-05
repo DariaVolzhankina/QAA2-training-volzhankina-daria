@@ -2,8 +2,7 @@ package ATMtests;
 
 import exceptions.WrongBankException;
 import exceptions.WrongCurrencyException;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import objects.ATM;
 import objects.CreditCard;
 import org.testng.Assert;
@@ -34,13 +33,22 @@ public class CheckCurrencyTests {
         };
     }
 
-    @Test(dataProvider = "checkCurrencyPositiveData", description = "Подходящая валюта")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Проверка данных карты")
+    @Description("Позитивная проверка работы метода checkCurrency")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "checkCurrencyPositiveData", description = "Позитивная проверка")
     public void testCheckBankPositive(ATM atm, CreditCard card, boolean expected) {
         Assert.assertEquals(atm.checkCurrency(card), expected);
     }
 
-
-    @Test(dataProvider = "checkCurrencyNegativeData",expectedExceptions = WrongCurrencyException.class, expectedExceptionsMessageRegExp = "The ATM issues another currency")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Проверка данных карты")
+    @Description("Негативная проверка работы метода checkCurrency")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "checkCurrencyNegativeData",expectedExceptions = WrongCurrencyException.class, expectedExceptionsMessageRegExp = "The ATM issues another currency",description = "Негативная проверка")
     public void testCheckBankException(ATM atm, CreditCard card) throws WrongCurrencyException{
         atm.checkCurrency(card);
     }

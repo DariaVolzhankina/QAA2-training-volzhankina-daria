@@ -1,7 +1,6 @@
 package DebitCardTests;
 
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import objects.Cash;
 import objects.DebitCard;
 import org.testng.Assert;
@@ -23,7 +22,11 @@ public class PutMoneyDebitTests {
         };
     }
 
-    @Test(dataProvider = "putMoneyDebitPositiveData")
+    @TmsLink(value = "TL-679")
+    @Story("Положить деньги на счет")
+    @Description("Позитивная проверка работы метода putMoney")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "putMoneyDebitPositiveData", description = "Позитивная проверка работы метода putMoney")
     public void testPutMoneyDebitPositive(DebitCard card, Cash sum, int expected) {
         Assert.assertEquals(card.putMoney(sum), expected);
     }

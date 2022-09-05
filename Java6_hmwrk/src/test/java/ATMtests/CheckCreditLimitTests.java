@@ -1,7 +1,6 @@
 package ATMtests;
 
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import objects.ATM;
 import objects.CreditCard;
 import org.testng.Assert;
@@ -23,7 +22,12 @@ public class CheckCreditLimitTests {
         };
     }
 
-    @Test(dataProvider = "checkCreditLimitData")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Проверка кредитного лимита")
+    @Description("Позитивная проверка работы метода checkCreditLimit")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "checkCreditLimitData", description = "проверка кредитного лимита карты")
     public void testCheckCreditLimitPositive(ATM atm, CreditCard card, int expected) {
         Assert.assertEquals(atm.checkCreditLimit(card), expected);
     }

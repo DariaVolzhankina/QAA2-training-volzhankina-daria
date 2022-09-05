@@ -1,7 +1,6 @@
 package ATMtests;
 
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import objects.ATM;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -22,7 +21,12 @@ public class IncreaseLimitTests {
         };
     }
 
-    @Test(dataProvider = "increaseLimitData")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Увеличение лимита банкомата")
+    @Description("Позитивная проверка работы метода increaseLimit")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "increaseLimitData", description = "увеличение лимита банкомата")
     public void testIncreaseLimit(ATM atm, int sum, int expected) {
         Assert.assertEquals(atm.increaseLimit(sum), expected);
     }

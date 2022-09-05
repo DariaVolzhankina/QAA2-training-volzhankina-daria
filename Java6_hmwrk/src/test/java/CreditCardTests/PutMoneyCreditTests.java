@@ -1,7 +1,6 @@
 package CreditCardTests;
 
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import objects.Cash;
 import objects.CreditCard;
 import org.testng.Assert;
@@ -42,18 +41,33 @@ public class PutMoneyCreditTests {
         };
     }
 
-    @Test(dataProvider = "maxCreditLimitEqualsToCreditLimit")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Положить деньги на счет")
+    @Description("Позитивная проверка работы метода putMoney, кредитный лимит полный")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "maxCreditLimitEqualsToCreditLimit",description = "Позитивная проверка работы метода putMoney")
     public void testPutMoneyMaxCreditLimitEqualsToCreditLimit(CreditCard card, Cash cash, int expected) {
         Assert.assertEquals(card.putMoney(cash), expected);
     }
 
-    @Test(dataProvider = "requiredAmountLessThanSum")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Положить деньги на счет")
+    @Description("Позитивная проверка работы метода putMoney, maxCreditLimit - creditLimit < cash.getSum()")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "requiredAmountLessThanSum", description = "maxCreditLimit - creditLimit < cash.getSum()")
     public void testPutMoneyRequiredAmountLessThanSum(CreditCard card, Cash cash, int creditLimitExpected, int moneyAmountExpected) {
         card.putMoney(cash);
         Assert.assertEquals(card.getCreditLimit(), creditLimitExpected);
         Assert.assertEquals(card.getMoneyAmount(), moneyAmountExpected);
     }
-    @Test(dataProvider = "requiredAmountGreaterThanSum")
+
+    @TmsLink(value = "TL-679")
+    @Story("Положить деньги на счет")
+    @Description("Позитивная проверка работы метода putMoney, maxCreditLimit - creditLimit > cash.getSum()")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "requiredAmountGreaterThanSum", description = "maxCreditLimit - creditLimit > cash.getSum()")
     public void testPutMoneyRequiredAmountGreaterThanSum(CreditCard card, Cash cash, int creditLimitExpected, int moneyAmountExpected) {
         card.putMoney(cash);
         Assert.assertEquals(card.getCreditLimit(), creditLimitExpected);

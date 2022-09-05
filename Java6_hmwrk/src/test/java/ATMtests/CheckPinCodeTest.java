@@ -1,8 +1,7 @@
 package ATMtests;
 
 import exceptions.WrongPinCodeException;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import objects.ATM;
 import objects.DebitCard;
 import org.testng.Assert;
@@ -34,12 +33,22 @@ public class CheckPinCodeTest {
         };
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Проверка данных карты")
+    @Description("Позитивная проверка работы метода checkPinCode")
+    @Owner(value = "Иванов Иван Иванович")
     @Test(dataProvider = "checkPinCodePositiveData", description = "Подходящий пин-код")
     public void testPinCodePositive(ATM atm, DebitCard card, String pin, boolean expected) {
         Assert.assertEquals(atm.checkPinCode(card,pin), expected);
     }
 
-    @Test(dataProvider = "checkPinCodeNegativeData",expectedExceptions = WrongPinCodeException.class, expectedExceptionsMessageRegExp = "invalid pin code")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Проверка данных карты")
+    @Description("Негативная проверка работы метода checkPinCode")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "checkPinCodeNegativeData",expectedExceptions = WrongPinCodeException.class, expectedExceptionsMessageRegExp = "invalid pin code", description = "Невалидный пин-код")
     public void testCheckPinCodeException(ATM atm, DebitCard card, String pin) throws WrongPinCodeException{
         atm.checkPinCode(card,pin);
     }

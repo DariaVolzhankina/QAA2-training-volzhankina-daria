@@ -1,8 +1,7 @@
 package CreditCardTests;
 
 import exceptions.MoneyAmountException;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import objects.Cash;
 import objects.CreditCard;
 import org.testng.Assert;
@@ -51,26 +50,46 @@ public class WithdrawMoneyCreditTests {
         };
     }
 
-    @Test(dataProvider = "withdrawMoneyCreditPositiveData")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Снятие денег со счета")
+    @Description("Позитивная проверка работы метода withdrawMoney")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "withdrawMoneyCreditPositiveData", description = "Позитивная проверка работы метода withdrawMoney")
     public void testWithdrawMoneyCreditPositive(CreditCard card, int sum, Cash expected) {
         Assert.assertEquals(card.withdrawMoney(sum), expected);
     }
 
-    @Test(dataProvider = "sumGreaterThanMoneyAmount")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Снятие денег со счета")
+    @Description("Проверка изменения кредитного лимита и суммы денег при sum > moneyAmount")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "sumGreaterThanMoneyAmount", description = "Проверка изменения кредитного лимита и суммы денег при sum > moneyAmount")
     public void testWithdrawMoneySumGreaterThanMoneyAmount(CreditCard card, int sum, int expectedMoneyAmount, int expectedCreditLimit) {
         card.withdrawMoney(sum);
         Assert.assertEquals(card.getMoneyAmount(), expectedMoneyAmount);
         Assert.assertEquals(card.getCreditLimit(), expectedCreditLimit);
     }
 
-    @Test(dataProvider = "sumLessThanMoneyAmount")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Снятие денег со счета")
+    @Description("Проверка изменения суммы денег при sum < moneyAmount")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "sumLessThanMoneyAmount", description ="Проверка изменения суммы денег при sum < moneyAmount")
     public void testWithdrawMoneySumLessThanMoneyAmount(CreditCard card, int sum, int expectedMoneyAmount, int expectedCreditLimit) {
         card.withdrawMoney(sum);
         Assert.assertEquals(card.getMoneyAmount(), expectedMoneyAmount);
         Assert.assertEquals(card.getCreditLimit(), expectedCreditLimit);
     }
 
-    @Test(dataProvider = "withdrawMoneyCreditNegativeData", expectedExceptions = MoneyAmountException.class, expectedExceptionsMessageRegExp = "not enough money on the card")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Снятие денег со счета")
+    @Description("Негативная проверка работы метода withdrawMoney")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "withdrawMoneyCreditNegativeData", expectedExceptions = MoneyAmountException.class, expectedExceptionsMessageRegExp = "not enough money on the card", description ="Негативная проверка работы метода withdrawMoney")
     public void testWithdrawMoneyCreditNegative(CreditCard card, int sum) throws MoneyAmountException{
         card.withdrawMoney(sum);
     }

@@ -1,8 +1,7 @@
 package ATMtests;
 
 import exceptions.MoneyAmountException;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import objects.ATM;
 import objects.Cash;
 import objects.DebitCard;
@@ -41,17 +40,32 @@ public class WithdrawMoneyTests {
         };
     }
 
-    @Test(dataProvider = "withdrawMoneyPositiveData")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Снятие денег со счета")
+    @Description("Позитивная проверка работы метода withdrawMoney")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "withdrawMoneyPositiveData", description = "Позитивная проверка работы метода withdrawMoney")
     public void testWithdrawMoneyPositive(ATM atm, DebitCard card, int sum, Cash expected) {
         Assert.assertEquals(atm.withdrawMoney(card,sum), expected);
     }
 
-    @Test(dataProvider = "withdrawMoneyAmountEqualToZeroLessThanZero", expectedExceptions = MoneyAmountException.class, expectedExceptionsMessageRegExp ="the values cannot be equal to zero or less than zero")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Снятие денег со счета")
+    @Description("Негативная проверка работы метода withdrawMoney, expectedExceptionsMessageRegExp =\"the values cannot be equal to zero or less than zero\"")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "withdrawMoneyAmountEqualToZeroLessThanZero", expectedExceptions = MoneyAmountException.class, expectedExceptionsMessageRegExp ="the values cannot be equal to zero or less than zero", description = "Негативная проверка работы метода withdrawMoney")
     public void testWithdrawMoneyAmountEqualToZeroLessThanZero(ATM atm, DebitCard card, int sum) {
         atm.withdrawMoney(card,sum);
     }
 
-    @Test(dataProvider = "withdrawMoneyAmountGreaterThanATMLimit", expectedExceptions = MoneyAmountException.class, expectedExceptionsMessageRegExp = "ATM doesn't have enough money")
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "TL-679")
+    @Story("Снятие денег со счета")
+    @Description("Негативная проверка работы метода withdrawMoney, expectedExceptionsMessageRegExp = \"ATM doesn't have enough money\"")
+    @Owner(value = "Иванов Иван Иванович")
+    @Test(dataProvider = "withdrawMoneyAmountGreaterThanATMLimit", expectedExceptions = MoneyAmountException.class, expectedExceptionsMessageRegExp = "ATM doesn't have enough money", description = "Негативная проверка работы метода withdrawMoney")
     public void testWithdrawMoneyAmountGreaterThanATMLimit(ATM atm, DebitCard card, int sum) {
         atm.withdrawMoney(card,sum);
     }
