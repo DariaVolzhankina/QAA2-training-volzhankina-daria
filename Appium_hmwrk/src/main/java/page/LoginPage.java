@@ -5,20 +5,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class MenuPage {
+public class LoginPage {
 
     private final AndroidDriver driver;
 
-    @FindBy(id = "com.alibaba.aliexpresshd:id/chosen_account_view")
-    private WebElement account;
+    @FindBy(id = "com.alibaba.aliexpresshd:id/btn_sign_in")
+    private WebElement signInButton;
 
-    public MenuPage(AndroidDriver androidDriver){
+    public LoginPage(AndroidDriver androidDriver){
         driver = androidDriver;
         PageFactory.initElements(driver, this);
     }
 
-    public LoginPage clickAccount(){
-        account.click();
-        return new LoginPage(driver);
+    public SignInPage clickSignInButton(){
+        signInButton.click();
+        return new SignInPage(driver);
     }
 }

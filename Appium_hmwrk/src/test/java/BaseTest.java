@@ -1,4 +1,5 @@
 import config.AndroidSettingsConfig;
+import dict.AndroidCapabilityType;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class BaseTest {
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, androidConfig.platformVersion());
         capabilities.setCapability(MobileCapabilityType.UDID, androidConfig.udid());
         capabilities.setCapability(MobileCapabilityType.APP, androidConfig.app());
+       //capabilities.setCapability(AndroidCapabilityType.APP_WAIT_ACTIVITY, androidConfig.appWaitActivity());
 
         driver = new AndroidDriver(new URL(androidConfig.url()),capabilities);
     }

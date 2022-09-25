@@ -15,4 +15,6 @@ public interface AndroidSettingsConfig extends Config {
     String udid();
 
     String app();
+
+    String appWaitActivity();
 }
