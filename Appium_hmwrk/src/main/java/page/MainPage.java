@@ -5,16 +5,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class MainPage  {
-
-    private final AndroidDriver driver;
+public class MainPage extends Page {
 
     @FindBy(id = "com.alibaba.aliexpresshd:id/left_action")
     private WebElement hamburger;
 
-    public MainPage(AndroidDriver androidDriver){
-        driver = androidDriver;
-        PageFactory.initElements(driver, this);
+    public MainPage(AndroidDriver androidDriver) {
+        super(androidDriver);
     }
 
     public MenuPage clickHamburger(){
