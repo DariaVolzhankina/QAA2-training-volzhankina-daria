@@ -1,8 +1,11 @@
 package page;
 
 import io.appium.java_client.android.AndroidDriver;
+import lombok.Builder;
+import lombok.Data;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 
 public class LoginPage extends Page{
 

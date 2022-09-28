@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import org.openqa.selenium.support.PageFactory;
 
-@Data
-@Builder
 public class Page {
     protected final AndroidDriver driver;
 

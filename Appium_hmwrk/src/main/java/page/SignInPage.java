@@ -2,9 +2,12 @@ package page;
 
 import accountData.AccountData;
 import io.appium.java_client.android.AndroidDriver;
+import lombok.Builder;
+import lombok.Data;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 
 public class SignInPage extends Page{
 
