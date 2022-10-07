@@ -1,64 +1,117 @@
+import io.qameta.allure.*;
 import lombok.SneakyThrows;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.*;
 
+import static io.qameta.allure.Allure.step;
 import static utils.Waiters.waitUntilElementToBeClickable;
 
+/**
+ * Класс с проверками полей страницы авторизации
+ */
+@Epic("Авторизация")
+@Feature("Авторизация с разными данными")
 public class SignInTests extends BaseTest {
 
-    @Test
+    @Description("Авторизация с существующими в базе логином/паролем")
+    @Severity(SeverityLevel.CRITICAL)
     @SneakyThrows
+    @Test(description = "Авторизация с существующими в базе логином/паролем")
     public void correctDataTest() {
-        new MainPage(driver).clickHamburger();
-        waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
 
-        new MenuPage(driver).clickAccount();
-        waitUntilElementToBeClickable(driver, new LoginPage(driver).getSignInButton());
+        step("Клик на меню", () -> {
+            new MainPage(driver).clickHamburger();
+        });
 
-        Page page = new LoginPage(driver).clickSignInButton()
-                .enterValidEmail()
-                .enterValidPassword()
-                .clickSignInButtonOnSignInPage();
+        step("Клик на аккаунт", () -> {
+            waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
+            new MenuPage(driver).clickAccount();
+        });
 
-        Assert.assertTrue(page instanceof AccountPage);
+        step("Клик на кнопку войти", () -> {
+            waitUntilElementToBeClickable(driver, new LoginPage(driver).getSignInButton());
+            new LoginPage(driver).clickSignInButton();
+        });
+
+        step("Ввод данных", () -> {
+            new SignInPage(driver)
+                    .enterValidEmail()
+                    .enterValidPassword();
+        });
+
+        step("Проверка данных", () -> {
+            waitUntilElementToBeClickable(driver, new SignInPage(driver).getSignInBtn());
+            Page page = new SignInPage(driver).clickSignInButtonOnSignInPage();
+            Assert.assertTrue(page instanceof AccountPage);
+        });
     }
 
-    @Test
+    @Description("Авторизация с некорректным логином")
+    @Severity(SeverityLevel.CRITICAL)
     @SneakyThrows
+    @Test(description = "Не успешная авторизация. Несуществующий емаил")
     public void incorrectEmailTest() {
-        new MainPage(driver).clickHamburger();
-        waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
 
-        new MenuPage(driver).clickAccount();
-        waitUntilElementToBeClickable(driver, new LoginPage(driver).getSignInButton());
+        step("Клик на меню", () -> {
+            new MainPage(driver).clickHamburger();
+        });
 
-        Page page = new LoginPage(driver).clickSignInButton()
-                .enterInvalidEmail()
-                .enterValidPassword()
-                .clickSignInButtonOnSignInPage();
+        step("Клик на аккаунт", () -> {
+            waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
+            new MenuPage(driver).clickAccount();
+        });
 
-        Assert.assertTrue(page instanceof SignInPage);
-        boolean b = ((SignInPage) page).getMessage().getText().equals("Account does not exist. Please register an account to start shopping.");
-        Assert.assertTrue(b);
+        step("Клик на кнопку войти", () -> {
+            waitUntilElementToBeClickable(driver, new LoginPage(driver).getSignInButton());
+            new LoginPage(driver).clickSignInButton();
+        });
+
+        step("Ввод данных", () -> {
+            new SignInPage(driver).enterInvalidEmail()
+                    .enterValidPassword();
+        });
+
+        step("Проверка данных", () -> {
+            waitUntilElementToBeClickable(driver, new SignInPage(driver).getSignInBtn());
+            Page page = new SignInPage(driver).clickSignInButtonOnSignInPage();
+
+            Assert.assertTrue(page instanceof SignInPage);
+            boolean b = ((SignInPage) page).getMessage().getText().equals("Account does not exist. Please register an account to start shopping.");
+            Assert.assertTrue(b);
+        });
     }
 
-    @Test
+    @Description("Авторизация с некорректным паролем")
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(description = "Не успешная авторизация. Неверный пароль.")
     @SneakyThrows
     public void incorrectPasswordTest() {
-        new MainPage(driver).clickHamburger();
-        waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
+        step("Клик на меню", () -> {
+            new MainPage(driver).clickHamburger();
+        });
 
-        new MenuPage(driver).clickAccount();
-        waitUntilElementToBeClickable(driver, new LoginPage(driver).getSignInButton());
+        step("Клик на аккаунт", () -> {
+            waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
+            new MenuPage(driver).clickAccount();
+        });
+        step("Клик на кнопку войти", () -> {
+            waitUntilElementToBeClickable(driver, new LoginPage(driver).getSignInButton());
+            new LoginPage(driver).clickSignInButton();
+        });
 
-        Page page = new LoginPage(driver).clickSignInButton()
-                .enterValidEmail()
-                .enterInvalidPassword()
-                .clickSignInButtonOnSignInPage();
+        step("Ввод данных", () -> {
+            new SignInPage(driver).enterValidEmail()
+                    .enterInvalidPassword();
+        });
 
-        Assert.assertTrue(page instanceof SignInPage);
-        boolean b = ((SignInPage) page).getMessage().getText().equals("Password is incorrect. Please try again.");
-        Assert.assertTrue(b);
+        step("Проверка данных", () -> {
+            waitUntilElementToBeClickable(driver, new SignInPage(driver).getSignInBtn());
+            Page page = new SignInPage(driver).clickSignInButtonOnSignInPage();
+
+            Assert.assertTrue(page instanceof SignInPage);
+            boolean b = ((SignInPage) page).getMessage().getText().equals("Password is incorrect. Please try again.");
+            Assert.assertTrue(b);
+        });
     }
 }

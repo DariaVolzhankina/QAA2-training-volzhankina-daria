@@ -6,6 +6,10 @@ import org.openqa.selenium.support.PageFactory;
 
 @Data
 public class Page {
+
+    /**
+     * Переменная с экземпляром драйвера
+     */
     protected final AndroidDriver driver;
 
     public Page(AndroidDriver androidDriver) {

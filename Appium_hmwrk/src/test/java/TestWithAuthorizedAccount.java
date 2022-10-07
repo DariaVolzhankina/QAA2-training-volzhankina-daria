@@ -1,18 +1,23 @@
+import io.qameta.allure.*;
 import lombok.SneakyThrows;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import page.*;
 
-import static utils.Waiters.waitUntilElementToBeClickable;
+import static io.qameta.allure.Allure.step;
+import static utils.Waiters.*;
 
+/**
+ * Класс с тестами для авторизаванного аккаунта
+ */
+@Epic("Тесты с авторизованным аккаунтом")
 public class TestWithAuthorizedAccount extends BaseTest {
 
     @SneakyThrows
     @BeforeMethod
     public void login() {
-        new MainPage(driver)
-                .clickHamburger();
+        new MainPage(driver).clickHamburger();
         waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
 
         new MenuPage(driver).clickAccount();
@@ -24,79 +29,111 @@ public class TestWithAuthorizedAccount extends BaseTest {
                 .clickSignInButtonOnSignInPage();
     }
 
-    @Test
-    @SneakyThrows
+    @Description("Проверка горизонтального свайпа")
+    @Severity(SeverityLevel.NORMAL)
+    @Test(description = "Открытие бокового меню свайпом")
     public void swipeTest() {
-        //Swipe
-        MenuPage menuPage = new AccountPage(driver).swipe();
-        waitUntilElementToBeClickable(driver, menuPage.getAccount());
 
-        Assert.assertTrue(menuPage.getMenu().isDisplayed());
+        step("Свайп", () -> {
+            MenuPage menuPage = new AccountPage(driver).swipe();
+            waitUntilElementToBeClickable(driver, menuPage.getAccount());
+            Assert.assertTrue(menuPage.getMenu().isDisplayed());
+        });
     }
 
-    @Test
-    @SneakyThrows
+    @Description("Включение/выключение")
+    @Severity(SeverityLevel.MINOR)
+    @Test(description = "Включение/Выключение свитча \"Промоакции и скидки\"")
     public void turnOnOffNotificationsTest() {
 
-        //Swipe
-        MenuPage menuPage = new AccountPage(driver).swipe();
-        waitUntilElementToBeClickable(driver, menuPage.getSettings());
+        step("Свайп", () -> {
+            new AccountPage(driver).swipe();
+        });
 
-        //click on Settings
-        SettingsPage settingsPage = menuPage.clickSettings();
-        waitUntilElementToBeClickable(driver, settingsPage.getNotificationSettings());
+        step("Клик на настройки", () -> {
+            MenuPage menuPage = new MenuPage(driver);
+            waitUntilElementToBeClickable(driver, menuPage.getSettings());
+            menuPage.clickSettings();
+        });
 
-        //click on Notification Settings
-        NotificationSettingsPage notificationSettingsPage1 = settingsPage.clickNotificationSettings();
-        waitUntilElementToBeClickable(driver, notificationSettingsPage1.getSwitchPromotion());
+        step("Клик на настройки уведомлений", () -> {
+            SettingsPage settingsPage = new SettingsPage(driver);
+            waitUntilElementToBeClickable(driver, settingsPage.getNotificationSettings());
+            settingsPage.clickNotificationSettings();
+        });
 
-        //turn off notifications
-        NotificationSettingsPage notificationSettingsPage2 = notificationSettingsPage1.clickSwitchPromotion();
-        Assert.assertEquals(notificationSettingsPage2.getSwitchPromotion().getText(), "OFF");
+        step("Выключить уведомления", () -> {
+            NotificationSettingsPage notificationSettingsPage1 = new NotificationSettingsPage(driver);
+            waitUntilElementToBeClickable(driver, notificationSettingsPage1.getSwitchPromotion());
+            NotificationSettingsPage notificationSettingsPage2 = notificationSettingsPage1.clickSwitchPromotion();
+            Assert.assertEquals(notificationSettingsPage2.getSwitchPromotion().getText(), "OFF");
+        });
 
-        //turn on notifications
-        NotificationSettingsPage notificationSettingsPage3 = notificationSettingsPage2.clickSwitchPromotion();
-        waitUntilElementToBeClickable(driver, notificationSettingsPage3.getSwitchPromotionNotifications());
-        boolean switchPromotionNotificationsIsDisplayed = notificationSettingsPage3.getSwitchPromotionNotifications().isDisplayed();
-        Assert.assertEquals(notificationSettingsPage3.getSwitchPromotion().getText(), "ON");
-        Assert.assertTrue(switchPromotionNotificationsIsDisplayed);
+        step("Включить уведомления", () -> {
+            NotificationSettingsPage notificationSettingsPage = new NotificationSettingsPage(driver).clickSwitchPromotion();
+            waitUntilElementToBeClickable(driver, notificationSettingsPage.getSwitchPromotionNotifications());
+            boolean switchPromotionNotificationsIsDisplayed = notificationSettingsPage.getSwitchPromotionNotifications().isDisplayed();
+            Assert.assertEquals(notificationSettingsPage.getSwitchPromotion().getText(), "ON");
+            Assert.assertTrue(switchPromotionNotificationsIsDisplayed);
+        });
     }
 
-    @Test
-    @SneakyThrows
+    @Description(" Включение радиокнопки “Каждые 3 дня” в настройке \"Частота напоминаний\"")
+    @Severity(SeverityLevel.MINOR)
+    @Test(description = "Включение радиокнопки “Каждые 3 дня” в настройке \"Частота напоминаний\"")
     public void reminderFrequencyTest() {
 
-        //Swipe
-        MenuPage menuPage = new AccountPage(driver).swipe();
-        waitUntilElementToBeClickable(driver, menuPage.getSettings());
+        step("Свайп", () -> {
+            new AccountPage(driver).swipe();
+        });
 
-        //click on Settings
-        SettingsPage settingsPage = menuPage.clickSettings();
-        waitUntilElementToBeClickable(driver, settingsPage.getNotificationSettings());
+        step("Клик на настройки", () -> {
+            MenuPage menuPage = new MenuPage(driver);
+            waitUntilElementToBeClickable(driver, menuPage.getSettings());
+            menuPage.clickSettings();
+        });
 
-        //click on Notification Settings
-        NotificationSettingsPage notificationSettingsPage1 = settingsPage.clickNotificationSettings();
+        step("Клик на настройки уведомлений", () -> {
+            SettingsPage settingsPage = new SettingsPage(driver);
+            waitUntilElementToBeClickable(driver, settingsPage.getNotificationSettings());
+            settingsPage.clickNotificationSettings();
+        });
 
-        //click on reminder frequency
-        NotificationSettingsPage notificationSettingsPage2 = notificationSettingsPage1.swipeVertical().reminderFrequencyClick();
-        waitUntilElementToBeClickable(driver,notificationSettingsPage2.getEvery3Days());
+        step("Клик на частоту напоминаний", () -> {
+            new NotificationSettingsPage(driver)
+                    .swipeVertical()
+                    .reminderFrequencyClick();
+        });
 
-        //click on every3Days
-        NotificationSettingsPage notificationSettingsPage3 = notificationSettingsPage2.every3DaysClick();
-        Assert.assertEquals(notificationSettingsPage3.getReminderFrequencyText().getText(), "Every 3 days");
+        step("Клик на каждые 3 дня", () -> {
+            NotificationSettingsPage notificationSettingsPage1 = new NotificationSettingsPage(driver);
+            waitUntilElementToBeClickable(driver, notificationSettingsPage1.getEvery3Days());
+            NotificationSettingsPage notificationSettingsPage2 = notificationSettingsPage1.every3DaysClick();
+            Assert.assertEquals(notificationSettingsPage2.getReminderFrequencyText().getText(), "Every 3 days");
+        });
     }
 
-    @Test
+    @Description("Переход в Google Play ")
+    @Severity(SeverityLevel.MINOR)
+    @Test(description = "Переход в Google Play")
     public void googlePlayTest() {
 
-        //Swipe
-        MenuPage menuPage = new AccountPage(driver).swipe();
-        waitUntilElementToBeClickable(driver, menuPage.getSettings());
+        step("Свайп", () -> {
+            new AccountPage(driver).swipe();
+        });
 
-        //click on Settings
-        SettingsPage settingsPage = menuPage.clickSettings();
-        waitUntilElementToBeClickable(driver, settingsPage.getNotificationSettings());
+        step("Клик на настройки", () -> {
+            MenuPage menuPage = new MenuPage(driver);
+            waitUntilElementToBeClickable(driver, menuPage.getSettings());
+            menuPage.clickSettings();
+        });
 
-
+        step("Клик на PlayMarket", () -> {
+            SettingsPage settingsPage = new SettingsPage(driver);
+            waitUntilVisibilityOfElement(driver, settingsPage.getRateInPlayMarket());
+            PlayMarketPage playMarketPage = settingsPage.clickRateInPlayMarket();
+            waitUntilVisibilityOfElement(driver, playMarketPage.getOnboardingText());
+            Assert.assertEquals(playMarketPage.getOnboardingText().getText(), "Sign in to find the latest Android apps, games, movies, music, & more");
+        });
     }
 }

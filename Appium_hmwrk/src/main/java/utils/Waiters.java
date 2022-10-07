@@ -1,7 +1,6 @@
 package utils;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,7 +11,7 @@ public class Waiters {
     /**
      * Ожидает в течении 10 секунд кликабельность элемента
      *
-     * @param driver  экземпляр драйвера браузера
+     * @param driver  экземпляр драйвера
      * @param element элемент
      */
     public static void waitUntilElementToBeClickable(final AndroidDriver driver, WebElement element) {
@@ -20,13 +19,12 @@ public class Waiters {
     }
 
     /**
-     * Ожидает в течении 10 секунд что определенный текст присутсвует в параметре value элемента
+     * Ожидает в течении 10 секунд что определенный элемент становится видимым
      *
-     * @param driver  экземпляр драйвера браузера
+     * @param driver  экземпляр драйвера
      * @param element элемент
-     * @param text    ожидаемый текст
      */
-    public static void waitUntilTextToBePresentInElementValue(final AndroidDriver driver, WebElement element, String text) {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.textToBePresentInElementValue(element, text));
+    public static void waitUntilVisibilityOfElement(final AndroidDriver driver, WebElement element) {
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(element));
     }
 }

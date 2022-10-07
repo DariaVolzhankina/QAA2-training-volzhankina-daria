@@ -12,20 +12,36 @@ import static io.appium.java_client.touch.offset.PointOption.point;
 import static java.time.Duration.ofMillis;
 import static utils.Waiters.waitUntilElementToBeClickable;
 
+/**
+ * Класс в котором происходит взаимодействие со главной страницей
+ */
 public class MainPage extends Page {
-
-    @FindBy(id = "com.alibaba.aliexpresshd:id/left_action")
-    private WebElement hamburger;
 
     public MainPage(AndroidDriver androidDriver) {
         super(androidDriver);
     }
 
+    /**
+     * Элемент вызова меню
+     */
+    @FindBy(id = "com.alibaba.aliexpresshd:id/left_action")
+    private WebElement hamburger;
+
+    /**
+     * Метода вызова меню
+     *
+     * @return MenuPage - страница меню
+     */
     public MenuPage clickHamburger() {
         hamburger.click();
         return new MenuPage(driver);
     }
 
+    /**
+     * Метод бокового свайпа для вызова меню
+     *
+     * @return MenuPage страницу с меню
+     */
     @SneakyThrows
     public MenuPage swipe() {
         Dimension size = driver.manage().window().getSize();

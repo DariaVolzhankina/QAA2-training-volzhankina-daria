@@ -11,16 +11,26 @@ import static io.appium.java_client.touch.offset.PointOption.point;
 import static java.time.Duration.ofMillis;
 import static utils.Waiters.waitUntilElementToBeClickable;
 
-
+/**
+ * Класс в котором происходит взаимодействие со страницей настроек аккаунта
+ */
 public class AccountPage extends Page{
 
     public AccountPage(AndroidDriver androidDriver) {
         super(androidDriver);
     }
 
+    /**
+     * Элемент вызова меню
+     */
     @FindBy(xpath = "//android.widget.ImageButton[@content-desc=\"Navigate up\"]")
     private WebElement hamburger;
 
+    /**
+     * Метод бокового свайпа для вызова меню
+     *
+     * @return MenuPage страницу с меню
+     */
     @SneakyThrows
     public MenuPage swipe(){
         Dimension size = driver.manage().window().getSize();
