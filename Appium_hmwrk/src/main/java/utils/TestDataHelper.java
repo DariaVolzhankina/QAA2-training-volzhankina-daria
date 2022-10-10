@@ -17,7 +17,7 @@ public class TestDataHelper {
     /**
      * Невалидный email
      */
-    public static final String INVALID_EMAIL = "qweqw@gmail.com";
+    public static final String INVALID_EMAIL = "qweqw@gmail.com";//Здесь без faker,потому что на различные e-mail приложуха выдает разные сообщения
 
     /**
      * Метод для генерации невалидного пароля

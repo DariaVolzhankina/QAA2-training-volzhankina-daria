@@ -7,6 +7,8 @@ import org.aeonbits.owner.Config;
 @Config.Sources({"classpath:config/config.properties"})
 public interface AndroidSettingsConfig extends Config {
 
+
+    String runType();
     /**
      * Метод для возвращения параметра url из config.properties
      *
@@ -48,4 +50,14 @@ public interface AndroidSettingsConfig extends Config {
      * @return app устройства
      */
     String app();
+
+    /**
+     * Èìÿ óñòðîéñòâà â îáëàêå
+     */
+    String deviceNameBrowserStack();
+
+    /**
+     * Âåðñèÿ îïåðàöèîííîé ñèñòåìû â îáëàêå
+     */
+    String osVersionBrowserStack();
 }

@@ -68,6 +68,7 @@ public class SignInTests extends BaseTest {
         });
 
         step("Ввод данных", () -> {
+            waitUntilElementToBeClickable(driver, new SignInPage(driver).getEmail());
             new SignInPage(driver).enterInvalidEmail()
                     .enterValidPassword();
         });
