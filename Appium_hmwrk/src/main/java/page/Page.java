@@ -5,7 +5,7 @@ import lombok.Data;
 import org.openqa.selenium.support.PageFactory;
 
 @Data
-public class Page {
+public abstract class Page {
 
     /**
      * Переменная с экземпляром драйвера

@@ -1,20 +1,16 @@
 package page;
 
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
-import lombok.SneakyThrows;
-import org.openqa.selenium.Dimension;
+import io.qameta.allure.Step;
+import lombok.Data;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static io.appium.java_client.touch.WaitOptions.waitOptions;
-import static io.appium.java_client.touch.offset.PointOption.point;
-import static java.time.Duration.ofMillis;
-import static utils.Waiters.waitUntilElementToBeClickable;
 
 /**
  * Класс в котором происходит взаимодействие со главной страницей
  */
+@Data
 public class MainPage extends Page {
 
     public MainPage(AndroidDriver androidDriver) {
@@ -28,30 +24,13 @@ public class MainPage extends Page {
     private WebElement hamburger;
 
     /**
-     * Метода вызова меню
+     * Метод вызова меню
      *
      * @return MenuPage - страница меню
      */
+    @Step("Клик на иконку меню")
     public MenuPage clickHamburger() {
         hamburger.click();
-        return new MenuPage(driver);
-    }
-
-    /**
-     * Метод бокового свайпа для вызова меню
-     *
-     * @return MenuPage страницу с меню
-     */
-    @SneakyThrows
-    public MenuPage swipe() {
-        Dimension size = driver.manage().window().getSize();
-        int endx = size.width;
-        int startx = (int) (size.width * 0.01);
-        int starty = size.height / 3;
-
-        TouchAction touchAction = new TouchAction(driver);
-        waitUntilElementToBeClickable(driver,hamburger);
-        touchAction.press(point(startx, starty)).waitAction(waitOptions(ofMillis(500))).moveTo(point(endx, starty)).release().perform();
         return new MenuPage(driver);
     }
 }

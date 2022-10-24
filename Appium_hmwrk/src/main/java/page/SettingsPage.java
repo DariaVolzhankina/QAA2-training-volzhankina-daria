@@ -1,9 +1,13 @@
 package page;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.Step;
 import lombok.Data;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import static utils.Waiters.waitUntilElementToBeClickable;
+import static utils.Waiters.waitUntilVisibilityOfElement;
 
 /**
  * Класс в котором происходит взаимодействие со страницей настроек
@@ -18,27 +22,31 @@ public class SettingsPage extends Page{
      * Элемент настроек уведомлений
      */
     @FindBy(id = "com.alibaba.aliexpresshd:id/rl_notification_settings")
-    private WebElement notificationSettings;
+    private WebElement notificationSettingsButton;
 
     /**
      * Элемент оценки приложения в Play Market
      */
     @FindBy(id = "com.alibaba.aliexpresshd:id/rl_rate_settings")
-    private WebElement rateInPlayMarket;
+    private WebElement rateInPlayMarketButton;
 
     /**
      * Метод клика по настройкам уведомлений
      */
+    @Step("Клик на настройки уведомлений")
     public NotificationSettingsPage clickNotificationSettings(){
-        notificationSettings.click();
+        waitUntilElementToBeClickable(driver, notificationSettingsButton);
+        notificationSettingsButton.click();
         return new NotificationSettingsPage(driver);
     }
 
     /**
      * Метод клика на поле оценки приложения в Play Market
      */
+    @Step("Клик на поле оценки приложения в Play Market")
     public PlayMarketPage clickRateInPlayMarket(){
-        rateInPlayMarket.click();
+        waitUntilVisibilityOfElement(driver, rateInPlayMarketButton);
+        rateInPlayMarketButton.click();
         return new PlayMarketPage(driver);
     }
 }

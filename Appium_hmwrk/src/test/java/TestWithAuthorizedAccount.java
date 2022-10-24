@@ -1,29 +1,28 @@
 import io.qameta.allure.*;
 import lombok.SneakyThrows;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import page.*;
+import utils.Listener;
 
-import static io.qameta.allure.Allure.step;
-import static utils.Waiters.*;
+import static utils.TestDataHelper.swipe;
+import static utils.TestDataHelper.swipeVertical;
 
 /**
  * Класс с тестами для авторизаванного аккаунта
  */
 @Epic("Тесты с авторизованным аккаунтом")
+@Listeners(Listener.class)
 public class TestWithAuthorizedAccount extends BaseTest {
 
     @SneakyThrows
     @BeforeMethod
     public void login() {
-        new MainPage(driver).clickHamburger();
-        waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
-
-        new MenuPage(driver).clickAccount();
-        waitUntilElementToBeClickable(driver, new LoginPage(driver).getSignInButton());
-
-        new LoginPage(driver).clickSignInButton()
+        new MainPage(driver)
+                .clickHamburger()
+                .clickAccount()
+                .clickSignInButton()
                 .enterValidEmail()
                 .enterValidPassword()
                 .clickSignInButtonOnSignInPage();
@@ -33,12 +32,7 @@ public class TestWithAuthorizedAccount extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Test(description = "Открытие бокового меню свайпом")
     public void swipeTest() {
-
-        step("Свайп", () -> {
-            MenuPage menuPage = new AccountPage(driver).swipe();
-            waitUntilElementToBeClickable(driver, menuPage.getAccount());
-            Assert.assertTrue(menuPage.getMenu().isDisplayed());
-        });
+        swipe(driver, new AccountPage(driver).getHamburger(), new MenuPage(driver).getAccountButton());
     }
 
     @Description("Включение/выключение")
@@ -46,36 +40,13 @@ public class TestWithAuthorizedAccount extends BaseTest {
     @Test(description = "Включение/Выключение свитча \"Промоакции и скидки\"")
     public void turnOnOffNotificationsTest() {
 
-        step("Свайп", () -> {
-            new AccountPage(driver).swipe();
-        });
-
-        step("Клик на настройки", () -> {
-            MenuPage menuPage = new MenuPage(driver);
-            waitUntilElementToBeClickable(driver, menuPage.getSettings());
-            menuPage.clickSettings();
-        });
-
-        step("Клик на настройки уведомлений", () -> {
-            SettingsPage settingsPage = new SettingsPage(driver);
-            waitUntilElementToBeClickable(driver, settingsPage.getNotificationSettings());
-            settingsPage.clickNotificationSettings();
-        });
-
-        step("Выключить уведомления", () -> {
-            NotificationSettingsPage notificationSettingsPage1 = new NotificationSettingsPage(driver);
-            waitUntilElementToBeClickable(driver, notificationSettingsPage1.getSwitchPromotion());
-            NotificationSettingsPage notificationSettingsPage2 = notificationSettingsPage1.clickSwitchPromotion();
-            Assert.assertEquals(notificationSettingsPage2.getSwitchPromotion().getText(), "OFF");
-        });
-
-        step("Включить уведомления", () -> {
-            NotificationSettingsPage notificationSettingsPage = new NotificationSettingsPage(driver).clickSwitchPromotion();
-            waitUntilElementToBeClickable(driver, notificationSettingsPage.getSwitchPromotionNotifications());
-            boolean switchPromotionNotificationsIsDisplayed = notificationSettingsPage.getSwitchPromotionNotifications().isDisplayed();
-            Assert.assertEquals(notificationSettingsPage.getSwitchPromotion().getText(), "ON");
-            Assert.assertTrue(switchPromotionNotificationsIsDisplayed);
-        });
+        swipe(driver, new AccountPage(driver).getHamburger(), new MenuPage(driver).getAccountButton())
+                .clickSettings()
+                .clickNotificationSettings()
+                .clickSwitchPromotion()
+                .checkPromotionSwitchIsOff()
+                .clickSwitchPromotion()
+                .checkPromotionSwitchIsOn();
     }
 
     @Description(" Включение радиокнопки “Каждые 3 дня” в настройке \"Частота напоминаний\"")
@@ -83,34 +54,14 @@ public class TestWithAuthorizedAccount extends BaseTest {
     @Test(description = "Включение радиокнопки “Каждые 3 дня” в настройке \"Частота напоминаний\"")
     public void reminderFrequencyTest() {
 
-        step("Свайп", () -> {
-            new AccountPage(driver).swipe();
-        });
+        NotificationSettingsPage page = swipe(driver, new AccountPage(driver).getHamburger(), new MenuPage(driver).getAccountButton())
+                .clickSettings()
+                .clickNotificationSettings();
 
-        step("Клик на настройки", () -> {
-            MenuPage menuPage = new MenuPage(driver);
-            waitUntilElementToBeClickable(driver, menuPage.getSettings());
-            menuPage.clickSettings();
-        });
-
-        step("Клик на настройки уведомлений", () -> {
-            SettingsPage settingsPage = new SettingsPage(driver);
-            waitUntilElementToBeClickable(driver, settingsPage.getNotificationSettings());
-            settingsPage.clickNotificationSettings();
-        });
-
-        step("Клик на частоту напоминаний", () -> {
-            new NotificationSettingsPage(driver)
-                    .swipeVertical()
-                    .reminderFrequencyClick();
-        });
-
-        step("Клик на каждые 3 дня", () -> {
-            NotificationSettingsPage notificationSettingsPage1 = new NotificationSettingsPage(driver);
-            waitUntilElementToBeClickable(driver, notificationSettingsPage1.getEvery3Days());
-            NotificationSettingsPage notificationSettingsPage2 = notificationSettingsPage1.every3DaysClick();
-            Assert.assertEquals(notificationSettingsPage2.getReminderFrequencyText().getText(), "Every 3 days");
-        });
+        swipeVertical(driver, page)
+                .reminderFrequencyClick()
+                .every3DaysClick()
+                .checkReminderFrequencyTextIsEvery3Days();
     }
 
     @Description("Переход в Google Play ")
@@ -118,22 +69,9 @@ public class TestWithAuthorizedAccount extends BaseTest {
     @Test(description = "Переход в Google Play")
     public void googlePlayTest() {
 
-        step("Свайп", () -> {
-            new AccountPage(driver).swipe();
-        });
-
-        step("Клик на настройки", () -> {
-            MenuPage menuPage = new MenuPage(driver);
-            waitUntilElementToBeClickable(driver, menuPage.getSettings());
-            menuPage.clickSettings();
-        });
-
-        step("Клик на PlayMarket", () -> {
-            SettingsPage settingsPage = new SettingsPage(driver);
-            waitUntilVisibilityOfElement(driver, settingsPage.getRateInPlayMarket());
-            PlayMarketPage playMarketPage = settingsPage.clickRateInPlayMarket();
-            waitUntilVisibilityOfElement(driver, playMarketPage.getOnboardingText());
-            Assert.assertEquals(playMarketPage.getOnboardingText().getText(), "Sign in to find the latest Android apps, games, movies, music, & more");
-        });
+        swipe(driver, new AccountPage(driver).getHamburger(), new MenuPage(driver).getAccountButton())
+                .clickSettings()
+                .clickRateInPlayMarket()
+                .checkTextOnPlayMarketPage();
     }
 }

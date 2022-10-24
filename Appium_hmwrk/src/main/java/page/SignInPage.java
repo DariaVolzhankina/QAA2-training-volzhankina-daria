@@ -2,6 +2,7 @@ package page;
 
 import accountData.AccountData;
 import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.Step;
 import lombok.Data;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebElement;
@@ -9,6 +10,8 @@ import org.openqa.selenium.support.FindBy;
 
 import static utils.TestDataHelper.getRandomInvalidPassword;
 import static utils.TestDataHelper.INVALID_EMAIL;
+import static utils.Waiters.waitUntilElementToBeClickable;
+import static utils.Waiters.waitUntilVisibilityOfElement;
 
 /**
  * Класс в котором происходит взаимодействие со страницей авторизации
@@ -25,13 +28,13 @@ public class SignInPage extends Page {
      * Поле ввода email
      */
     @FindBy(id = "com.alibaba.aliexpresshd:id/et_email")
-    private WebElement email;
+    private WebElement emailField;
 
     /**
      * Поле ввода пароля
      */
     @FindBy(id = "com.alibaba.aliexpresshd:id/et_password")
-    private WebElement password;
+    private WebElement passwordField;
 
     /**
      * Кнопка "Войти"
@@ -43,7 +46,7 @@ public class SignInPage extends Page {
      * Всплывающее сообщение
      */
     @FindBy(id = "android:id/message")
-    private WebElement message;
+    private WebElement messageWindow;
 
     public SignInPage(AndroidDriver androidDriver) {
         super(androidDriver);
@@ -54,8 +57,9 @@ public class SignInPage extends Page {
      *
      * @return страницу авторизации
      */
+    @Step("Ввод корректного email")
     public SignInPage enterValidEmail() {
-        email.sendKeys(accountData.login());
+        emailField.sendKeys(accountData.login());
         return new SignInPage(driver);
     }
 
@@ -64,8 +68,9 @@ public class SignInPage extends Page {
      *
      * @return страницу авторизации
      */
+    @Step("Ввод некорректного email")
     public SignInPage enterInvalidEmail() {
-        email.sendKeys(INVALID_EMAIL);//Здесь без faker,потому что на различные e-mail приложуха выдает разные сообщения
+        emailField.sendKeys(INVALID_EMAIL);//Здесь без faker,потому что на различные e-mail приложуха выдает разные сообщения
         return new SignInPage(driver);
     }
 
@@ -74,8 +79,9 @@ public class SignInPage extends Page {
      *
      * @return страницу авторизации
      */
+    @Step("Ввод корректного пароля")
     public SignInPage enterValidPassword() {
-        password.sendKeys(accountData.password());
+        passwordField.sendKeys(accountData.password());
         return new SignInPage(driver);
     }
 
@@ -84,8 +90,9 @@ public class SignInPage extends Page {
      *
      * @return страницу авторизации
      */
+    @Step("Ввод некорректного пароля")
     public SignInPage enterInvalidPassword() {
-        password.sendKeys(getRandomInvalidPassword());
+        passwordField.sendKeys(getRandomInvalidPassword());
         return new SignInPage(driver);
     }
 
@@ -94,11 +101,13 @@ public class SignInPage extends Page {
      *
      * @return страницу авторизации или страницу с данными аккаунта
      */
-    public <T extends Page> T clickSignInButtonOnSignInPage() throws InterruptedException {
+    @Step("Клик на кнопку \"Войти\"")
+    public <T extends Page> T clickSignInButtonOnSignInPage() {
+        waitUntilElementToBeClickable(driver, signInBtn);
         signInBtn.click();
-        Thread.sleep(10000);
         try {
-            if (message.isDisplayed()) {
+            waitUntilVisibilityOfElement(driver, messageWindow);
+            if (messageWindow.isDisplayed()) {
                 return (T) new SignInPage(driver);
             }
         } catch (Exception e) {

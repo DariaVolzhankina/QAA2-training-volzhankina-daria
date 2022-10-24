@@ -1,17 +1,18 @@
 import io.qameta.allure.*;
 import lombok.SneakyThrows;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import page.*;
+import utils.Listener;
 
-import static io.qameta.allure.Allure.step;
-import static utils.Waiters.waitUntilElementToBeClickable;
 
 /**
  * Класс с проверками полей страницы авторизации
  */
 @Epic("Авторизация")
 @Feature("Авторизация с разными данными")
+@Listeners(Listener.class)
 public class SignInTests extends BaseTest {
 
     @Description("Авторизация с существующими в базе логином/паролем")
@@ -19,32 +20,15 @@ public class SignInTests extends BaseTest {
     @SneakyThrows
     @Test(description = "Авторизация с существующими в базе логином/паролем")
     public void correctDataTest() {
+        Page page = new MainPage(driver)
+                .clickHamburger()
+                .clickAccount()
+                .clickSignInButton()
+                .enterValidEmail()
+                .enterValidPassword()
+                .clickSignInButtonOnSignInPage();
 
-        step("Клик на меню", () -> {
-            new MainPage(driver).clickHamburger();
-        });
-
-        step("Клик на аккаунт", () -> {
-            waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
-            new MenuPage(driver).clickAccount();
-        });
-
-        step("Клик на кнопку войти", () -> {
-            waitUntilElementToBeClickable(driver, new LoginPage(driver).getSignInButton());
-            new LoginPage(driver).clickSignInButton();
-        });
-
-        step("Ввод данных", () -> {
-            new SignInPage(driver)
-                    .enterValidEmail()
-                    .enterValidPassword();
-        });
-
-        step("Проверка данных", () -> {
-            waitUntilElementToBeClickable(driver, new SignInPage(driver).getSignInBtn());
-            Page page = new SignInPage(driver).clickSignInButtonOnSignInPage();
-            Assert.assertTrue(page instanceof AccountPage);
-        });
+        Assert.assertTrue(page instanceof AccountPage);
     }
 
     @Description("Авторизация с некорректным логином")
@@ -53,34 +37,16 @@ public class SignInTests extends BaseTest {
     @Test(description = "Не успешная авторизация. Несуществующий емаил")
     public void incorrectEmailTest() {
 
-        step("Клик на меню", () -> {
-            new MainPage(driver).clickHamburger();
-        });
+        Page page = new MainPage(driver)
+                .clickHamburger()
+                .clickAccount()
+                .clickSignInButton()
+                .enterInvalidEmail()
+                .enterValidPassword()
+                .clickSignInButtonOnSignInPage();
 
-        step("Клик на аккаунт", () -> {
-            waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
-            new MenuPage(driver).clickAccount();
-        });
-
-        step("Клик на кнопку войти", () -> {
-            waitUntilElementToBeClickable(driver, new LoginPage(driver).getSignInButton());
-            new LoginPage(driver).clickSignInButton();
-        });
-
-        step("Ввод данных", () -> {
-            waitUntilElementToBeClickable(driver, new SignInPage(driver).getEmail());
-            new SignInPage(driver).enterInvalidEmail()
-                    .enterValidPassword();
-        });
-
-        step("Проверка данных", () -> {
-            waitUntilElementToBeClickable(driver, new SignInPage(driver).getSignInBtn());
-            Page page = new SignInPage(driver).clickSignInButtonOnSignInPage();
-
-            Assert.assertTrue(page instanceof SignInPage);
-            boolean b = ((SignInPage) page).getMessage().getText().equals("Account does not exist. Please register an account to start shopping.");
-            Assert.assertTrue(b);
-        });
+        Assert.assertTrue(page instanceof SignInPage);
+        Assert.assertEquals(((SignInPage) page).getMessageWindow().getText(), "Account does not exist. Please register an account to start shopping.");
     }
 
     @Description("Авторизация с некорректным паролем")
@@ -88,31 +54,15 @@ public class SignInTests extends BaseTest {
     @Test(description = "Не успешная авторизация. Неверный пароль.")
     @SneakyThrows
     public void incorrectPasswordTest() {
-        step("Клик на меню", () -> {
-            new MainPage(driver).clickHamburger();
-        });
+        Page page = new MainPage(driver)
+                .clickHamburger()
+                .clickAccount()
+                .clickSignInButton()
+                .enterValidEmail()
+                .enterInvalidPassword()
+                .clickSignInButtonOnSignInPage();
 
-        step("Клик на аккаунт", () -> {
-            waitUntilElementToBeClickable(driver, new MenuPage(driver).getAccount());
-            new MenuPage(driver).clickAccount();
-        });
-        step("Клик на кнопку войти", () -> {
-            waitUntilElementToBeClickable(driver, new LoginPage(driver).getSignInButton());
-            new LoginPage(driver).clickSignInButton();
-        });
-
-        step("Ввод данных", () -> {
-            new SignInPage(driver).enterValidEmail()
-                    .enterInvalidPassword();
-        });
-
-        step("Проверка данных", () -> {
-            waitUntilElementToBeClickable(driver, new SignInPage(driver).getSignInBtn());
-            Page page = new SignInPage(driver).clickSignInButtonOnSignInPage();
-
-            Assert.assertTrue(page instanceof SignInPage);
-            boolean b = ((SignInPage) page).getMessage().getText().equals("Password is incorrect. Please try again.");
-            Assert.assertTrue(b);
-        });
+        Assert.assertTrue(page instanceof SignInPage);
+        Assert.assertEquals(((SignInPage) page).getMessageWindow().getText(), "Password is incorrect. Please try again.");
     }
 }

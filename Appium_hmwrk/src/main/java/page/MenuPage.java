@@ -2,9 +2,12 @@ package page;
 
 
 import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.Step;
 import lombok.Data;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import static utils.Waiters.waitUntilElementToBeClickable;
 
 /**
  * Класс в котором происходит взаимодействие со списком меню
@@ -20,27 +23,32 @@ public class MenuPage extends Page{
      * Элемент с информацией об аккаунте
      */
     @FindBy(id = "com.alibaba.aliexpresshd:id/chosen_account_view")
-    private WebElement account;
+    private WebElement accountButton;
 
     /**
      * Элемент со списком меню
      */
-    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.ScrollView/android.widget.LinearLayout")
-    private WebElement menu;
+    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/" +
+            "android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.ScrollView/android.widget.LinearLayout")
+    private WebElement menuList;
 
     /**
      * Элемент настроек
      */
-    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.RelativeLayout[9]")
-    private WebElement settings;
+    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/" +
+            "android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.ScrollView/android.widget.LinearLayout/" +
+            "android.widget.LinearLayout/android.widget.LinearLayout/android.widget.RelativeLayout[9]")
+    private WebElement settingsButton;
 
     /**
      * Метод клика по аккаунту
      *
      * @return LoginPage - страница выбора логина/регистрации
      */
+    @Step("Клик на аккаунт")
     public LoginPage clickAccount(){
-        account.click();
+        waitUntilElementToBeClickable(driver, accountButton);
+        accountButton.click();
         return new LoginPage(driver);
     }
 
@@ -49,8 +57,10 @@ public class MenuPage extends Page{
      *
      * @return SettingsPage - страница с настройками
      */
+    @Step("Клик на настройки")
     public SettingsPage clickSettings(){
-        settings.click();
+        waitUntilElementToBeClickable(driver, settingsButton);
+        settingsButton.click();
         return new SettingsPage(driver);
     }
 }
