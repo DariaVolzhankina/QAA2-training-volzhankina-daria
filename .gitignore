@@ -8,3 +8,10 @@
 /logs/
 /Java6_hmwrk/logs/
 /Java6_hmwrk/.allure/
+/Appium_hmwrk/target/
+/Appium_hmwrk/data/
+/Appium_hmwrk/src/main/java/accountData/
+/data/
+/accountData/
+/Appium_hmwrk/src/test/resources/data/
+/Appium_hmwrk/.allure/
